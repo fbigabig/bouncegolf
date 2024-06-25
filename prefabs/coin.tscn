@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ci0d6iu8qaahy"]
+
+[ext_resource type="Texture2D" uid="uid://benkd1cy5yd6j" path="res://assets/coin.png" id="1_pildl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h3wik"]
+radius = 6.0
+height = 16.0
+
+[node name="coin" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pildl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["coin"]]
+shape = SubResource("CapsuleShape2D_h3wik")
