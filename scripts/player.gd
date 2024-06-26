@@ -54,7 +54,7 @@ func _process(delta):
 		$wheel.play()
 		$wheel.flip_h = velocity.x<0
 	else:
-		$wheel.stop()
+		$wheel.pause()
 func _physics_process(delta):
 	
 	grounded = is_on_floor()&&bounce==0

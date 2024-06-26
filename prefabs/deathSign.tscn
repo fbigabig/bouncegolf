@@ -10,7 +10,7 @@ texture = ExtResource("1_tsg3w")
 script = ExtResource("2_va7jb")
 
 [node name="restarttimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 0.78
 one_shot = true
 autostart = true
 
