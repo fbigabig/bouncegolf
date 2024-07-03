@@ -13,18 +13,22 @@ var dashFact = 2
 var bounceFact = 1.01
 var oldV = Vector2.ZERO
 var aim_dir
+var canBounce = true
 var grounded=true
 var deathSign = preload("res://prefabs/deathSign.tscn")
+var oneTickGroundDelay =false
 @onready var cursor = $cursor
 @onready var field = $bounceField
+@export var timer : RichTextLabel
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 750
 func _ready():
+	global.time=0
 	field.hide()
 func _input(event):
 	# Mouse in viewport coordinates.
 	
-	if Input.is_action_just_pressed("shoot")&&bounce==0&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
+	if Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
 
 		if(event is InputEventMouse):
 			#velocity = Vector2.ZERO
@@ -34,32 +38,37 @@ func _input(event):
 
 
 		else:
-			aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown")
+			aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 		
-		
+
 		startBounce()
-		print(aim_dir)
+
 		velocity= aim_dir*SPEED*dashFact
 
 	
 func startBounce():
 	bounce=1
 	field.show()
+	canBounce=false
 func endBounce():
 	bounce=0
 	field.hide()
-	
+	oneTickGroundDelay=true
 func _process(delta):
+	global.time+=delta
+	timer.text=str(global.time).pad_decimals(2)
 	if(velocity.x!=0):
 		$wheel.play()
 		$wheel.flip_h = velocity.x<0
 	else:
 		$wheel.pause()
 func _physics_process(delta):
-	
-	grounded = is_on_floor()&&bounce==0
+
+
+
 	# Add the gravity.
-	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown")
+	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
+
 	if(aim_dir.length()==0):
 		cursor.hide()
 	else:
@@ -99,11 +108,21 @@ func _physics_process(delta):
 		elif(is_on_floor()&&abs(velocity.x)>SPEED):
 
 			velocity.x = move_toward(velocity.x, SPEED, OVERDECEL)
+
 		move_and_slide()
+
 		for i in get_slide_collision_count():
 			hitCheck(get_slide_collision(i).get_collider())
-		
+	
+	
+	grounded = is_on_floor()&&bounce==0&&!oneTickGroundDelay #
+	if(grounded):
+		canBounce=true
 
+	if(oneTickGroundDelay): #is on floor doesn't get updated when bounce gets set to 0 because it updates with move and slide. this can lead to one frame where bounce is 0 and is on floor is true while in midair since boucing starting grounded doesn't change is_on_floor due to it using move and collide. this is why the one frame delay exists
+		oneTickGroundDelay=false
+
+	
 
 func hitCheck(obj):
 	if obj is Node:

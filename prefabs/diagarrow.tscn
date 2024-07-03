@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://vh7d0srt5hhy"]
+
+[ext_resource type="Texture2D" uid="uid://d0nlqq4f2ox4i" path="res://assets/diagarrow.png" id="1_3wddx"]
+
+[node name="diagarrow" type="Node2D"]
+z_index = -1
+z_as_relative = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3wddx")

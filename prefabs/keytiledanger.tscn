@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0kdxj34tjqxs"]
+
+[ext_resource type="Texture2D" uid="uid://dwg45a7lwxy3q" path="res://assets/keytile.png" id="1_2ixk8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gf2qv"]
+size = Vector2(16, 16)
+
+[node name="keytiledanger" type="StaticBody2D" groups=["hazard"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gf2qv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_2ixk8")

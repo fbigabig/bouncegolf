@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cie83h7mwjqg2"]
+
+[ext_resource type="Texture2D" uid="uid://cqq5lx01yc70x" path="res://assets/whitearrow.png" id="1_acvtu"]
+
+[node name="arrow" type="Node2D"]
+z_index = -1
+z_as_relative = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_acvtu")
