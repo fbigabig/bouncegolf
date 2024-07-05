@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw82hlvhdgih5"]
+
+[ext_resource type="Script" path="res://prefabs/levelselector.gd" id="1_pwa5i"]
+[ext_resource type="Texture2D" uid="uid://d2wb7gjg7wu8d" path="res://assets/levelport.png" id="2_frjf2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xp3p3"]
+radius = 8.0
+
+[node name="selector" type="Area2D" groups=["selector"]]
+script = ExtResource("1_pwa5i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+z_as_relative = false
+texture = ExtResource("2_frjf2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["coin"]]
+shape = SubResource("CircleShape2D_xp3p3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -26.0
+offset_top = -20.0
+offset_right = 26.0
+offset_bottom = -4.0
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]level 1[/center]"
+
+[node name="timeLabel" type="RichTextLabel" parent="."]
+offset_left = -26.0
+offset_top = 7.0
+offset_right = 26.0
+offset_bottom = 23.0
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]0:00[/center]"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

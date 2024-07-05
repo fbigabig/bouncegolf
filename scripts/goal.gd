@@ -1,5 +1,5 @@
 extends Area2D
-@export var sceneToLoad = "res://scenes/newlevel1.tscn"
+var sceneToLoad = "res://scenes/levels/levelselect.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,7 +12,8 @@ func _process(delta):
 
 func doLoad():
 	#get_tree().change_scene_to_file(sceneToLoad)
-	get_tree().change_scene_to_file(global.nextLevel())
+	global.nextLevel()
+	get_tree().change_scene_to_file(sceneToLoad)
 func _on_body_entered(body):
 	if(body.is_in_group("player")):
 		print(str(global.time).pad_decimals(2))

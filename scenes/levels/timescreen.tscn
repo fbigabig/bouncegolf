@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_nw5p0"]
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="2_m27wi"]
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="3_1tl3c"]
-[ext_resource type="Script" path="res://scenes/levels/displaytimes.gd" id="4_v8b6u"]
+[ext_resource type="Script" path="res://scripts/displaytimes.gd" id="4_v8b6u"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -28,7 +28,6 @@ timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("3_1tl3c")]
 position = Vector2(288, 144)
-sceneToLoad = "res://scenes/newlevel2.tscn"
 
 [node name="timer" type="RichTextLabel" parent="."]
 anchors_preset = 1

@@ -23,8 +23,7 @@ layer_0/tile_data = PackedInt32Array(2228285, 1, 0, 2293821, 1, 1, 2228286, 6553
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("2_yfs46")]
-z_index = -1
-position = Vector2(-272, -96)
+position = Vector2(-280, -96)
 timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("3_etxqr")]
