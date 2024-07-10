@@ -1,12 +1,25 @@
 extends Area2D
 
 @export var level = 1
-
+@onready var ball = $ballspin
+@onready var check = $checksprite
 # Called when the node enters the scene tree for the first time.
-func setText():
+
+
+func setup():
+	if(!global.times.has(level)):
+		global.times[level]=0.0
 	$RichTextLabel.text="[center]"+"level "+str(level)+"[/center]"
 	$timeLabel.text="[center]"+str(global.times[level]).pad_decimals(2)+"[/center]"
-
+	if(global.times[level]<=global.flooredTimes[level] and global.times[level]!=0.0):
+		ball.show()
+	else:
+		ball.hide()
+	
+	if(global.times[level]<=global.devTimes[level] and global.times[level]!=0.0):
+		check.show()
+	else:
+		check.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

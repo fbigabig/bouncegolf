@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 150.0
-const JUMP_VELOCITY = -190.0 #old is 200
+const JUMP_VELOCITY = -190.5 #old is 200
 const ACCEL = 4
 const DECEL = 15
 const OVERDECEL = 4
@@ -26,6 +26,7 @@ var oneTickGroundDelay =false
 var coyoteTime = true
 var coyotecounter = 0
 var grounded = true
+var timerStarted = false
 @onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
@@ -42,6 +43,9 @@ func _ready():
 	if(!interactBox):
 		remove_child($interacter)
 func _input(event):
+	if(not timerStarted):
+		if(not event is InputEventMouseMotion and not event.is_action("aimLeft")and not event.is_action("aimRight")and not event.is_action("aimDown")and not event.is_action("aimUp") and not event.is_action("confirm") and not event.is_action("quit")and not event.is_action("restart")):
+			timerStarted=true
 	# Mouse in viewport coordinates.
 	if(interactBox && Input.is_action_just_pressed("confirm")):
 		for i in $interacter.get_overlapping_areas():
@@ -82,7 +86,7 @@ func endBounce():
 	field.hide()
 	oneTickGroundDelay=true
 func _process(delta):
-	if(timer!=null):
+	if(timer!=null and timerStarted):
 		global.time+=delta
 		timer.text=str(global.time).pad_decimals(2)
 	if(velocity.x!=0):

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://t3lqrk10dvy2"]
+
+[ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_y7s8k"]
+
+[node name="owmap" type="TileMap" groups=["hazard"]]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-320, -184)
+tile_set = ExtResource("1_y7s8k")
+format = 2
