@@ -11,5 +11,5 @@ size = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_gf2qv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(1, 0, 1, 1)
 texture = ExtResource("1_2ixk8")

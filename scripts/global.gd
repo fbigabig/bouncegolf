@@ -7,12 +7,13 @@ var levels = {
 	1 : "res://scenes/levels/newlevel1.tscn",
 	2: "res://scenes/levels/newlevel3.tscn",
 	3: "res://scenes/levels/newlevel2.tscn",
-	4: "res://scenes/levels/newlevel4.tscn",
+	5: "res://scenes/levels/newlevel4.tscn",
+	4: "res://scenes/levels/newlevel5.tscn",
 	-1: "res://scenes/levels/timescreen.tscn"
 }
-var times = [0.0,0.0,0.0,0.0,0.0,0.0]
+var times = [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 func nextLevel():
-	if(time<times[currentlevel]):
+	if(time<times[currentlevel]||times[currentlevel]==0):
 		times[currentlevel] = time
 	
 func setLevel(l):

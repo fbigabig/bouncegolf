@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 150.0
-const JUMP_VELOCITY = -200.0
+const JUMP_VELOCITY = -190.0 #old is 200
 const ACCEL = 4
 const DECEL = 15
 const OVERDECEL = 4
@@ -12,7 +12,7 @@ enum BounceState {
 	Bouncing,
 	Landing
 }
-
+@export var linelength=20
 var bounce:BounceState = BounceState.None
 var didBounce = false
 var dashFact = 2
@@ -25,7 +25,8 @@ var deathSign = preload("res://prefabs/deathSign.tscn")
 var oneTickGroundDelay =false
 var coyoteTime = true
 var coyotecounter = 0
-
+var grounded = true
+@onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
 @export var timer : RichTextLabel
@@ -37,6 +38,7 @@ var gravity = 750
 func _ready():
 	global.time=0
 	field.hide()
+
 	if(!interactBox):
 		remove_child($interacter)
 func _input(event):
@@ -96,14 +98,17 @@ func _physics_process(delta):
 	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 
 	if(aim_dir.length()==0):
-		cursor.hide()
+		#cursor.hide()
+		line.hide()
 	else:
-		cursor.show()
-	cursor.rotation = Transform2D.IDENTITY.looking_at(aim_dir).get_rotation()
+		#cursor.show()
+		line.show()
+	#cursor.rotation = Transform2D.IDENTITY.looking_at(aim_dir).get_rotation()
+	line.set_point_position(1,aim_dir*linelength)
 	velocity.y += gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and (is_on_floor()||coyoteTime):
+	if Input.is_action_just_pressed("jump") and (grounded||coyoteTime) and bounce==BounceState.None:
 		coyoteTime=false
 		velocity.y = JUMP_VELOCITY
 
@@ -161,7 +166,7 @@ func _physics_process(delta):
 
 
 
-
+	
 			
 		
 	
@@ -169,6 +174,9 @@ func _physics_process(delta):
 	if(is_on_floor()&&bounce == BounceState.None):
 		canBounce=true
 		coyoteTime=true
+		grounded=true
+	else:
+		grounded=false
 	if(coyotecounter>0):
 		coyotecounter-=1
 	if(!is_on_floor() and oldFloor):

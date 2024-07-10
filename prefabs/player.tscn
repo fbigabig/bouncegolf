@@ -162,12 +162,14 @@ autoplay = "new_animation_1"
 shape = SubResource("CircleShape2D_dlyay")
 
 [node name="bounceField" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 1, 0.341176)
+modulate = Color(0, 0, 1, 0.341176)
 texture = ExtResource("3_cqtkc")
 
 [node name="cursor" type="Node2D" parent="."]
+visible = false
 
 [node name="cursorSprite" type="Sprite2D" parent="cursor"]
+visible = false
 z_index = 1
 position = Vector2(14, 0)
 texture = ExtResource("3_3sui1")
@@ -176,3 +178,9 @@ texture = ExtResource("3_3sui1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interacter"]
 shape = SubResource("RectangleShape2D_ybh6i")
+
+[node name="aimline" type="Line2D" parent="."]
+modulate = Color(0, 0, 1, 1)
+show_behind_parent = true
+points = PackedVector2Array(0, 0, 16, 0)
+width = 1.0
