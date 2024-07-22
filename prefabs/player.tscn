@@ -176,6 +176,8 @@ texture = ExtResource("3_3sui1")
 
 [node name="interacter" type="Area2D" parent="."]
 visible = false
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interacter"]
 shape = SubResource("RectangleShape2D_ybh6i")
@@ -185,3 +187,5 @@ modulate = Color(0, 0, 1, 1)
 show_behind_parent = true
 points = PackedVector2Array(0, 0, 16, 0)
 width = 1.0
+
+[connection signal="body_entered" from="interacter" to="." method="_on_interacter_body_entered"]

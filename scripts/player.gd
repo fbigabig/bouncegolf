@@ -35,7 +35,8 @@ var timerStarted = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 750
 @onready var wheel = $wheel
-
+@onready var ouchbox = $interacter
+@export var tileMap: TileMap
 func _ready():
 	global.player=self
 	global.time=0
@@ -49,7 +50,7 @@ func _input(event):
 			timerStarted=true
 	# Mouse in viewport coordinates.
 	if(interactBox && Input.is_action_just_pressed("confirm")):
-		for i in $interacter.get_overlapping_areas():
+		for i in ouchbox.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
 	elif(Input.is_action_just_pressed("quit")):
@@ -81,7 +82,7 @@ func startBounce():
 func transgenderBounce(collision):
 	bounce=BounceState.Landing
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact
-	hitCheck(collision.get_collider())
+
 func endBounce():
 	bounce=BounceState.None
 	field.hide()
@@ -122,7 +123,7 @@ func _physics_process(delta):
 	var direction = Input.get_axis("moveLeft", "moveRight")
 
 	
-
+	var velOffset = velocity.normalized()
 	match bounce:
 		#if direction && (abs(velocity.x)<SPEED||velocity.x*direction<0):
 			#velocity.x += direction * SPEED * delta * AIRCONTROL
@@ -139,10 +140,13 @@ func _physics_process(delta):
 				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL)
 
 			move_and_slide()
+			if(get_slide_collision_count()>0):
+				for i in get_slide_collision_count():
+					var col = get_slide_collision(i)
+					var off = (global_position-col.get_position()).normalized()
 
-			for i in get_slide_collision_count():
-
-				hitCheck(get_slide_collision(i).get_collider())
+					var result = getTileType(col.get_position()-(off))
+					handleTile(result,false)
 				
 
 		BounceState.Bouncing:
@@ -161,14 +165,21 @@ func _physics_process(delta):
 							position+= velocity*delta
 				
 				if(!didThing):
+					var result = getTileType(collision.get_position()+velOffset)
+					handleTile(result,true)
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
 			if(get_slide_collision_count()>0):
+				for i in get_slide_collision_count():
+					var col = get_slide_collision(i)
+					var off = (global_position-col.get_position()).normalized()
+
+					var result = getTileType(col.get_position()-(off))
+					handleTile(result,false)
 				endBounce()
 
-				for i in get_slide_collision_count():
-					hitCheck(get_slide_collision(i).get_collider())
+
 			
 		#var collision = move_and_collide(velocity * delta)
 		#if(collision):
@@ -213,3 +224,30 @@ func die():
 	dM.position=position
 	get_parent().add_child(dM)
 	queue_free()
+
+
+func _on_interacter_area_entered(area):
+	pass # Replace with function body.
+
+
+func _on_interacter_body_entered(body):
+	hitCheck(body)
+func getTileType(tilePos):
+
+	if(tileMap):
+
+		var pos = tileMap.to_local(tilePos)
+		pos= tileMap.local_to_map(pos)
+		var dat = tileMap.get_cell_tile_data(0,pos)
+		if(dat):
+			var thing = (dat.get_custom_data("special"))
+			if(thing != ""):
+				return thing
+		return "nothing"
+func handleTile(type,bouncing):
+	match type:
+		"checker":
+			if(bouncing):
+				return
+			else:
+				die()

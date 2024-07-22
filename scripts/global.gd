@@ -12,7 +12,8 @@ var levels = {
 	100: "res://scenes/levels/newlevel4.tscn",
 	4: "res://scenes/levels/newlevel5.tscn",
 	6:"res://scenes/levels/level6.tscn",
-	-1: "res://scenes/levels/timescreen.tscn"
+	-1: "res://scenes/levels/timescreen.tscn",
+	7: "res://scenes/levels/level7.tscn"
 }
 var levelEntryPos = {}
 var times = {}
@@ -23,7 +24,8 @@ var flooredTimes = {
 	3: 18,
 	4: 35,
 	100: 40,
-	6: 20
+	6: 20,
+	7: 20
 }
 var devTimes = {
 	0: 9.11,
@@ -32,7 +34,8 @@ var devTimes = {
 	3: 9.31,
 	4: 17.76,
 	100: 18.81,
-	6: 8.98
+	6: 8.98,
+	7: 15
 }
 func nextLevel():
 	if(time<times[currentlevel]||times[currentlevel]==0):
