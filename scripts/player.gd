@@ -143,12 +143,14 @@ func _physics_process(delta):
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
-					var diff = col.get_position()-position
-					print(diff*velOffset)
-					if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
-						var off = (global_position-col.get_position()).normalized()
+					var diff = (position-col.get_position())
+					if(!tileMap):
+						hitCheck(col.get_collider())
+					else:
+						if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
+							var off = (global_position-col.get_position()).normalized()
 
-						handleTile(col.get_position()-off)
+							handleTile(col.get_position()-off)
 
 		BounceState.Bouncing:
 
@@ -166,18 +168,23 @@ func _physics_process(delta):
 							position+= velocity*delta
 				
 				if(!didThing):
-					var off = (global_position-collision.get_position()).normalized()
-
-					handleTile(collision.get_position()-off)
+					if(!tileMap):
+						hitCheck(collision.get_collider())
+					else:
+						var off = (global_position-collision.get_position()).normalized()
+						
+						handleTile(collision.get_position()-off)
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
-					var off = (global_position-col.get_position()).normalized()
-
-					handleTile(col.get_position()-off)
+					if(!tileMap):
+						hitCheck(col.get_collider())
+					else:
+						var off = (global_position-col.get_position()).normalized()
+						handleTile(col.get_position()-off)
 				endBounce()
 
 
@@ -217,8 +224,11 @@ func _physics_process(delta):
 		oneTickGroundDelay=false
 
 func hitCheck(obj):
-	die()
+	if obj is Node:
+		if obj.is_in_group("hazard"):
+			die()
 func die():
+	print("ouch")
 	var dM = deathSign.instantiate()
 	dM.position=position
 	get_parent().add_child(dM)

@@ -144,7 +144,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dlyay"]
-radius = 7.0
+radius = 6.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4vqbj"]
 radius = 6.9
@@ -161,7 +161,6 @@ animation = &"new_animation_1"
 autoplay = "new_animation_1"
 
 [node name="playerHitbox" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_dlyay")
 
 [node name="bounceField" type="Sprite2D" parent="."]
