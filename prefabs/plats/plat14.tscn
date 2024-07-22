@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv3hpiswqpd8m"]
+
+[ext_resource type="Texture2D" uid="uid://urmoj5i05u23" path="res://assets/passtru/plat (14).png" id="1_6gywm"]
+[ext_resource type="Script" path="res://scripts/plat.gd" id="2_e53l5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcu6b"]
+size = Vector2(128, 8.00016)
+
+[node name="plat" type="StaticBody2D" groups=["gothruplat"]]
+script = ExtResource("2_e53l5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6gywm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vcu6b")
+one_way_collision = true

@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ba13idvf5tkki"]
+[gd_scene load_steps=4 format=3 uid="uid://ba13idvf5tkki"]
 
 [ext_resource type="Texture2D" uid="uid://b7ugp5io3xllk" path="res://assets/passtru/plat (4).png" id="1_d1v2l"]
+[ext_resource type="Script" path="res://scripts/plat.gd" id="1_kv3cx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6gcxg"]
 size = Vector2(48, 8)
 
 [node name="plat" type="StaticBody2D"]
+script = ExtResource("1_kv3cx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_d1v2l")

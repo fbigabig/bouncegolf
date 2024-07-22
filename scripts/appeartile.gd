@@ -23,6 +23,8 @@ func _on_exitarea_body_exited(body):
 	if(body.is_in_group("player") and playerIn):
 		var temp = toAppear.instantiate()
 		temp.position=position
-		get_parent().add_child(temp)
-		queue_free()
+		call_deferred("doTheThing",temp)
 
+func doTheThing(temp):
+	get_parent().add_child(temp)
+	queue_free()

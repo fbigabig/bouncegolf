@@ -16,7 +16,7 @@ enum BounceState {
 var bounce:BounceState = BounceState.None
 var didBounce = false
 var dashFact = 2
-var bounceFact = 1.01
+var bounceFact = 1.00
 var oldV = Vector2.ZERO
 var aim_dir
 var canBounce = true
@@ -37,6 +37,7 @@ var gravity = 750
 @onready var wheel = $wheel
 
 func _ready():
+	global.player=self
 	global.time=0
 	field.hide()
 
@@ -44,7 +45,7 @@ func _ready():
 		remove_child($interacter)
 func _input(event):
 	if(not timerStarted):
-		if(not event is InputEventMouseMotion and not event.is_action("aimLeft")and not event.is_action("aimRight")and not event.is_action("aimDown")and not event.is_action("aimUp") and not event.is_action("confirm") and not event.is_action("quit")and not event.is_action("restart")):
+		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )):
 			timerStarted=true
 	# Mouse in viewport coordinates.
 	if(interactBox && Input.is_action_just_pressed("confirm")):
@@ -147,8 +148,20 @@ func _physics_process(delta):
 		BounceState.Bouncing:
 
 			var collision = move_and_collide(velocity * delta)
+			var didThing= false
 			if(collision):
-				transgenderBounce(collision)
+				if(collision.get_collider() is Node):
+					var cold = collision.get_collider()
+					print(cold.get_groups())
+					if(cold.is_in_group("gothruplat")):
+						print("a")
+						if(global_position.x+2.5<cold.global_position.x-cold.w or global_position.x-2.5>cold.global_position.x+cold.w):
+							print("zone")
+							didThing=true
+							position+= velocity*delta
+				
+				if(!didThing):
+					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
 			if(get_slide_collision_count()>0):

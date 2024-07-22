@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m1adtlbkl1al"]
+[gd_scene load_steps=12 format=3 uid="uid://m1adtlbkl1al"]
 
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_tahq0"]
 [ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_xdb54"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://dw5byehy21vtx" path="res://prefabs/appearertile.tscn" id="7_0hprp"]
 [ext_resource type="PackedScene" uid="uid://cvhp755tpvcgk" path="res://prefabs/key.tscn" id="7_bg3gv"]
 [ext_resource type="PackedScene" uid="uid://vh7d0srt5hhy" path="res://prefabs/diagarrow.tscn" id="8_sjfkx"]
+[ext_resource type="PackedScene" uid="uid://bethrere6boii" path="res://prefabs/keytilehalfdanger.tscn" id="10_rvaod"]
+[ext_resource type="PackedScene" uid="uid://cie83h7mwjqg2" path="res://prefabs/arrow.tscn" id="11_ppbeb"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -39,7 +41,7 @@ position = Vector2(288, -136)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 272.0
+offset_left = 208.0
 offset_top = -184.0
 offset_right = 320.0
 offset_bottom = -160.0
@@ -52,21 +54,6 @@ position = Vector2(-160, 44)
 
 [node name="keytile" parent="keytile" instance=ExtResource("4_2um1x")]
 position = Vector2(0, -16)
-
-[node name="keytile3" parent="keytile" instance=ExtResource("4_2um1x")]
-position = Vector2(0, -32)
-
-[node name="keytile4" parent="keytile" instance=ExtResource("4_2um1x")]
-position = Vector2(16, -32)
-
-[node name="keytile5" parent="keytile" instance=ExtResource("4_2um1x")]
-position = Vector2(32, -32)
-
-[node name="keytile6" parent="keytile" instance=ExtResource("4_2um1x")]
-position = Vector2(48, -32)
-
-[node name="keytile7" parent="keytile" instance=ExtResource("4_2um1x")]
-position = Vector2(64, -32)
 
 [node name="keytile8" parent="keytile" instance=ExtResource("4_2um1x")]
 position = Vector2(48, 72)
@@ -94,6 +81,21 @@ position = Vector2(112, 32)
 
 [node name="keytiledanger5" parent="keytile" instance=ExtResource("6_bu2wt")]
 position = Vector2(128, 32)
+
+[node name="keytilehalfdanger" parent="keytile" instance=ExtResource("10_rvaod")]
+position = Vector2(0, -32)
+
+[node name="keytilehalfdanger2" parent="keytile" instance=ExtResource("10_rvaod")]
+position = Vector2(16, -32)
+
+[node name="keytilehalfdanger3" parent="keytile" instance=ExtResource("10_rvaod")]
+position = Vector2(32, -32)
+
+[node name="keytilehalfdanger4" parent="keytile" instance=ExtResource("10_rvaod")]
+position = Vector2(48, -32)
+
+[node name="keytilehalfdanger5" parent="keytile" instance=ExtResource("10_rvaod")]
+position = Vector2(64, -32)
 
 [node name="key" parent="." node_paths=PackedStringArray("keyTile") instance=ExtResource("7_bg3gv")]
 modulate = Color(1, 1, 0, 1)
@@ -166,3 +168,10 @@ position = Vector2(272, -60)
 [node name="diagarrow" parent="." instance=ExtResource("8_sjfkx")]
 position = Vector2(56, 116)
 rotation = 3.14159
+
+[node name="diagarrow2" parent="." instance=ExtResource("8_sjfkx")]
+position = Vector2(-192, 136)
+rotation = 3.14159
+
+[node name="arrow" parent="." instance=ExtResource("11_ppbeb")]
+position = Vector2(-176, 120)

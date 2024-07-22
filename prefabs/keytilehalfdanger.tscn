@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bethrere6boii"]
+
+[ext_resource type="Texture2D" uid="uid://df06pemb2re40" path="res://assets/halfrect.png" id="1_sfvpl"]
+[ext_resource type="Texture2D" uid="uid://s6ofst2yv4qs" path="res://assets/keytiletrans.png" id="2_n67se"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gf2qv"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogfg5"]
+size = Vector2(16, 8)
+
+[node name="keytilehalfdanger" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_gf2qv")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(0, -8)
+texture = ExtResource("1_sfvpl")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+texture = ExtResource("1_sfvpl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n67se")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["hazard"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_ogfg5")
