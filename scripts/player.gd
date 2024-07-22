@@ -35,22 +35,22 @@ var timerStarted = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 750
 @onready var wheel = $wheel
-@onready var ouchbox = $interacter
+@onready var interacter = $interacter
 @export var tileMap: TileMap
+
 func _ready():
 	global.player=self
 	global.time=0
 	field.hide()
 
-	if(!interactBox):
-		remove_child($interacter)
+
 func _input(event):
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )):
 			timerStarted=true
 	# Mouse in viewport coordinates.
 	if(interactBox && Input.is_action_just_pressed("confirm")):
-		for i in ouchbox.get_overlapping_areas():
+		for i in interacter.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
 	elif(Input.is_action_just_pressed("quit")):
@@ -143,11 +143,12 @@ func _physics_process(delta):
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
-					var off = (global_position-col.get_position()).normalized()
+					var diff = col.get_position()-position
+					print(diff*velOffset)
+					if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
+						var off = (global_position-col.get_position()).normalized()
 
-					var result = getTileType(col.get_position()-(off))
-					handleTile(result,false)
-				
+						handleTile(col.get_position()-off)
 
 		BounceState.Bouncing:
 
@@ -165,8 +166,9 @@ func _physics_process(delta):
 							position+= velocity*delta
 				
 				if(!didThing):
-					var result = getTileType(collision.get_position()+velOffset)
-					handleTile(result,true)
+					var off = (global_position-collision.get_position()).normalized()
+
+					handleTile(collision.get_position()-off)
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
@@ -175,12 +177,11 @@ func _physics_process(delta):
 					var col = get_slide_collision(i)
 					var off = (global_position-col.get_position()).normalized()
 
-					var result = getTileType(col.get_position()-(off))
-					handleTile(result,false)
+					handleTile(col.get_position()-off)
 				endBounce()
 
 
-			
+		
 		#var collision = move_and_collide(velocity * delta)
 		#if(collision):
 			#if(bounce == 2):
@@ -216,9 +217,7 @@ func _physics_process(delta):
 		oneTickGroundDelay=false
 
 func hitCheck(obj):
-	if obj is Node:
-		if obj.is_in_group("hazard"):
-			die()
+	die()
 func die():
 	var dM = deathSign.instantiate()
 	dM.position=position
@@ -226,28 +225,31 @@ func die():
 	queue_free()
 
 
-func _on_interacter_area_entered(area):
-	pass # Replace with function body.
 
 
-func _on_interacter_body_entered(body):
-	hitCheck(body)
-func getTileType(tilePos):
 
+func handleTile(tilePos):
 	if(tileMap):
-
+		var type
 		var pos = tileMap.to_local(tilePos)
 		pos= tileMap.local_to_map(pos)
 		var dat = tileMap.get_cell_tile_data(0,pos)
 		if(dat):
 			var thing = (dat.get_custom_data("special"))
 			if(thing != ""):
-				return thing
-		return "nothing"
-func handleTile(type,bouncing):
-	match type:
-		"checker":
-			if(bouncing):
+				type = thing
+			else: 
 				return
-			else:
+		else:
+			return
+		match type:
+			"checker": # don't put checkers somewhere you can jump and brush alongside them as scraping them will kill you since they use the full hitbox 
+				if(bounce==BounceState.Bouncing):
+					return
+				else:
+					die()
+			"hazard":
 				die()
+
+
+
