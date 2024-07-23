@@ -46,8 +46,8 @@ bouce cancel to get to levels 4+5
 position = Vector2(-280, 56)
 
 [node name="selector7" parent="." instance=ExtResource("4_dp0rp")]
-position = Vector2(-256, 144)
-level = 7
+position = Vector2(-280, 144)
+level = 6
 
 [node name="selector" parent="." instance=ExtResource("4_dp0rp")]
 position = Vector2(168, 24)
@@ -71,7 +71,7 @@ level = 100
 
 [node name="selector6" parent="." instance=ExtResource("4_dp0rp")]
 position = Vector2(32, -144)
-level = 6
+level = 5
 
 [node name="plat" parent="." instance=ExtResource("4_evoi2")]
 show_behind_parent = true

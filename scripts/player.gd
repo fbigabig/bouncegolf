@@ -157,15 +157,15 @@ func _physics_process(delta):
 			var collision = move_and_collide(velocity * delta)
 			var didThing= false
 			if(collision):
-				if(collision.get_collider() is Node):
-					var cold = collision.get_collider()
-					print(cold.get_groups())
-					if(cold.is_in_group("gothruplat")):
-						print("a")
-						if(global_position.x+2.5<cold.global_position.x-cold.w or global_position.x-2.5>cold.global_position.x+cold.w):
-							print("zone")
-							didThing=true
-							position+= velocity*delta
+				#if(collision.get_collider() is Node): #enable to clip through corners of one way plats
+					#var cold = collision.get_collider()
+					#print(cold.get_groups())
+					#if(cold.is_in_group("gothruplat")):
+						#print("a")
+						#if((global_position.x+2.5<cold.global_position.x-cold.w or global_position.x-2.5>cold.global_position.x+cold.w)and not grounded):
+							#print("zone")
+							#didThing=true 
+							#position+= velocity*delta
 				
 				if(!didThing):
 					if(!tileMap):
@@ -253,13 +253,15 @@ func handleTile(tilePos):
 		else:
 			return
 		match type:
-			"checker": # don't put checkers somewhere you can jump and brush alongside them as scraping them will kill you since they use the full hitbox 
+			"bounceonly":
 				if(bounce==BounceState.Bouncing):
 					return
 				else:
 					die()
 			"hazard":
 				die()
+				
+				#add 4 things for each dir of grav flip tiles
 
 
 

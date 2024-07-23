@@ -150,7 +150,7 @@ radius = 6.5
 radius = 6.9
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
-z_index = -1
+z_index = 2
 collision_mask = 7
 floor_snap_length = 5.0
 script = ExtResource("1_2agn3")
@@ -187,6 +187,8 @@ shape = SubResource("CircleShape2D_4vqbj")
 [node name="aimline" type="Line2D" parent="."]
 modulate = Color(0, 0, 1, 1)
 show_behind_parent = true
+z_index = 2
+z_as_relative = false
 points = PackedVector2Array(0, 0, 16, 0)
 width = 1.0
 

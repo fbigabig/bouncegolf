@@ -28,7 +28,7 @@ format = 2
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("3_1e7g0")]
-position = Vector2(-288, 144)
+position = Vector2(-288, 152)
 timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("4_osihk")]
