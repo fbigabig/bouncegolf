@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://m1adtlbkl1al"]
+[gd_scene load_steps=13 format=3 uid="uid://m1adtlbkl1al"]
 
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_tahq0"]
 [ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_xdb54"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://vh7d0srt5hhy" path="res://prefabs/diagarrow.tscn" id="8_sjfkx"]
 [ext_resource type="PackedScene" uid="uid://bethrere6boii" path="res://prefabs/keytilehalfdanger.tscn" id="10_rvaod"]
 [ext_resource type="PackedScene" uid="uid://cie83h7mwjqg2" path="res://prefabs/arrow.tscn" id="11_ppbeb"]
+[ext_resource type="Script" path="res://scripts/goaltime.gd" id="12_qtxs1"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -30,24 +31,11 @@ layer_0/tile_data = PackedInt32Array(1507331, 65537, 1, 1507332, 1, 1, 1507333, 
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("2_mvn0x")]
+[node name="player" parent="." instance=ExtResource("2_mvn0x")]
 position = Vector2(-248, -72)
-timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("3_k7me8")]
 position = Vector2(288, -136)
-
-[node name="timer" type="RichTextLabel" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 208.0
-offset_top = -184.0
-offset_right = 320.0
-offset_bottom = -160.0
-grow_horizontal = 0
-text = "0:00"
-text_direction = 2
 
 [node name="keytile" parent="." instance=ExtResource("4_2um1x")]
 position = Vector2(-160, 44)
@@ -175,3 +163,30 @@ rotation = 3.14159
 
 [node name="arrow" parent="." instance=ExtResource("11_ppbeb")]
 position = Vector2(-176, 120)
+
+[node name="timer" type="RichTextLabel" parent="."]
+z_index = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 192.0
+offset_top = -184.0
+offset_right = 320.0
+offset_bottom = -160.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = "[center]0:00[/center]"
+fit_content = true
+text_direction = 2
+
+[node name="goaltime" type="RichTextLabel" parent="."]
+z_index = 2
+offset_left = -320.0
+offset_top = -184.0
+offset_right = -192.0
+offset_bottom = -160.0
+bbcode_enabled = true
+text = "[center]10:00[/center]"
+fit_content = true
+text_direction = 2
+script = ExtResource("12_qtxs1")

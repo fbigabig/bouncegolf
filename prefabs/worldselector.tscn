@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdhlp7dpg14cr"]
+
+[ext_resource type="Script" path="res://scripts/worldselector.gd" id="1_trhri"]
+[ext_resource type="Texture2D" uid="uid://c1ykghpf222vr" path="res://assets/worldselects/worldpicker1.png" id="2_aqcjm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xp3p3"]
+radius = 8.0
+
+[node name="worldselector" type="Area2D" groups=["selector"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_trhri")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+z_as_relative = false
+texture = ExtResource("2_aqcjm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["coin"]]
+shape = SubResource("CircleShape2D_xp3p3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -26.0
+offset_top = -20.0
+offset_right = 26.0
+offset_bottom = -4.0
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]world 1[/center]"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

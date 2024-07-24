@@ -45,7 +45,7 @@ func _physics_process(delta):
 	if direction:
 		if(abs(velocity.x)<maxVel || velocity.x * direction < 0):
 			velocity.x += direction * SPEED* delta
-	print(is_on_floor())
+
 	#if(grappled):
 		#var diff = hookPos-global_position
 		#var angle = Vector2.UP.angle_to(to_local(hookPos)) 

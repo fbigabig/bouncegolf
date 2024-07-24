@@ -1,32 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://701cwee2mhu"]
+[gd_scene load_steps=7 format=3 uid="uid://701cwee2mhu"]
 
 [ext_resource type="PackedScene" uid="uid://br5lmcyc2ujrc" path="res://prefabs/worldmapv2.tscn" id="3_1w5jq"]
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="3_6gy7g"]
+[ext_resource type="PackedScene" uid="uid://dts6ekad6ua0s" path="res://prefabs/timer.tscn" id="3_uho02"]
 [ext_resource type="PackedScene" uid="uid://cbkqogf2lat6i" path="res://prefabs/plats/plat8.tscn" id="4_5uxt0"]
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="4_casrg"]
+[ext_resource type="PackedScene" uid="uid://cbmyg0i4mlu5h" path="res://prefabs/goaltime.tscn" id="4_ogwby"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="player" parent="." node_paths=PackedStringArray("timer", "tileMap") instance=ExtResource("3_6gy7g")]
+[node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("3_6gy7g")]
 position = Vector2(276, -48)
-timer = NodePath("../timer")
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("4_casrg")]
 position = Vector2(280, -120)
 
-[node name="timer" type="RichTextLabel" parent="."]
-z_index = 2
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 184.0
-offset_top = -184.0
-offset_right = 320.0
-offset_bottom = -160.0
-grow_horizontal = 0
-text = "0:00"
-text_direction = 2
+[node name="timer" parent="." instance=ExtResource("3_uho02")]
+
+[node name="goaltime" parent="." instance=ExtResource("4_ogwby")]
 
 [node name="worldmapv2" parent="." instance=ExtResource("3_1w5jq")]
 modulate = Color(1, 1, 1, 1)

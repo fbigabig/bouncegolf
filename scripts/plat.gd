@@ -9,7 +9,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	print(rot)
+
 	if(rot==0):
 		if(is_instance_valid(global.player)): #7 for player, 3 for this thing's height. would be 4 but then u fall thru when right on top so 3.
 			if(global.player.global_position.y+7+3>global_position.y and not global.player.grounded and not global.player.velocity.y>0):

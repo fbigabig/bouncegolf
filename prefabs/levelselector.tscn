@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cw82hlvhdgih5"]
 
-[ext_resource type="Script" path="res://prefabs/levelselector.gd" id="1_pwa5i"]
+[ext_resource type="Script" path="res://scripts/levelselector.gd" id="1_pwa5i"]
 [ext_resource type="Texture2D" uid="uid://d2wb7gjg7wu8d" path="res://assets/levelport.png" id="2_frjf2"]
 [ext_resource type="Texture2D" uid="uid://c6kye4orunfvl" path="res://assets/spinballsheet.png" id="3_re672"]
 [ext_resource type="Texture2D" uid="uid://bgl6kkopm3gvx" path="res://assets/smolcheck.png" id="4_ha28b"]
@@ -86,7 +86,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="selector" type="Area2D" groups=["selector"]]
+[node name="selector" type="Area2D" groups=["levelselector", "selector"]]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_pwa5i")

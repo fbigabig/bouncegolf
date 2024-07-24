@@ -30,10 +30,16 @@ var timerStarted = false
 @onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
-@export var timer : RichTextLabel
+var timer
 @export var interactBox = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 750
+var gravity = Vector2(0,750)
+var gravities = {
+	"up": Vector2(0,-750),
+	"down": Vector2(0,750),
+	"right": Vector2(750,0),
+	"left": Vector2(-750,0),
+}
 @onready var wheel = $wheel
 @onready var interacter = $interacter
 @export var tileMap: TileMap
@@ -42,7 +48,7 @@ func _ready():
 	global.player=self
 	global.time=0
 	field.hide()
-
+	timer = get_tree().get_first_node_in_group("timer")
 
 func _input(event):
 	if(not timerStarted):
@@ -54,7 +60,7 @@ func _input(event):
 			if(i.is_in_group("selector")):
 				i.doLoad()
 	elif(Input.is_action_just_pressed("quit")):
-		get_tree().change_scene_to_file("res://scenes/levels/levelselect.tscn")
+		global.exitToWorld()
 	elif(Input.is_action_just_pressed("restart")):
 		die()
 	elif Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
@@ -90,7 +96,7 @@ func endBounce():
 func _process(delta):
 	if(timer!=null and timerStarted):
 		global.time+=delta
-		timer.text=str(global.time).pad_decimals(2)
+		timer.text="[center]"+str(global.time).pad_decimals(2)+"[/center]"
 	if(velocity.x!=0):
 		wheel.play()
 		wheel.flip_h = velocity.x<0
@@ -111,7 +117,7 @@ func _physics_process(delta):
 		line.show()
 	#cursor.rotation = Transform2D.IDENTITY.looking_at(aim_dir).get_rotation()
 	line.set_point_position(1,aim_dir*linelength)
-	velocity.y += gravity * delta
+	velocity += gravity * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (grounded||coyoteTime) and bounce==BounceState.None:
@@ -140,17 +146,25 @@ func _physics_process(delta):
 				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL)
 
 			move_and_slide()
+
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
-					var diff = (position-col.get_position())
+					var diff = (global_position-col.get_position())
 					if(!tileMap):
 						hitCheck(col.get_collider())
-					else:
-						if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
-							var off = (global_position-col.get_position()).normalized()
 
+					else:
+
+						if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
+							var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
+							if(!grounded):
+								print(col.get_position())
+								print(off)
+								print(global_position)
 							handleTile(col.get_position()-off)
+
+
 
 		BounceState.Bouncing:
 
@@ -228,7 +242,7 @@ func hitCheck(obj):
 		if obj.is_in_group("hazard"):
 			die()
 func die():
-	print("ouch")
+
 	var dM = deathSign.instantiate()
 	dM.position=position
 	get_parent().add_child(dM)
@@ -240,10 +254,12 @@ func die():
 
 func handleTile(tilePos):
 	if(tileMap):
+		if(!grounded): print("handling")
 		var type
 		var pos = tileMap.to_local(tilePos)
 		pos= tileMap.local_to_map(pos)
 		var dat = tileMap.get_cell_tile_data(0,pos)
+		if(!grounded): print(pos)
 		if(dat):
 			var thing = (dat.get_custom_data("special"))
 			if(thing != ""):
@@ -251,7 +267,9 @@ func handleTile(tilePos):
 			else: 
 				return
 		else:
+			if(!grounded): print("nodata")
 			return
+		print(type)
 		match type:
 			"bounceonly":
 				if(bounce==BounceState.Bouncing):
@@ -260,7 +278,18 @@ func handleTile(tilePos):
 					die()
 			"hazard":
 				die()
-				
+			"up":
+				gravity = gravities["up"] #totally broken, need to adjust sense of floor? and xy movement to match, ugh
+				up_direction=-gravities["up"].normalized()
+			"down":
+				gravity = gravities["down"]
+				up_direction=-gravities["down"].normalized()
+			"right":
+				gravity = gravities["right"]
+				up_direction=-gravities["right"].normalized()
+			"left":
+				gravity = gravities["left"]
+				up_direction=-gravities["left"].normalized()
 				#add 4 things for each dir of grav flip tiles
 
 

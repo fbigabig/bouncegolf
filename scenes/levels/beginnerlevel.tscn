@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://qohlah2qdoq"]
+[gd_scene load_steps=7 format=3 uid="uid://qohlah2qdoq"]
 
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_ghmob"]
 [ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_llkwh"]
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="2_pe6yp"]
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="3_kldp2"]
+[ext_resource type="Script" path="res://scripts/goaltime.gd" id="6_t457u"]
 [ext_resource type="PackedScene" uid="uid://vh7d0srt5hhy" path="res://prefabs/diagarrow.tscn" id="8_74p41"]
 
 [node name="Node2D" type="Node2D"]
@@ -31,18 +32,33 @@ timer = NodePath("../timer")
 [node name="goal" parent="." instance=ExtResource("3_kldp2")]
 position = Vector2(288, -104)
 
+[node name="diagarrow" parent="." instance=ExtResource("8_74p41")]
+position = Vector2(-176, -112)
+rotation = -3.14159
+
 [node name="timer" type="RichTextLabel" parent="."]
+z_index = 2
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 200.0
+offset_left = 192.0
 offset_top = -184.0
 offset_right = 320.0
 offset_bottom = -160.0
 grow_horizontal = 0
-text = "0:00"
+bbcode_enabled = true
+text = "[center]0:00[/center]"
+fit_content = true
 text_direction = 2
 
-[node name="diagarrow" parent="." instance=ExtResource("8_74p41")]
-position = Vector2(-176, -112)
-rotation = -3.14159
+[node name="goaltime" type="RichTextLabel" parent="."]
+z_index = 2
+offset_left = -320.0
+offset_top = -184.0
+offset_right = -192.0
+offset_bottom = -160.0
+bbcode_enabled = true
+text = "[center]10:00[/center]"
+fit_content = true
+text_direction = 2
+script = ExtResource("6_t457u")

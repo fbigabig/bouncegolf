@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bq6c073j5a0eq"]
+[gd_scene load_steps=10 format=3 uid="uid://bq6c073j5a0eq"]
 
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_ro3h8"]
 [ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_sq8ci"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c0kdxj34tjqxs" path="res://prefabs/keytiledanger.tscn" id="5_sb54y"]
 [ext_resource type="PackedScene" uid="uid://vh7d0srt5hhy" path="res://prefabs/diagarrow.tscn" id="6_mkxgl"]
 [ext_resource type="PackedScene" uid="uid://cie83h7mwjqg2" path="res://prefabs/arrow.tscn" id="7_5t5i8"]
+[ext_resource type="Script" path="res://scripts/goaltime.gd" id="9_i3sep"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -29,19 +30,7 @@ layer_0/tile_data = PackedInt32Array(1703939, 1, 0, 1769475, 1, 1, 1703940, 6553
 
 [node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("2_wjiiu")]
 position = Vector2(272, -120)
-timer = NodePath("../timer")
-
-[node name="timer" type="RichTextLabel" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 192.0
-offset_top = -184.0
-offset_right = 320.0
-offset_bottom = -152.0
-grow_horizontal = 0
-text = "0:00"
-text_direction = 2
+timer = NodePath("")
 
 [node name="goal" parent="." instance=ExtResource("3_uimuf")]
 position = Vector2(280, 0)
@@ -77,3 +66,30 @@ position = Vector2(168, -104)
 [node name="arrow" parent="." instance=ExtResource("7_5t5i8")]
 position = Vector2(152, 112)
 rotation = 2.81317
+
+[node name="timer" type="RichTextLabel" parent="."]
+z_index = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 192.0
+offset_top = -184.0
+offset_right = 320.0
+offset_bottom = -160.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = "[center]0:00[/center]"
+fit_content = true
+text_direction = 2
+
+[node name="goaltime" type="RichTextLabel" parent="."]
+z_index = 2
+offset_left = -320.0
+offset_top = -184.0
+offset_right = -192.0
+offset_bottom = -160.0
+bbcode_enabled = true
+text = "[center]10:00[/center]"
+fit_content = true
+text_direction = 2
+script = ExtResource("9_i3sep")

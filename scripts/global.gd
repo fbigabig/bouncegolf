@@ -3,7 +3,7 @@ extends Node
 var time = 0
 var currentlevel = -1
 var player
-var loaded=false
+var loaded=[false,false,false]
 var levels = {
 	0: "res://scenes/levels/beginnerlevel.tscn",
 	1 : "res://scenes/levels/newlevel1.tscn",
@@ -12,10 +12,16 @@ var levels = {
 	100: "res://scenes/levels/newlevel4.tscn",
 	4: "res://scenes/levels/newlevel5.tscn",
 	5:"res://scenes/levels/level6.tscn",
-	-1: "res://scenes/levels/timescreen.tscn",
 	6: "res://scenes/levels/level7.tscn"
 }
-var levelEntryPos = {}
+var worlds = {
+	1: "res://scenes/worlds/world1.tscn",
+	2: "res://scenes/worlds/world2.tscn"
+}
+var curWorld = 1
+var levelEntryPos = {
+	-1: Vector2(-280,144)
+}
 var times = {}
 var flooredTimes = {
 	0: 15,
@@ -37,6 +43,12 @@ var devTimes = {
 	5: 8.98,
 	6: 15
 }
+func exitToWorld():
+	get_tree().change_scene_to_file(worlds[curWorld])
+func newWorld(worldNum):
+	curWorld=worldNum
+	currentlevel=-1
+	exitToWorld()
 func nextLevel():
 	if(time<times[currentlevel]||times[currentlevel]==0):
 		times[currentlevel] = time
