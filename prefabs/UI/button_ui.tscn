@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7mhpeon3yogn"]
+
+[ext_resource type="Script" path="res://scripts/buttonUI.gd" id="1_10g4e"]
+[ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="2_4jtub"]
+
+[node name="buttonUI" type="VBoxContainer"]
+process_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.0
+offset_top = -56.0
+offset_right = 88.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("1_10g4e")
+
+[node name="restart" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_top = NodePath("../manual")
+focus_neighbor_bottom = NodePath("../levelSelect")
+theme = ExtResource("2_4jtub")
+text = "RESTART"
+
+[node name="levelSelect" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_top = NodePath("../restart")
+focus_neighbor_bottom = NodePath("../manual")
+theme = ExtResource("2_4jtub")
+text = "LEVEL SELECT"
+
+[node name="manual" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_top = NodePath("../levelSelect")
+focus_neighbor_bottom = NodePath("../restart")
+theme = ExtResource("2_4jtub")
+text = "MANUAL"
+
+[connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="levelSelect" to="." method="_on_level_select_pressed"]
+[connection signal="pressed" from="manual" to="." method="_on_manual_pressed"]

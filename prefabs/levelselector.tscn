@@ -1,12 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://cw82hlvhdgih5"]
+[gd_scene load_steps=18 format=3 uid="uid://cw82hlvhdgih5"]
 
 [ext_resource type="Script" path="res://scripts/levelselector.gd" id="1_pwa5i"]
 [ext_resource type="Texture2D" uid="uid://d2wb7gjg7wu8d" path="res://assets/levelport.png" id="2_frjf2"]
 [ext_resource type="Texture2D" uid="uid://c6kye4orunfvl" path="res://assets/spinballsheet.png" id="3_re672"]
+[ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="3_ywaab"]
 [ext_resource type="Texture2D" uid="uid://bgl6kkopm3gvx" path="res://assets/smolcheck.png" id="4_ha28b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xp3p3"]
-radius = 8.0
+radius = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rdn17"]
 atlas = ExtResource("3_re672")
@@ -101,11 +102,11 @@ shape = SubResource("CircleShape2D_xp3p3")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_as_relative = false
-offset_left = -26.0
+offset_left = -32.0
 offset_top = -20.0
-offset_right = 26.0
+offset_right = 32.0
 offset_bottom = -4.0
-theme_override_font_sizes/normal_font_size = 10
+theme = ExtResource("3_ywaab")
 bbcode_enabled = true
 text = "[center]level 1[/center]"
 
@@ -114,7 +115,7 @@ offset_left = -26.0
 offset_top = 7.0
 offset_right = 26.0
 offset_bottom = 23.0
-theme_override_font_sizes/normal_font_size = 10
+theme = ExtResource("3_ywaab")
 bbcode_enabled = true
 text = "[center]0:00[/center]"
 

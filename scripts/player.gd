@@ -3,21 +3,27 @@ extends CharacterBody2D
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -194 #oldest is 200, old is 190.5
-const ACCEL = 15 #old:10
+const ACCEL = 10 #old:10
 #const ACCELBOOST = 2
-const OVERDECEL = 3
+const OVERDECEL = 5 #old = 3
 const AIRCONTROL= 2
 const CONVEYORFORCE = {
 	"black": 150,
-	"white": 20
+	"white": 15
 }
-const CONVEYORMAXFORCE = 400
+const CONVEYOR_WHITEINITBOOSTFACTOR=10
+const CONVEYORMAXFORCE = 350
+const CONVEYORGRAVFACT = .5
+#const CONVEYORSTICKYFORCE = 20
 enum BounceState {
 	None,
 	Bouncing,
 	Landing
 }
 @export var linelength=20
+var UItemplate = preload("res://prefabs/UI/button_ui.tscn")
+var UI
+var oldOnConveyor=false
 var bounce:BounceState = BounceState.None
 var didBounce = false
 var dashFact = 2
@@ -37,13 +43,14 @@ var velOffset
 var timerStarted = false
 var fieldFresh = Color8(0,0,255,85)
 var fieldUsed = Color8(125,0,255,85)
+var paused=false
 @onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
 var timer
 @export var interactBox = false
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = 750
+
+var gravity = 12.5
 
 @onready var wheel = $wheel
 @onready var interacter = $interacter
@@ -58,8 +65,10 @@ func _ready():
 	field.hide()
 
 	timer = get_tree().get_first_node_in_group("timer")
-	print(timer)
 
+	UI = UItemplate.instantiate() 
+	get_parent().add_child.call_deferred(UI)
+	UI.hide()
 func _input(event):
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )):
@@ -69,10 +78,15 @@ func _input(event):
 		for i in interacter.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
-	elif(Input.is_action_just_pressed("quit")):
-		global.exitToWorld()
-	elif(Input.is_action_just_pressed("restart")):
-		die()
+	elif(Input.is_action_just_pressed("pause")):
+		if(paused):
+			UI.hide()
+			get_tree().paused=false
+		else:
+			UI.show()
+			UI.restartButton.grab_focus()
+			get_tree().paused=true
+
 	elif Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
 
 		if(event is InputEventMouse):
@@ -92,6 +106,8 @@ func _input(event):
 
 	
 func startBounce():
+	onconveyor=false
+	oldOnConveyor=false
 	bounce=BounceState.Bouncing
 	field.modulate=fieldFresh
 	field.show()
@@ -133,7 +149,9 @@ func _physics_process(delta):
 		line.show()
 	#cursor.rotation = Transform2D.IDENTITY.looking_at(aim_dir).get_rotation()
 	line.set_point_position(1,aim_dir*linelength)
-	velocity.y += gravity * delta
+	var tmp = gravity *(CONVEYORGRAVFACT if oldOnConveyor else 1)
+
+	velocity.y += tmp
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (grounded||coyoteTime) and bounce==BounceState.None:
@@ -147,6 +165,8 @@ func _physics_process(delta):
 
 	
 	velOffset = velocity.normalized()
+
+
 	match bounce:
 		#if direction && (abs(velocity.x)<SPEED||velocity.x*direction<0):
 			#velocity.x += direction * SPEED * delta * AIRCONTROL
@@ -158,21 +178,26 @@ func _physics_process(delta):
 					#acc=ACCEL*ACCELBOOST
 				#else:
 					#acc=ACCEL
-				velocity.x = move_toward(velocity.x,SPEED*direction,(ACCEL if is_on_floor() else ACCEL/AIRCONTROL))
+				velocity.x = move_toward(velocity.x,SPEED*direction,(ACCEL if is_on_floor() else ACCEL/AIRCONTROL)+(OVERDECEL if abs(velocity.x)>SPEED and velocity.x*direction<0 else 0))
 
 				if(velocity.x*direction>0):
 					velocity.x = min(SPEED,abs(velocity.x))*(1 if velocity.x>0 else -1)
+
 			elif(!direction and !onconveyor):
 
 				velocity.x = move_toward(velocity.x, 0, ACCEL)#*ACCELBOOST
 
+
 			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor):
 
 				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL) #don't steal speed too quick
-			onconveyor=false
+
+			
 
 			move_and_slide()
 
+			oldOnConveyor=onconveyor
+			onconveyor=false
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
@@ -212,6 +237,8 @@ func _physics_process(delta):
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
+			oldOnConveyor=onconveyor
+			onconveyor=false
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
@@ -223,7 +250,6 @@ func _physics_process(delta):
 				endBounce()
 
 
-		
 		#var collision = move_and_collide(velocity * delta)
 		#if(collision):
 			#if(bounce == 2):
@@ -293,36 +319,50 @@ func handleTile(tilePos, col):
 
 		match type:
 			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
-				onconveyor=true
+
 				if(hitConveyor["white"]): return
 				hitConveyor["white"]=true
 				#todo: make speedy conveyor
-				var force = (CONVEYORFORCE["white"]*col.get_normal()).rotated(PI/2)
-				force.x=roundi(force.x)
-				force.y=roundi(force.y)
-				var flipped = (dat.get_custom_data("value"))
+				var force = (CONVEYORFORCE["white"]*col.get_normal()).rotated(PI/2) * (1 if oldOnConveyor else CONVEYOR_WHITEINITBOOSTFACTOR)
 
+				onconveyor=true
+				force.x=snapped(force.x,.1)
+				force.y=snapped(force.y,.1)
+				var normal=col.get_normal()
+				var flipped = (dat.get_custom_data("value"))
+			
 				if(flipped==1): force*=-1
 
-				if(force.x!=0):
+				if(abs(force.x)>.2):
+					#if(force.x>0):
+						#force.y=min(CONVEYORSTICKYFORCE,(force.y if force.y>0 else CONVEYORSTICKYFORCE))
+					#else:
+						#force.y=max(-CONVEYORSTICKYFORCE,(force.y if force.y<0 else -CONVEYORSTICKYFORCE))
+
 					if abs(velocity.x)<CONVEYORMAXFORCE or force.x*velocity.x<0:
 						velocity.x=min(abs(velocity.x+force.x),CONVEYORMAXFORCE)*(1 if velocity.x+force.x>0 else -1)
+
 					#else:
 						#print("toofast1")
+					#if(velocity.x*force.x<0):velocity.x=force.x
 				else:
-					if abs(velocity.y)<CONVEYORMAXFORCE or force.y*velocity.y<0:
-						velocity.y=min(abs(velocity.y+force.y),CONVEYORMAXFORCE)*(1 if velocity.y+force.y>0 else -1)
 
+					
+
+					if (abs(velocity.y)<CONVEYORMAXFORCE or force.y*velocity.y<0) and (!direction or Vector2(direction,0).angle_to(normal)!=0):
+						velocity.y=min(abs(velocity.y+force.y),CONVEYORMAXFORCE)*(1 if velocity.y+force.y>0 else -1)
+					#if(velocity.y*force.y<0):velocity.y=force.y
 					#else:
 						#print("toofast2")
 			"conveyor_black": #black conveyors are like dash pads- instant speed. bouncing off them will severely affect ur trajectory.
 				onconveyor=true
 				if(hitConveyor["black"]): return
 				hitConveyor["black"]=true
+				var normal=col.get_normal()
 				#todo: make speedy conveyor
-				var force = (CONVEYORFORCE["black"]*col.get_normal()).rotated(PI/2)
-				force.x=roundi(force.x)
-				force.y=roundi(force.y)
+				var force = (CONVEYORFORCE["black"]*normal).rotated(PI/2)
+				force.x=snapped(force.x,1)
+				force.y=snapped(force.y,1)
 				var flipped = (dat.get_custom_data("value"))
 
 				if(flipped==1): force*=-1
@@ -332,7 +372,8 @@ func handleTile(tilePos, col):
 					#else:
 						#print("toofast1")
 				else:
-					if abs(velocity.y)<CONVEYORFORCE["black"] or force.y*velocity.y<0:
+					print(Vector2(direction,0).angle_to(normal))
+					if (abs(velocity.y)<CONVEYORFORCE["black"] or force.y*velocity.y<0) and (!direction or Vector2(direction,0).angle_to(normal)!=0):
 						velocity.y=force.y
 
 					#else:

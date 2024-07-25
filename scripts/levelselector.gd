@@ -9,7 +9,7 @@ extends Area2D
 func setup():
 	if(!global.times.has(level)):
 		global.times[level]=0.0
-	$RichTextLabel.text="[center]"+"level "+str(level)+"[/center]"
+	$RichTextLabel.text="[center]"+"level "+str(level)+"[/center]" #add 3rd label to display best time if it exists, otherwise hide itself. goes in top middle. also get a font lazy ass.
 	$timeLabel.text="[center]"+str(global.times[level]).pad_decimals(2)+"[/center]"
 	if(global.times[level]<=global.flooredTimes[level] and global.times[level]!=0.0):
 		ball.show()

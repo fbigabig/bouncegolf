@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://hnyqwamwqqsh"]
+[gd_scene load_steps=12 format=3 uid="uid://hnyqwamwqqsh"]
 
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_5j8v8"]
 [ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="2_5sy88"]
@@ -9,7 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bm2u3m3kugvmr" path="res://prefabs/plats/plat10.tscn" id="7_83lik"]
 [ext_resource type="PackedScene" uid="uid://dr5u6em6ltdd1" path="res://prefabs/plats/plat12.tscn" id="8_lsm4q"]
 [ext_resource type="PackedScene" uid="uid://dqec2ju2nyila" path="res://prefabs/plats/plat16.tscn" id="9_31cba"]
-[ext_resource type="Script" path="res://scripts/goaltime.gd" id="10_nlbco"]
+[ext_resource type="PackedScene" uid="uid://dts6ekad6ua0s" path="res://prefabs/timer.tscn" id="10_6wa4g"]
+[ext_resource type="PackedScene" uid="uid://cbmyg0i4mlu5h" path="res://prefabs/goaltime.tscn" id="11_wow1s"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -52,29 +53,6 @@ position = Vector2(-240, -20)
 [node name="plat2" parent="." instance=ExtResource("9_31cba")]
 position = Vector2(192, -92)
 
-[node name="timer" type="RichTextLabel" parent="." groups=["timer"]]
-z_index = 2
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 192.0
-offset_top = -184.0
-offset_right = 320.0
-offset_bottom = -160.0
-grow_horizontal = 0
-bbcode_enabled = true
-text = "[center]0:00[/center]"
-fit_content = true
-text_direction = 2
+[node name="timer" parent="." instance=ExtResource("10_6wa4g")]
 
-[node name="goaltime" type="RichTextLabel" parent="."]
-z_index = 2
-offset_left = -320.0
-offset_top = -184.0
-offset_right = -192.0
-offset_bottom = -160.0
-bbcode_enabled = true
-text = "[center]10:00[/center]"
-fit_content = true
-text_direction = 2
-script = ExtResource("10_nlbco")
+[node name="goaltime" parent="." instance=ExtResource("11_wow1s")]
