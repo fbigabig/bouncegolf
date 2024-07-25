@@ -2,11 +2,16 @@ extends CharacterBody2D
 
 
 const SPEED = 150.0
-const JUMP_VELOCITY = -190.5 #old is 200
-const ACCEL = 4
-const DECEL = 15
-const OVERDECEL = 4
+const JUMP_VELOCITY = -194 #oldest is 200, old is 190.5
+const ACCEL = 15 #old:10
+#const ACCELBOOST = 2
+const OVERDECEL = 3
 const AIRCONTROL= 2
+const CONVEYORFORCE = {
+	"black": 150,
+	"white": 20
+}
+const CONVEYORMAXFORCE = 400
 enum BounceState {
 	None,
 	Bouncing,
@@ -26,6 +31,9 @@ var oneTickGroundDelay =false
 var coyoteTime = true
 var coyotecounter = 0
 var grounded = true
+var onconveyor = false
+var direction=1
+var velOffset
 var timerStarted = false
 @onready var line = $aimline
 @onready var cursor = $cursor
@@ -33,22 +41,22 @@ var timerStarted = false
 var timer
 @export var interactBox = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = Vector2(0,750)
-var gravities = {
-	"up": Vector2(0,-750),
-	"down": Vector2(0,750),
-	"right": Vector2(750,0),
-	"left": Vector2(-750,0),
-}
+var gravity = 750
+
 @onready var wheel = $wheel
 @onready var interacter = $interacter
 @export var tileMap: TileMap
-
+var hitConveyor = {
+	"white": false,
+	"black": false
+}
 func _ready():
 	global.player=self
 	global.time=0
 	field.hide()
+
 	timer = get_tree().get_first_node_in_group("timer")
+	print(timer)
 
 func _input(event):
 	if(not timerStarted):
@@ -97,13 +105,16 @@ func _process(delta):
 	if(timer!=null and timerStarted):
 		global.time+=delta
 		timer.text="[center]"+str(global.time).pad_decimals(2)+"[/center]"
-	if(velocity.x!=0):
+	if(direction!=0):
 		wheel.play()
-		wheel.flip_h = velocity.x<0
+		
+		wheel.flip_h = direction<0
 	else:
 		wheel.pause()
 func _physics_process(delta):
 
+	for key in hitConveyor:
+		hitConveyor[key]=false
 
 	oldFloor=is_on_floor()
 	# Add the gravity.
@@ -117,53 +128,58 @@ func _physics_process(delta):
 		line.show()
 	#cursor.rotation = Transform2D.IDENTITY.looking_at(aim_dir).get_rotation()
 	line.set_point_position(1,aim_dir*linelength)
-	velocity += gravity * delta
+	velocity.y += gravity * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and (grounded||coyoteTime) and bounce==BounceState.None:
 		coyoteTime=false
 		velocity.y = JUMP_VELOCITY
+		
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("moveLeft", "moveRight")
+	direction = Input.get_axis("moveLeft", "moveRight")
 
 	
-	var velOffset = velocity.normalized()
+	velOffset = velocity.normalized()
 	match bounce:
 		#if direction && (abs(velocity.x)<SPEED||velocity.x*direction<0):
 			#velocity.x += direction * SPEED * delta * AIRCONTROL
 		BounceState.None:
 			if direction && (abs(velocity.x)<SPEED||velocity.x*direction<0):
-				velocity.x += direction * SPEED * delta * (ACCEL if is_on_floor() else AIRCONTROL)
-				if(abs(velocity.x)>SPEED):
-					velocity.x=SPEED if velocity.x>0 else -SPEED
 
-			elif(!direction):
-				velocity.x = move_toward(velocity.x, 0, DECEL)
-			elif(is_on_floor()&&abs(velocity.x)>SPEED):
+				#var acc
+				#if(velocity.x*direction<0 and abs(velocity.x)<SPEED and not onconveyor): #boost acceleration if turning and not speeding (to keep exceel speed a thing you have to balance)
+					#acc=ACCEL*ACCELBOOST
+				#else:
+					#acc=ACCEL
+				velocity.x = move_toward(velocity.x,SPEED*direction,(ACCEL if is_on_floor() else ACCEL/AIRCONTROL))
 
-				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL)
+				if(velocity.x*direction>0):
+					velocity.x = min(SPEED,abs(velocity.x))*(1 if velocity.x>0 else -1)
+			elif(!direction and !onconveyor):
+
+				velocity.x = move_toward(velocity.x, 0, ACCEL)#*ACCELBOOST
+
+			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor):
+
+				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL) #don't steal speed too quick
+			onconveyor=false
 
 			move_and_slide()
 
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
-					var diff = (global_position-col.get_position())
+					
 					if(!tileMap):
 						hitCheck(col.get_collider())
 
 					else:
 
-						if((diff*velOffset).length()>0.1): #ignore jumping alongside walls
-							var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
-							if(!grounded):
-								print(col.get_position())
-								print(off)
-								print(global_position)
-							handleTile(col.get_position()-off)
-
+						
+						var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
+						handleTile(col.get_position()-off,col)
 
 
 		BounceState.Bouncing:
@@ -187,7 +203,7 @@ func _physics_process(delta):
 					else:
 						var off = (global_position-collision.get_position()).normalized()
 						
-						handleTile(collision.get_position()-off)
+						handleTile(collision.get_position()-off,collision)
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
@@ -198,7 +214,7 @@ func _physics_process(delta):
 						hitCheck(col.get_collider())
 					else:
 						var off = (global_position-col.get_position()).normalized()
-						handleTile(col.get_position()-off)
+						handleTile(col.get_position()-off,col)
 				endBounce()
 
 
@@ -252,14 +268,14 @@ func die():
 
 
 
-func handleTile(tilePos):
+func handleTile(tilePos, col):
 	if(tileMap):
-		if(!grounded): print("handling")
+
 		var type
 		var pos = tileMap.to_local(tilePos)
 		pos= tileMap.local_to_map(pos)
 		var dat = tileMap.get_cell_tile_data(0,pos)
-		if(!grounded): print(pos)
+
 		if(dat):
 			var thing = (dat.get_custom_data("special"))
 			if(thing != ""):
@@ -267,30 +283,91 @@ func handleTile(tilePos):
 			else: 
 				return
 		else:
-			if(!grounded): print("nodata")
+
 			return
-		print(type)
+
 		match type:
-			"bounceonly":
-				if(bounce==BounceState.Bouncing):
-					return
+			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
+				onconveyor=true
+				if(hitConveyor["white"]): return
+				hitConveyor["white"]=true
+				#todo: make speedy conveyor
+				var force = (CONVEYORFORCE["white"]*col.get_normal()).rotated(PI/2)
+				force.x=roundi(force.x)
+				force.y=roundi(force.y)
+				var flipped = (dat.get_custom_data("value"))
+
+				if(flipped==1): force*=-1
+
+				if(force.x!=0):
+					if abs(velocity.x)<CONVEYORMAXFORCE or force.x*velocity.x<0:
+						velocity.x=min(abs(velocity.x+force.x),CONVEYORMAXFORCE)*(1 if velocity.x+force.x>0 else -1)
+					#else:
+						#print("toofast1")
 				else:
+					if abs(velocity.y)<CONVEYORMAXFORCE or force.y*velocity.y<0:
+						velocity.y=min(abs(velocity.y+force.y),CONVEYORMAXFORCE)*(1 if velocity.y+force.y>0 else -1)
+
+					#else:
+						#print("toofast2")
+			"conveyor_black": #black conveyors are like dash pads- instant speed. bouncing off them will severely affect ur trajectory.
+				onconveyor=true
+				if(hitConveyor["black"]): return
+				hitConveyor["black"]=true
+				#todo: make speedy conveyor
+				var force = (CONVEYORFORCE["black"]*col.get_normal()).rotated(PI/2)
+				force.x=roundi(force.x)
+				force.y=roundi(force.y)
+				var flipped = (dat.get_custom_data("value"))
+
+				if(flipped==1): force*=-1
+				if(force.x!=0):
+					if abs(velocity.x)<CONVEYORFORCE["black"] or force.x*velocity.x<0:
+						velocity.x=force.x
+					#else:
+						#print("toofast1")
+				else:
+					if abs(velocity.y)<CONVEYORFORCE["black"] or force.y*velocity.y<0:
+						velocity.y=force.y
+
+					#else:
+						#print("toofast2")
+						
+						
+		#check that stops you from grazing hazardous tiles:
+		var diff = (global_position-col.get_position())
+		if((diff*velOffset).length()>0.1): #ignore jumping alongside walls	
+			match type:
+				"bounceonly":
+					if(bounce==BounceState.Bouncing):
+						return
+					else:
+						die()
+				"hazard":
 					die()
-			"hazard":
-				die()
-			"up":
-				gravity = gravities["up"] #totally broken, need to adjust sense of floor? and xy movement to match, ugh
-				up_direction=-gravities["up"].normalized()
-			"down":
-				gravity = gravities["down"]
-				up_direction=-gravities["down"].normalized()
-			"right":
-				gravity = gravities["right"]
-				up_direction=-gravities["right"].normalized()
-			"left":
-				gravity = gravities["left"]
-				up_direction=-gravities["left"].normalized()
-				#add 4 things for each dir of grav flip tiles
+				
+				
+				
+				
+			#removed: grav flip stuff, too jank and not enough room to utilize
+			#"up":
+				#if(gravity == gravities[type]): return
+				#gravity = gravities["up"] #totally broken, need to adjust sense of floor? and xy movement to match, ugh
+				#up_direction=-gravities["up"].normalized() #this causes stutters idk why
+			#"down":
+				#if(gravity == gravities[type]): return
+				#gravity = gravities["down"]
+				#up_direction=-gravities["down"].normalized()
+			#"right":
+				#if(gravity == gravities[type]): return
+				#gravity = gravities["right"]
+				#up_direction=-gravities["right"].normalized()
+			#"left":
+				#if(gravity == gravities[type]): return
+				#gravity = gravities["left"]
+				#up_direction=-gravities["left"].normalized()
+				##add 4 things for each dir of grav flip tiles
+
 
 
 

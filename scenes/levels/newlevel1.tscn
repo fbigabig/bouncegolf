@@ -27,9 +27,8 @@ layer_0/tile_data = PackedInt32Array(2687033, 1, 0, 2687034, 65537, 0, 2687031, 
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("2_86c0q")]
+[node name="player" parent="." instance=ExtResource("2_86c0q")]
 position = Vector2(-280, -104)
-timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("3_33v20")]
 position = Vector2(-276, 36)
@@ -45,7 +44,7 @@ position = Vector2(-16, -136)
 [node name="keytile2" parent="keytile" instance=ExtResource("5_k0pla")]
 position = Vector2(0, -16)
 
-[node name="timer" type="RichTextLabel" parent="."]
+[node name="timer" type="RichTextLabel" parent="." groups=["timer"]]
 z_index = 2
 anchors_preset = 1
 anchor_left = 1.0

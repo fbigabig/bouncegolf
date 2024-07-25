@@ -25,9 +25,8 @@ layer_0/tile_data = PackedInt32Array(2621505, 327681, 4, 2687041, 327681, 5, 262
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="player" parent="." node_paths=PackedStringArray("timer") instance=ExtResource("2_pe6yp")]
+[node name="player" parent="." instance=ExtResource("2_pe6yp")]
 position = Vector2(-288, 144)
-timer = NodePath("../timer")
 
 [node name="goal" parent="." instance=ExtResource("3_kldp2")]
 position = Vector2(288, -104)
@@ -36,7 +35,7 @@ position = Vector2(288, -104)
 position = Vector2(-176, -112)
 rotation = -3.14159
 
-[node name="timer" type="RichTextLabel" parent="."]
+[node name="timer" type="RichTextLabel" parent="." groups=["timer"]]
 z_index = 2
 anchors_preset = 1
 anchor_left = 1.0

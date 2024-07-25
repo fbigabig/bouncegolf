@@ -52,7 +52,7 @@ position = Vector2(-240, -20)
 [node name="plat2" parent="." instance=ExtResource("9_31cba")]
 position = Vector2(192, -92)
 
-[node name="timer" type="RichTextLabel" parent="."]
+[node name="timer" type="RichTextLabel" parent="." groups=["timer"]]
 z_index = 2
 anchors_preset = 1
 anchor_left = 1.0
