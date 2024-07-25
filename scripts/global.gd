@@ -20,7 +20,7 @@ var worlds = {
 }
 var curWorld = 1
 var levelEntryPos = {
-	-1: Vector2(-280,144)
+	-1: Vector2(-264,144) #start pos, same for every world
 }
 var times = {}
 var flooredTimes = {

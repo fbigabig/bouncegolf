@@ -64,10 +64,6 @@ level = 4
 position = Vector2(224, -32)
 level = 100
 
-[node name="selector6" parent="." instance=ExtResource("4_dp0rp")]
-position = Vector2(32, -144)
-level = 5
-
 [node name="plat" parent="." instance=ExtResource("4_evoi2")]
 show_behind_parent = true
 position = Vector2(84, 36)
@@ -87,4 +83,8 @@ position = Vector2(76, 132)
 
 [node name="worldselector" parent="." instance=ExtResource("8_00k0f")]
 position = Vector2(-280, 144)
+world = 2
+
+[node name="worldselector2" parent="." instance=ExtResource("8_00k0f")]
+position = Vector2(32, -144)
 world = 2

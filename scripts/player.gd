@@ -35,6 +35,8 @@ var onconveyor = false
 var direction=1
 var velOffset
 var timerStarted = false
+var fieldFresh = Color8(0,0,255,85)
+var fieldUsed = Color8(125,0,255,85)
 @onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
@@ -91,9 +93,12 @@ func _input(event):
 	
 func startBounce():
 	bounce=BounceState.Bouncing
+	field.modulate=fieldFresh
 	field.show()
+	
 	canBounce=false
 func transgenderBounce(collision):
+	field.modulate=fieldUsed
 	bounce=BounceState.Landing
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact
 
