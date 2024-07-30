@@ -12,7 +12,7 @@ const CONVEYORFORCE = {
 	"white": 15
 }
 const CONVEYOR_WHITEINITBOOSTFACTOR=10
-const CONVEYORMAXFORCE = 350
+const CONVEYORMAXFORCE = 400 #old: 350
 const CONVEYORGRAVFACT = .5
 #const CONVEYORSTICKYFORCE = 20
 enum BounceState {
@@ -21,7 +21,7 @@ enum BounceState {
 	Landing
 }
 @export var linelength=20
-var UItemplate = preload("res://prefabs/UI/button_ui.tscn")
+var UItemplate = preload("res://prefabs/UI/pause_UI.tscn")
 var UI
 var oldOnConveyor=false
 var bounce:BounceState = BounceState.None
@@ -34,7 +34,7 @@ var canBounce = true
 var oldFloor = true
 var deathSign = preload("res://prefabs/deathSign.tscn")
 var oneTickGroundDelay =false
-var coyoteTime = true
+
 var coyotecounter = 0
 var grounded = true
 var onconveyor = false
@@ -51,7 +51,8 @@ var timer
 @export var interactBox = false
 
 var gravity = 12.5
-
+var jumpTicks = 0
+const jumpTicksNum=5
 @onready var wheel = $wheel
 @onready var interacter = $interacter
 @export var tileMap: TileMap
@@ -68,7 +69,7 @@ func _ready():
 
 	UI = UItemplate.instantiate() 
 	get_parent().add_child.call_deferred(UI)
-	UI.hide()
+
 func _input(event):
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )):
@@ -78,14 +79,6 @@ func _input(event):
 		for i in interacter.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
-	elif(Input.is_action_just_pressed("pause")):
-		if(paused):
-			UI.hide()
-			get_tree().paused=false
-		else:
-			UI.show()
-			UI.restartButton.grab_focus()
-			get_tree().paused=true
 
 	elif Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
 
@@ -103,7 +96,8 @@ func _input(event):
 		startBounce()
 
 		velocity = aim_dir*SPEED*dashFact
-
+	elif(Input.is_action_just_pressed("jump")):
+		jumpTicks=jumpTicksNum
 	
 func startBounce():
 	onconveyor=false
@@ -121,7 +115,7 @@ func transgenderBounce(collision):
 func endBounce():
 	bounce=BounceState.None
 	field.hide()
-	oneTickGroundDelay=true
+
 func _process(delta):
 	if(timer!=null and timerStarted):
 		global.time+=delta
@@ -137,7 +131,7 @@ func _physics_process(delta):
 	for key in hitConveyor:
 		hitConveyor[key]=false
 
-	oldFloor=is_on_floor()
+	oldFloor=grounded
 	# Add the gravity.
 	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 
@@ -152,10 +146,13 @@ func _physics_process(delta):
 	var tmp = gravity *(CONVEYORGRAVFACT if oldOnConveyor else 1)
 
 	velocity.y += tmp
-
+	
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and (grounded||coyoteTime) and bounce==BounceState.None:
-		coyoteTime=false
+	if (jumpTicks>0) and (grounded||coyotecounter>0) and bounce==BounceState.None:
+		print(grounded)
+		print(coyotecounter)
+		jumpTicks=0
+		coyotecounter=0
 		velocity.y = JUMP_VELOCITY
 		
 
@@ -217,14 +214,22 @@ func _physics_process(delta):
 			var collision = move_and_collide(velocity * delta)
 			var didThing= false
 			if(collision):
-				#if(collision.get_collider() is Node): #enable to clip through corners of one way plats
-					#var cold = collision.get_collider()
+
+				if(collision.get_collider() is Node): #enable to clip through corners of one way plats
+					var cold = collision.get_collider()
+
 					#print(cold.get_groups())
-					#if(cold.is_in_group("gothruplat")):
+					if(cold.is_in_group("gothruplat")):
+						var norm = collision.get_normal()
+						print("norm")
+						print(norm)
+						if(norm.x!=0 and norm.y!=0):
+							didThing=true
+							position+= velocity*delta
 						#print("a")
 						#if((global_position.x+2.5<cold.global_position.x-cold.w or global_position.x-2.5>cold.global_position.x+cold.w)and not grounded):
 							#print("zone")
-							#didThing=true 
+							# 
 							#position+= velocity*delta
 				
 				if(!didThing):
@@ -269,20 +274,20 @@ func _physics_process(delta):
 	
 
 	if(is_on_floor()&&bounce == BounceState.None):
-		canBounce=true
-		coyoteTime=true
-		grounded=true
+		if(oneTickGroundDelay):
+			canBounce=true
+			grounded=true
+		oneTickGroundDelay=true #must be on ground two frames to get stuff back
 	else:
+		oneTickGroundDelay=false
 		grounded=false
 	if(coyotecounter>0):
 		coyotecounter-=1
 	if(!is_on_floor() and oldFloor):
 		coyotecounter=5 #start coyote timer
 		
-	if(coyotecounter==0&&coyoteTime&&!is_on_floor()):
-		coyoteTime=false
-	if(oneTickGroundDelay): #is on floor doesn't get updated when bounce gets set to 0 because it updates with move and slide. this can lead to one frame where bounce is 0 and is on floor is true while in midair since boucing starting grounded doesn't change is_on_floor due to it using move and collide. this is why the one frame delay exists
-		oneTickGroundDelay=false
+	if(jumpTicks>0):
+		jumpTicks-=1
 
 func hitCheck(obj):
 	if obj is Node:
@@ -298,7 +303,26 @@ func die():
 
 
 
+func eraseAll(pos,typeGoal,usedDict):
+	var dat = tileMap.get_cell_tile_data(0,pos)
+	var type
+	if(dat):
+		var thing = (dat.get_custom_data("special"))
+		if(thing != ""):
+			type = thing
+		else:
+			return
+	else:
+		return
+	if(type==typeGoal):
+		tileMap.erase_cell(0,pos)
+		for i in range(-1,2):
 
+			for j in range(-1,2):
+				var newPos = pos+Vector2i(i,j)
+				if(i==0 and j==0) or usedDict.has(newPos):
+					continue
+				eraseAll(newPos,typeGoal,usedDict)
 func handleTile(tilePos, col):
 	if(tileMap):
 
@@ -318,6 +342,11 @@ func handleTile(tilePos, col):
 			return
 
 		match type:
+			"crumble":
+				#await get_tree().create_timer(.1).timeout
+				var used={}
+				eraseAll(pos,"crumble",used)
+				
 			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
 
 				if(hitConveyor["white"]): return
@@ -372,7 +401,7 @@ func handleTile(tilePos, col):
 					#else:
 						#print("toofast1")
 				else:
-					print(Vector2(direction,0).angle_to(normal))
+
 					if (abs(velocity.y)<CONVEYORFORCE["black"] or force.y*velocity.y<0) and (!direction or Vector2(direction,0).angle_to(normal)!=0):
 						velocity.y=force.y
 

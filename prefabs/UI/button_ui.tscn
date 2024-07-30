@@ -40,6 +40,14 @@ focus_neighbor_bottom = NodePath("../restart")
 theme = ExtResource("2_4jtub")
 text = "MANUAL"
 
+[node name="quit" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_top = NodePath("../levelSelect")
+focus_neighbor_bottom = NodePath("../restart")
+theme = ExtResource("2_4jtub")
+text = "QUIT"
+
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="levelSelect" to="." method="_on_level_select_pressed"]
 [connection signal="pressed" from="manual" to="." method="_on_manual_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

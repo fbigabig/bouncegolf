@@ -26,3 +26,7 @@ func _on_level_select_pressed():
 
 func _on_manual_pressed():
 	pass # Replace with function body.
+
+
+func _on_quit_pressed():
+	get_tree().quit()
