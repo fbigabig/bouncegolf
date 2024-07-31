@@ -223,7 +223,9 @@ func _physics_process(delta):
 						var norm = collision.get_normal()
 						print("norm")
 						print(norm)
-						if(norm.x!=0 and norm.y!=0):
+						norm = snapped(norm,Vector2(.1,.1))
+						if(norm.x!=0 and norm.y!=0 and !grounded):
+							print(norm)
 							didThing=true
 							position+= velocity*delta
 						#print("a")

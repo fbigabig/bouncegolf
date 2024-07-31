@@ -84,7 +84,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="selector" type="Area2D" groups=["levelselector", "selector"]]
@@ -126,6 +126,8 @@ z_as_relative = false
 position = Vector2(4, 5)
 sprite_frames = SubResource("SpriteFrames_bm5xl")
 autoplay = "default"
+frame = 2
+frame_progress = 0.554873
 
 [node name="checksprite" type="Sprite2D" parent="."]
 visible = false

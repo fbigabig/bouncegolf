@@ -7,6 +7,7 @@ extends Area2D
 
 
 func setup():
+	global.worldLevels.append(level)
 	if(!global.times.has(level)):
 		global.times[level]=0.0
 	$RichTextLabel.text="[center]"+"level "+str(level)+"[/center]" #add 3rd label to display best time if it exists, otherwise hide itself. goes in top middle. also get a font lazy ass.

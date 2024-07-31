@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx12gxqy5ebqc"]
+
+[ext_resource type="Texture2D" uid="uid://rii6ycbhhjat" path="res://assets/blankdashtile.png" id="1_ikn2d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gf2qv"]
+size = Vector2(16, 16)
+
+[node name="blanktile" type="StaticBody2D"]
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gf2qv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+texture = ExtResource("1_ikn2d")

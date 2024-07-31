@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://byoajovxpdas6"]
 
-[ext_resource type="Script" path="res://scenes/levels/clearUI.gd" id="1_638qq"]
+[ext_resource type="Script" path="res://scripts/clearUI.gd" id="1_638qq"]
 [ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="2_yxqlp"]
 
 [node name="clearUI" type="VBoxContainer"]

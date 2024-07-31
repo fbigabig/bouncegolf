@@ -21,7 +21,7 @@ script = ExtResource("1_10g4e")
 
 [node name="restart" type="Button" parent="."]
 layout_mode = 2
-focus_neighbor_top = NodePath("../manual")
+focus_neighbor_top = NodePath("../quit")
 focus_neighbor_bottom = NodePath("../levelSelect")
 theme = ExtResource("2_4jtub")
 text = "RESTART"
@@ -36,13 +36,13 @@ text = "LEVEL SELECT"
 [node name="manual" type="Button" parent="."]
 layout_mode = 2
 focus_neighbor_top = NodePath("../levelSelect")
-focus_neighbor_bottom = NodePath("../restart")
+focus_neighbor_bottom = NodePath("../quit")
 theme = ExtResource("2_4jtub")
 text = "MANUAL"
 
 [node name="quit" type="Button" parent="."]
 layout_mode = 2
-focus_neighbor_top = NodePath("../levelSelect")
+focus_neighbor_top = NodePath("../manual")
 focus_neighbor_bottom = NodePath("../restart")
 theme = ExtResource("2_4jtub")
 text = "QUIT"

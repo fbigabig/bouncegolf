@@ -4,6 +4,7 @@ var time = 0
 var currentlevel = -1
 var player
 var loaded=[false,false,false,false,false]
+var worldLevels = []
 var levels = {
 	0: "res://scenes/levels/beginnerlevel.tscn",
 	1 : "res://scenes/levels/newlevel1.tscn",
