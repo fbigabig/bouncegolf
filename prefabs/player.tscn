@@ -143,8 +143,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_dlyay"]
-radius = 6.51
+[sub_resource type="CircleShape2D" id="CircleShape2D_kn312"]
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4vqbj"]
 radius = 6.9
@@ -152,7 +152,7 @@ radius = 6.9
 [node name="player" type="CharacterBody2D" groups=["player"]]
 z_index = 2
 collision_mask = 7
-floor_snap_length = 5.0
+floor_snap_length = 10.0
 script = ExtResource("1_2agn3")
 
 [node name="wheel" type="AnimatedSprite2D" parent="."]
@@ -161,7 +161,7 @@ animation = &"new_animation_1"
 autoplay = "new_animation_1"
 
 [node name="playerHitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_dlyay")
+shape = SubResource("CircleShape2D_kn312")
 
 [node name="bounceField" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 1, 0.341176)

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://br5lmcyc2ujrc" path="res://prefabs/worldmapv2.tscn" id="3_ke4pi"]
 [ext_resource type="PackedScene" uid="uid://dts6ekad6ua0s" path="res://prefabs/timer.tscn" id="4_050ma"]
 [ext_resource type="PackedScene" uid="uid://cbmyg0i4mlu5h" path="res://prefabs/goaltime.tscn" id="5_tuh60"]
-[ext_resource type="PackedScene" uid="uid://dqec2ju2nyila" path="res://prefabs/plats/plat16.tscn" id="6_h07hi"]
+[ext_resource type="PackedScene" uid="uid://f1i3w0t0k0i6" path="res://prefabs/plats/plat7.tscn" id="7_dhrdp"]
 [ext_resource type="PackedScene" uid="uid://chj58rppmg5op" path="res://prefabs/plats/plat6.tscn" id="7_vadkq"]
 
 [node name="Node2D" type="Node2D"]
@@ -28,8 +28,8 @@ layer_0/tile_data = PackedInt32Array(-131077, 65537, 1, -65541, 65537, 0, -5, 65
 
 [node name="goaltime" parent="." instance=ExtResource("5_tuh60")]
 
-[node name="plat" parent="." instance=ExtResource("6_h07hi")]
-position = Vector2(-104, -108)
-
 [node name="plat2" parent="." instance=ExtResource("7_vadkq")]
 position = Vector2(-256, 36)
+
+[node name="plat5" parent="." instance=ExtResource("7_dhrdp")]
+position = Vector2(-68, -108)

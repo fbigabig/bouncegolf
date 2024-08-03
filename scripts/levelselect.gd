@@ -2,6 +2,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 @onready var levels = get_tree().get_nodes_in_group("levelselector")
+@onready var todo = get_tree().get_nodes_in_group("worldtodo")
 func _ready():
 	global.worldLevels=[]
 	#print(global.loaded)
@@ -13,11 +14,15 @@ func _ready():
 
 	global.save_func()
 	for i in levels:
-		i.setup()
+		i.setup() #use signal later maybe?
 	print(global.worldLevels)
 	var player = get_tree().get_nodes_in_group("player")[0]
 	#print(global.levelEntryPos)
+	print(str(global.currentlevel)+" curlevel")
+	print("levelentrypos: "+ str(global.levelEntryPos))
 	player.position = global.levelEntryPos[global.currentlevel]
+	for i in todo:
+		i.setup()
 		
 
 

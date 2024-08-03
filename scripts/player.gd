@@ -38,6 +38,8 @@ var oneTickGroundDelay =false
 var coyotecounter = 0
 var grounded = true
 var onconveyor = false
+var onice=false
+const ICECONTROL = 4
 var direction=1
 var velOffset
 var timerStarted = false
@@ -72,14 +74,15 @@ func _ready():
 
 func _input(event):
 	if(not timerStarted):
-		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )):
+		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )) or Input.get_axis("moveLeft","moveRight")!=0:
 			timerStarted=true
 	# Mouse in viewport coordinates.
 	if(interactBox && Input.is_action_just_pressed("confirm")):
 		for i in interacter.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
-
+	elif(Input.is_action_just_pressed("restart")):
+		die()
 	elif Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
 
 		if(event is InputEventMouse):
@@ -101,6 +104,7 @@ func _input(event):
 	
 func startBounce():
 	onconveyor=false
+	onice=false
 	oldOnConveyor=false
 	bounce=BounceState.Bouncing
 	field.modulate=fieldFresh
@@ -149,8 +153,7 @@ func _physics_process(delta):
 	
 	# Handle jump.
 	if (jumpTicks>0) and (grounded||coyotecounter>0) and bounce==BounceState.None:
-		print(grounded)
-		print(coyotecounter)
+
 		jumpTicks=0
 		coyotecounter=0
 		velocity.y = JUMP_VELOCITY
@@ -175,17 +178,17 @@ func _physics_process(delta):
 					#acc=ACCEL*ACCELBOOST
 				#else:
 					#acc=ACCEL
-				velocity.x = move_toward(velocity.x,SPEED*direction,(ACCEL if is_on_floor() else ACCEL/AIRCONTROL)+(OVERDECEL if abs(velocity.x)>SPEED and velocity.x*direction<0 else 0))
+				velocity.x = move_toward(velocity.x,SPEED*direction,((ACCEL if grounded else ACCEL/AIRCONTROL) if !onice else ACCEL/ICECONTROL)+(OVERDECEL if abs(velocity.x)>SPEED and velocity.x*direction<0 else 0))
 
 				if(velocity.x*direction>0):
 					velocity.x = min(SPEED,abs(velocity.x))*(1 if velocity.x>0 else -1)
 
-			elif(!direction and !onconveyor):
+			elif(!direction and !onconveyor and !onice):
 
 				velocity.x = move_toward(velocity.x, 0, ACCEL)#*ACCELBOOST
 
 
-			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor):
+			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor and !onice):
 
 				velocity.x = move_toward(velocity.x, SPEED, OVERDECEL) #don't steal speed too quick
 
@@ -195,6 +198,7 @@ func _physics_process(delta):
 
 			oldOnConveyor=onconveyor
 			onconveyor=false
+			onice=false
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
@@ -221,8 +225,7 @@ func _physics_process(delta):
 					#print(cold.get_groups())
 					if(cold.is_in_group("gothruplat")):
 						var norm = collision.get_normal()
-						print("norm")
-						print(norm)
+
 						norm = snapped(norm,Vector2(.1,.1))
 						if(norm.x!=0 and norm.y!=0 and !grounded):
 							print(norm)
@@ -326,11 +329,13 @@ func eraseAll(pos,typeGoal,usedDict):
 					continue
 				eraseAll(newPos,typeGoal,usedDict)
 func handleTile(tilePos, col):
+
 	if(tileMap):
 
 		var type
 		var pos = tileMap.to_local(tilePos)
 		pos= tileMap.local_to_map(pos)
+		
 		var dat = tileMap.get_cell_tile_data(0,pos)
 
 		if(dat):
@@ -338,17 +343,19 @@ func handleTile(tilePos, col):
 			if(thing != ""):
 				type = thing
 			else: 
+
 				return
 		else:
 
 			return
 
 		match type:
+			"ice":
+				onice=true
 			"crumble":
 				#await get_tree().create_timer(.1).timeout
 				var used={}
 				eraseAll(pos,"crumble",used)
-				
 			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
 
 				if(hitConveyor["white"]): return
@@ -413,7 +420,9 @@ func handleTile(tilePos, col):
 						
 		#check that stops you from grazing hazardous tiles:
 		var diff = (global_position-col.get_position())
+
 		if((diff*velOffset).length()>0.1): #ignore jumping alongside walls	
+			
 			match type:
 				"bounceonly":
 					if(bounce==BounceState.Bouncing):
@@ -422,7 +431,6 @@ func handleTile(tilePos, col):
 						die()
 				"hazard":
 					die()
-				
 				
 				
 				

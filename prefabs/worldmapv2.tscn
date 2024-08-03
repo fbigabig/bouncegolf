@@ -4,6 +4,7 @@
 
 [node name="worldmapv2" type="TileMap"]
 modulate = Color(0, 0, 0, 1)
+z_index = 1
 position = Vector2(-320, -184)
 tile_set = ExtResource("1_5ck2n")
 format = 2

@@ -5,6 +5,7 @@
 
 [node name="buttonUI" type="VBoxContainer"]
 process_mode = 2
+z_index = 8
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -19,9 +20,16 @@ grow_vertical = 2
 alignment = 1
 script = ExtResource("1_10g4e")
 
-[node name="restart" type="Button" parent="."]
+[node name="resume" type="Button" parent="."]
 layout_mode = 2
 focus_neighbor_top = NodePath("../quit")
+focus_neighbor_bottom = NodePath("../restart")
+theme = ExtResource("2_4jtub")
+text = "RESUME"
+
+[node name="restart" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_top = NodePath("../resume")
 focus_neighbor_bottom = NodePath("../levelSelect")
 theme = ExtResource("2_4jtub")
 text = "RESTART"
@@ -43,10 +51,11 @@ text = "MANUAL"
 [node name="quit" type="Button" parent="."]
 layout_mode = 2
 focus_neighbor_top = NodePath("../manual")
-focus_neighbor_bottom = NodePath("../restart")
+focus_neighbor_bottom = NodePath("../resume")
 theme = ExtResource("2_4jtub")
 text = "QUIT"
 
+[connection signal="pressed" from="resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="levelSelect" to="." method="_on_level_select_pressed"]
 [connection signal="pressed" from="manual" to="." method="_on_manual_pressed"]

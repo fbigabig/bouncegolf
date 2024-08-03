@@ -6,7 +6,7 @@ func _input(event):
 		if(get_tree().paused):
 			UI.hide()
 			get_tree().paused=false
-		else:
+		elif(is_instance_valid(global.player)):
 			UI.show()
 			UI.restartButton.grab_focus()
 			get_tree().paused=true

@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://v6y77c0e427v" path="res://prefabs/plats/plat3.tscn" id="8_ywl7r"]
 [ext_resource type="PackedScene" uid="uid://cprdsqshhe8vq" path="res://prefabs/plats/plat1.tscn" id="9_w1mub"]
 [ext_resource type="PackedScene" uid="uid://bm2u3m3kugvmr" path="res://prefabs/plats/plat10.tscn" id="10_vk5s4"]
-[ext_resource type="PackedScene" uid="uid://chj58rppmg5op" path="res://prefabs/plats/plat6.tscn" id="12_eud0r"]
 [ext_resource type="PackedScene" uid="uid://vkw0vc2f6o41" path="res://prefabs/goal_gate.tscn" id="13_8uqi2"]
+[ext_resource type="PackedScene" uid="uid://d1v25frm0lhow" path="res://prefabs/plats/plat5.tscn" id="13_tv67e"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ywr2i")
@@ -29,7 +29,7 @@ interactBox = true
 tileMap = NodePath("../worldmap")
 
 [node name="selector1" parent="." instance=ExtResource("4_tdysx")]
-position = Vector2(-260, 0)
+position = Vector2(-260, 20)
 level = 5
 
 [node name="selector2" parent="." instance=ExtResource("4_tdysx")]
@@ -45,19 +45,18 @@ position = Vector2(112, -104)
 level = 8
 
 [node name="selector6" parent="." instance=ExtResource("4_tdysx")]
-position = Vector2(-272, -104)
+position = Vector2(-268, -116)
 level = 200
 
 [node name="replacemewitheasybubblelevel" parent="." instance=ExtResource("4_tdysx")]
-position = Vector2(112, -152)
-level = 0
+position = Vector2(268, -140)
+level = 9
 
 [node name="worldselector" parent="." instance=ExtResource("8_kmvtt")]
 position = Vector2(-288, 144)
 
 [node name="worldselector2" parent="." instance=ExtResource("8_kmvtt")]
-visible = false
-position = Vector2(-260, 104)
+position = Vector2(-260, 144)
 world = 3
 
 [node name="plat2" parent="." instance=ExtResource("7_bfifu")]
@@ -84,20 +83,24 @@ text = "[center]World 2[/center]"
 position = Vector2(-56, -44)
 
 [node name="plat" parent="." instance=ExtResource("6_da3o8")]
-position = Vector2(-244, -104)
+position = Vector2(-240, -104)
 rotation = 1.57079
-
-[node name="plat7" parent="." instance=ExtResource("12_eud0r")]
-position = Vector2(-32, -124)
 
 [node name="goalGate" parent="." instance=ExtResource("13_8uqi2")]
 position = Vector2(-288, -80)
 
 [node name="goalGate2" parent="." instance=ExtResource("13_8uqi2")]
-position = Vector2(-272, -80)
+position = Vector2(-268, -80)
 
 [node name="goalGate3" parent="." instance=ExtResource("13_8uqi2")]
-position = Vector2(-256, -80)
+position = Vector2(-248, -80)
 
-[node name="plat8" parent="." instance=ExtResource("7_bfifu")]
-position = Vector2(-272, -92)
+[node name="plat7" parent="." instance=ExtResource("13_tv67e")]
+position = Vector2(268, -116)
+
+[node name="plat5" parent="." instance=ExtResource("13_tv67e")]
+position = Vector2(236, -84)
+rotation = -1.57079
+
+[node name="plat9" parent="." instance=ExtResource("13_tv67e")]
+position = Vector2(-268, -92)

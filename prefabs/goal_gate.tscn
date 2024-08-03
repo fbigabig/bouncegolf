@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/goal_gate.gd" id="1_bxswh"]
 [ext_resource type="PackedScene" uid="uid://bx12gxqy5ebqc" path="res://prefabs/blanktile.tscn" id="1_nqul7"]
 
-[node name="goalGate" type="Node2D"]
+[node name="goalGate" type="Node2D" groups=["worldtodo"]]
 script = ExtResource("1_bxswh")
 
 [node name="keytile" parent="." instance=ExtResource("1_nqul7")]

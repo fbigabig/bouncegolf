@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var col = $keytile/col
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func setup():
 	var yes = true
 	for level in global.worldLevels:
 		if(level>99): continue

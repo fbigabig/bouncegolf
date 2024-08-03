@@ -33,7 +33,7 @@ text = "[center]World 1[/center]"
 
 [node name="selector1" parent="." instance=ExtResource("5_b34a7")]
 position = Vector2(-276, 144)
-level = 200
+level = 10
 
 [node name="worldselector" parent="." instance=ExtResource("9_yahyw")]
 position = Vector2(-188, 116)

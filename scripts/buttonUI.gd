@@ -30,3 +30,8 @@ func _on_manual_pressed():
 
 func _on_quit_pressed():
 	get_tree().quit()
+
+
+func _on_resume_pressed():
+	hide()
+	get_tree().paused=false

@@ -5,6 +5,7 @@
 
 [node name="clearUI" type="VBoxContainer"]
 process_mode = 3
+z_index = 8
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
