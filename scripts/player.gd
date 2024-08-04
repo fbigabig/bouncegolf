@@ -66,7 +66,10 @@ var hitConveyor = {
 	"white": false,
 	"black": false
 }
+func _init():
+	apply_floor_snap()
 func _ready():
+
 	global.player=self
 	global.time=0
 	field.hide()
