@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmv0xc6redsny"]
+
+[ext_resource type="Script" path="res://scripts/appeartile.gd" id="1_n5e35"]
+[ext_resource type="Texture2D" uid="uid://bferlftqdbs21" path="res://assets/dsh.png" id="2_tn4ua"]
+[ext_resource type="PackedScene" uid="uid://jsuau7ygtkdg" path="res://prefabs/evilappearedtile.tscn" id="2_vjvru"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6sy21"]
+radius = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inj1p"]
+size = Vector2(16, 16)
+
+[node name="appearertile" type="Area2D"]
+script = ExtResource("1_n5e35")
+toAppear = ExtResource("2_vjvru")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tn4ua")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6sy21")
+
+[node name="exitarea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="exitarea"]
+shape = SubResource("RectangleShape2D_inj1p")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="exitarea" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_exited" from="exitarea" to="." method="_on_exitarea_body_exited"]

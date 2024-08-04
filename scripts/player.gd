@@ -2,11 +2,13 @@ extends CharacterBody2D
 
 
 const SPEED = 150.0
-const JUMP_VELOCITY = -194 #oldest is 200, old is 190.5
+const JUMP_VELOCITY = -190.5 #oldest is 200, old is 190.5
 const ACCEL = 10 #old:10
 #const ACCELBOOST = 2
 const OVERDECEL = 5 #old = 3
 const AIRCONTROL= 2
+const SUPERBOUNCE = 1.325
+var hitBouncy = false
 const CONVEYORFORCE = {
 	"black": 150,
 	"white": 15
@@ -26,6 +28,7 @@ var UI
 var oldOnConveyor=false
 var bounce:BounceState = BounceState.None
 var didBounce = false
+
 var dashFact = 2
 var bounceFact = 1.00
 var oldV = Vector2.ZERO
@@ -34,11 +37,12 @@ var canBounce = true
 var oldFloor = true
 var deathSign = preload("res://prefabs/deathSign.tscn")
 var oneTickGroundDelay =false
-
+var onice=false
+var onslope=0
 var coyotecounter = 0
 var grounded = true
+#var gothru=false
 var onconveyor = false
-var onice=false
 const ICECONTROL = 4
 var direction=1
 var velOffset
@@ -114,7 +118,10 @@ func startBounce():
 func transgenderBounce(collision):
 	field.modulate=fieldUsed
 	bounce=BounceState.Landing
-	velocity = velocity.bounce(collision.get_normal()) * bounceFact
+	velocity = velocity.bounce(collision.get_normal()) * bounceFact * (SUPERBOUNCE if hitBouncy else 1)
+	#if(hitBouncy):
+		#velocity=Vector2(pow(abs(velocity.x),1.1)*(1 if velocity.x>0 else -1),pow(abs(velocity.y),1.1)*(1 if velocity.y>0 else -1))
+		#print(velocity)
 
 func endBounce():
 	bounce=BounceState.None
@@ -136,7 +143,7 @@ func _physics_process(delta):
 		hitConveyor[key]=false
 
 	oldFloor=grounded
-	# Add the gravity.
+
 	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 
 	if(aim_dir.length()==0):
@@ -165,7 +172,7 @@ func _physics_process(delta):
 
 	
 	velOffset = velocity.normalized()
-
+	oldV=velocity
 
 	match bounce:
 		#if direction && (abs(velocity.x)<SPEED||velocity.x*direction<0):
@@ -181,11 +188,16 @@ func _physics_process(delta):
 				velocity.x = move_toward(velocity.x,SPEED*direction,((ACCEL if grounded else ACCEL/AIRCONTROL) if !onice else ACCEL/ICECONTROL)+(OVERDECEL if abs(velocity.x)>SPEED and velocity.x*direction<0 else 0))
 
 				if(velocity.x*direction>0):
+
 					velocity.x = min(SPEED,abs(velocity.x))*(1 if velocity.x>0 else -1)
 
-			elif(!direction and !onconveyor and !onice):
+			elif(!direction and !onconveyor):
 
-				velocity.x = move_toward(velocity.x, 0, ACCEL)#*ACCELBOOST
+				velocity.x = move_toward(velocity.x, 0, (ACCEL if !onice else ACCEL/(2*ICECONTROL)))#*ACCELBOOST
+
+				if(onice and onslope*velocity.x<0 and abs(velocity.x)<40):
+					print("here")
+					velocity=Vector2.ZERO
 
 
 			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor and !onice):
@@ -195,10 +207,13 @@ func _physics_process(delta):
 			
 
 			move_and_slide()
-
 			oldOnConveyor=onconveyor
 			onconveyor=false
+			onslope=0
 			onice=false
+			#if(tileMap): floor_snap_length=0
+
+			
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
@@ -208,13 +223,12 @@ func _physics_process(delta):
 
 					else:
 
-						
 						var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
 						handleTile(col.get_position()-off,col)
 
 
 		BounceState.Bouncing:
-
+			var tmpPos=position
 			var collision = move_and_collide(velocity * delta)
 			var didThing= false
 			if(collision):
@@ -228,9 +242,9 @@ func _physics_process(delta):
 
 						norm = snapped(norm,Vector2(.1,.1))
 						if(norm.x!=0 and norm.y!=0 and !grounded):
-							print(norm)
+
 							didThing=true
-							position+= velocity*delta
+							position+= oldV*delta
 						#print("a")
 						#if((global_position.x+2.5<cold.global_position.x-cold.w or global_position.x-2.5>cold.global_position.x+cold.w)and not grounded):
 							#print("zone")
@@ -244,6 +258,13 @@ func _physics_process(delta):
 						var off = (global_position-collision.get_position()).normalized()
 						
 						handleTile(collision.get_position()-off,collision)
+					#print(gothru)
+					#if(gothru):
+						#position=tmpPos
+						#oldV.y=0
+						#position += oldV*delta
+						#velocity=oldV
+					#else:
 					transgenderBounce(collision)
 		BounceState.Landing:
 			move_and_slide()
@@ -257,6 +278,7 @@ func _physics_process(delta):
 					else:
 						var off = (global_position-col.get_position()).normalized()
 						handleTile(col.get_position()-off,col)
+
 				endBounce()
 
 
@@ -276,8 +298,7 @@ func _physics_process(delta):
 	
 			
 		
-	
-
+	hitBouncy=false
 	if(is_on_floor()&&bounce == BounceState.None):
 		if(oneTickGroundDelay):
 			canBounce=true
@@ -329,7 +350,9 @@ func eraseAll(pos,typeGoal,usedDict):
 					continue
 				eraseAll(newPos,typeGoal,usedDict)
 func handleTile(tilePos, col):
-
+	if(col.get_collider()!=tileMap):
+		hitCheck(col.get_collider())
+		return
 	if(tileMap):
 
 		var type
@@ -342,14 +365,30 @@ func handleTile(tilePos, col):
 			var thing = (dat.get_custom_data("special"))
 			if(thing != ""):
 				type = thing
-			else: 
+			else:
 
 				return
 		else:
 
 			return
+		#KNOWN BUG: player will snap to hazards if it can walk along a diagonal hazard, do not put diagonal hazard tiles next to non-hazardous tiles, separate them by at least one flat hazard tile
+		#floor snap stuff "fixed" it but broke slopes so it can't exist.
+		#if(type=="normal"||type=="ice"||type=="bouncy"):
+			#floor_snap_length=5 #prevents snapping to hazards
+			#var norm = col.get_normal()
+			#norm.x=snapped(norm.x,.1)
+			#norm.y=snapped(norm.y,.1)
+			#if(norm.x!=0 and norm.y!=0):
+				#onslope=1 if norm.x>0 else -1
 
 		match type:
+			"normal":
+				pass
+			#"gothru":
+				#
+				#gothru=true
+			"bouncy":
+				hitBouncy=true
 			"ice":
 				onice=true
 			"crumble":
@@ -421,8 +460,8 @@ func handleTile(tilePos, col):
 		#check that stops you from grazing hazardous tiles:
 		var diff = (global_position-col.get_position())
 
-		if((diff*velOffset).length()>0.1): #ignore jumping alongside walls	
-			
+		if not ((diff*velOffset).length()<0.1 and abs(snapped(col.get_normal(),Vector2(1,1)))==Vector2(1,0)): #ignore jumping alongside walls	
+
 			match type:
 				"bounceonly":
 					if(bounce==BounceState.Bouncing):
@@ -431,7 +470,6 @@ func handleTile(tilePos, col):
 						die()
 				"hazard":
 					die()
-				
 				
 				
 			#removed: grav flip stuff, too jank and not enough room to utilize
