@@ -40,12 +40,16 @@ position = Vector2(-268, 80)
 level = 10
 
 [node name="selector2" parent="." instance=ExtResource("5_b34a7")]
-position = Vector2(-276, 144)
+position = Vector2(44, -68)
 level = 11
 
 [node name="selector3" parent="." instance=ExtResource("5_b34a7")]
 position = Vector2(272, -120)
 level = 12
+
+[node name="selector4" parent="." instance=ExtResource("5_b34a7")]
+position = Vector2(-280, 144)
+level = 13
 
 [node name="worldselector" parent="." instance=ExtResource("9_yahyw")]
 position = Vector2(-144, 136)

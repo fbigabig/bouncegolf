@@ -20,7 +20,8 @@ var levels = {
 	200: "res://scenes/levels/levelbubble.tscn",
 	10: "res://scenes/levels/level_ice.tscn",
 	11: "res://scenes/levels/level_icesuperbounce.tscn",
-	12:"res://scenes/levels/level_superbounce.tscn"
+	12: "res://scenes/levels/level_superbounce.tscn",
+	13: "res://scenes/levels/level_cannon.tscn"
 }
 var worlds = {
 	1: "res://scenes/worlds/world1.tscn",
@@ -47,7 +48,8 @@ var flooredTimes = {
 	9: 20,
 	10:20,
 	11:20,
-	12:20
+	12:20,
+	13:20
 }
 var devTimes = {
 	0: 9.11,
@@ -64,7 +66,8 @@ var devTimes = {
 	9: 20,
 	10: 15,
 	11:20,
-	12:20
+	12:20,
+	13:20
 }
 func exitToWorld():
 	get_tree().change_scene_to_file(worlds[curWorld])

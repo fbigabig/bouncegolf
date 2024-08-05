@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://2v4lcapf42ed"]
+
+[ext_resource type="Script" path="res://scripts/momentumcannon.gd" id="1_5n435"]
+[ext_resource type="Texture2D" uid="uid://befiui7irfkw2" path="res://assets/arrowarea.png" id="2_psuvp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ignh7"]
+size = Vector2(32, 32)
+
+[node name="cannon" type="Area2D"]
+script = ExtResource("1_5n435")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_psuvp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ignh7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

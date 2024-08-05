@@ -28,12 +28,15 @@ var UI
 var oldOnConveyor=false
 var bounce:BounceState = BounceState.None
 var didBounce = false
-
+var flip =false
 var dashFact = 2
 var bounceFact = 1.00
 var oldV = Vector2.ZERO
 var aim_dir
 var canBounce = true
+var beingShot = false
+var cannon 
+var target = Vector2.ZERO
 var oldFloor = true
 var deathSign = preload("res://prefabs/deathSign.tscn")
 var oneTickGroundDelay =false
@@ -41,11 +44,14 @@ var onice=false
 var onslope=0
 var coyotecounter = 0
 var grounded = true
+var oldPos
 #var gothru=false
 var onconveyor = false
 const ICECONTROL = 4
 var direction=1
 var velOffset
+var buffBounce=false
+var buffForce=Vector2.ZERO
 var timerStarted = false
 var fieldFresh = Color8(0,0,255,85)
 var fieldUsed = Color8(125,0,255,85)
@@ -66,8 +72,6 @@ var hitConveyor = {
 	"white": false,
 	"black": false
 }
-func _init():
-	apply_floor_snap()
 func _ready():
 
 	global.player=self
@@ -90,7 +94,7 @@ func _input(event):
 				i.doLoad()
 	elif(Input.is_action_just_pressed("restart")):
 		die()
-	elif Input.is_action_just_pressed("shoot")&&canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
+	elif Input.is_action_just_pressed("shoot")&&  canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
 
 		if(event is InputEventMouse):
 			#velocity = Vector2.ZERO
@@ -102,7 +106,12 @@ func _input(event):
 		else:
 			aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 		
-
+		if(beingShot):
+			buffBounce=true
+			field.modulate=fieldFresh
+			field.show()
+			buffForce = aim_dir*SPEED*dashFact
+			return
 		startBounce()
 
 		velocity = aim_dir*SPEED*dashFact
@@ -141,7 +150,47 @@ func _process(delta):
 	else:
 		wheel.pause()
 func _physics_process(delta):
+	if(beingShot):
+		#var didThing=false
+		#
+		#var a = (abs(position.y-target.y))
+		#var b = (abs(position.x-target.x))
+		#if b>16-7:
+#
+			#print("aaaaa")
+			#position.x=move_toward(position.x,target.x, velocity.length()*delta)
+			#didThing=true
+		#if a>16-7:
+			#print("bb")
+			#position.y=move_toward(position.y,target.y, velocity.length()*delta)
+			#didThing=true
+		#if(!didThing):
+			##if(beingShot==1):
+				##print("A")
+				##position.y=move_toward(position.y,target.y, velocity.length()*delta)
+				##if(position.y==target.y):
+					##didThing=true
+			##elif(beingShot==2):
+				##print("b")
+				##position.x=move_toward(position.x,target.x, velocity.length()*delta)
+				##if(position.x==target.x):
+					##didThing=true
+			##if(didThing):
+			#beingShot=0
+			#velocity=oldV
+		position.x=move_toward(position.x,target.x, velocity.length()*delta if velocity.length()*delta > 1 else 1)
+		position.y=move_toward(position.y,target.y,  velocity.length()*delta if velocity.length()*delta > 1 else 1)
+		print(velocity.length()*delta)
+		if(position==target):
+			beingShot=false
+			velocity=oldV*1.5
+			cannon.doneShooting()
+			if(buffBounce):
+				buffBounce=false
+				startBounce()
+				velocity=buffForce
 
+		return
 	for key in hitConveyor:
 		hitConveyor[key]=false
 
@@ -199,8 +248,8 @@ func _physics_process(delta):
 				velocity.x = move_toward(velocity.x, 0, (ACCEL if !onice else ACCEL/(2*ICECONTROL)))#*ACCELBOOST
 
 				if(onice and onslope*velocity.x<0 and abs(velocity.x)<40):
-					print("here")
 					velocity=Vector2.ZERO
+					#fixes weird glitch involving going backwards on upslopes at slow speeds
 
 
 			elif(is_on_floor()&&abs(velocity.x)>SPEED and !onconveyor and !onice):
@@ -261,6 +310,8 @@ func _physics_process(delta):
 						var off = (global_position-collision.get_position()).normalized()
 						
 						handleTile(collision.get_position()-off,collision)
+
+							
 					#print(gothru)
 					#if(gothru):
 						#position=tmpPos
@@ -385,6 +436,23 @@ func handleTile(tilePos, col):
 				#onslope=1 if norm.x>0 else -1
 
 		match type:
+			"flip":
+				if(bounce==BounceState.Bouncing):
+					#var tmpv=velocity.x
+					#velocity.x=abs(velocity.y)*(1 if velocity.x>0 else -1)
+					#velocity.y=abs(tmpv)*(1 if velocity.y>0 else -1)
+
+					#var norm = snapped(col.get_normal(),Vector2(.1,.1))
+					#if(norm.x!=0):
+						#velocity.y*=-1
+					#else:
+						#velocity.x*=-1
+						
+					if(abs(velocity.y)>abs(velocity.x)):
+						velocity.x=0
+					else:
+						velocity.y=0
+					onice=true
 			"normal":
 				pass
 			#"gothru":
@@ -398,6 +466,10 @@ func handleTile(tilePos, col):
 				#await get_tree().create_timer(.1).timeout
 				var used={}
 				eraseAll(pos,"crumble",used)
+			"crumblebounce":
+				var used={}
+				eraseAll(pos,"crumblebounce",used)
+				hitBouncy=true
 			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
 
 				if(hitConveyor["white"]): return
@@ -495,5 +567,11 @@ func handleTile(tilePos, col):
 				##add 4 things for each dir of grav flip tiles
 
 
+func momentumCannonEntered(dir, center,cn):
+	target = center
+	oldPos=position
+	oldV=dir*(velocity.length() if velocity.length()>SPEED else SPEED)
+	beingShot=true
+	cannon=cn
 
 
