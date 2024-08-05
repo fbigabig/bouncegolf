@@ -10,6 +10,8 @@
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("1_scyp8")]
 position = Vector2(-256, 136)
+linelength = 20
+interactBox = false
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("2_xbesp")]

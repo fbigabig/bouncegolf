@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-
+signal landed
 const SPEED = 150.0
 const JUMP_VELOCITY = -190.5 #oldest is 200, old is 190.5
 const ACCEL = 10 #old:10
@@ -82,7 +82,6 @@ func _ready():
 
 	UI = UItemplate.instantiate() 
 	get_parent().add_child.call_deferred(UI)
-
 func _input(event):
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )) or Input.get_axis("moveLeft","moveRight")!=0:
@@ -180,7 +179,6 @@ func _physics_process(delta):
 			#velocity=oldV
 		position.x=move_toward(position.x,target.x, velocity.length()*delta if velocity.length()*delta > 1 else 1)
 		position.y=move_toward(position.y,target.y,  velocity.length()*delta if velocity.length()*delta > 1 else 1)
-		print(velocity.length()*delta)
 		if(position==target):
 			beingShot=false
 			velocity=oldV*1.5
@@ -361,6 +359,8 @@ func _physics_process(delta):
 	else:
 		oneTickGroundDelay=false
 		grounded=false
+	if(grounded and not oldFloor):
+		emit_signal("landed")
 	if(coyotecounter>0):
 		coyotecounter-=1
 	if(!is_on_floor() and oldFloor):
@@ -462,14 +462,7 @@ func handleTile(tilePos, col):
 				hitBouncy=true
 			"ice":
 				onice=true
-			"crumble":
-				#await get_tree().create_timer(.1).timeout
-				var used={}
-				eraseAll(pos,"crumble",used)
-			"crumblebounce":
-				var used={}
-				eraseAll(pos,"crumblebounce",used)
-				hitBouncy=true
+			
 			"conveyor_white": #white conveyors bring you up to a speed. bouncing off them does little as a result
 
 				if(hitConveyor["white"]): return
@@ -546,7 +539,14 @@ func handleTile(tilePos, col):
 				"hazard":
 					die()
 				
-				
+				"crumble":
+					#await get_tree().create_timer(.1).timeout
+					var used={}
+					eraseAll(pos,"crumble",used)
+				"crumblebounce":
+					var used={}
+					eraseAll(pos,"crumblebounce",used)
+					hitBouncy=true
 			#removed: grav flip stuff, too jank and not enough room to utilize
 			#"up":
 				#if(gravity == gravities[type]): return

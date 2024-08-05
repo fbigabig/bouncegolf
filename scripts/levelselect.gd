@@ -15,11 +15,11 @@ func _ready():
 	global.save_func()
 	for i in levels:
 		i.setup() #use signal later maybe?
-	print(global.worldLevels)
+	#(global.worldLevels)
 	var player = get_tree().get_nodes_in_group("player")[0]
 	#print(global.levelEntryPos)
-	print(str(global.currentlevel)+" curlevel")
-	print("levelentrypos: "+ str(global.levelEntryPos))
+	#print(str(global.currentlevel)+" curlevel")
+	#print("levelentrypos: "+ str(global.levelEntryPos))
 	player.position = global.levelEntryPos[global.currentlevel]
 	for i in todo:
 		i.setup()

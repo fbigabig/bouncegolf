@@ -16,4 +16,4 @@ func _on_body_entered(body):
 		get_tree().paused=true
 		var clearUI = clearUItemplate.instantiate()
 		get_parent().add_child(clearUI)
-		print(str(global.time).pad_decimals(2))
+		#print(str(global.time).pad_decimals(2))
