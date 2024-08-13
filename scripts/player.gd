@@ -23,6 +23,7 @@ enum BounceState {
 	Landing
 }
 @export var linelength=20
+
 var UItemplate = preload("res://prefabs/UI/pause_UI.tscn")
 var UI
 var oldOnConveyor=false
@@ -118,6 +119,7 @@ func _input(event):
 		jumpTicks=jumpTicksNum
 	
 func startBounce():
+	emit_signal("landed") #used to reset cannons
 	onconveyor=false
 	onice=false
 	oldOnConveyor=false
@@ -130,6 +132,7 @@ func transgenderBounce(collision):
 	field.modulate=fieldUsed
 	bounce=BounceState.Landing
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact * (SUPERBOUNCE if hitBouncy else 1)
+	#print(hitBouncy)
 	#if(hitBouncy):
 		#velocity=Vector2(pow(abs(velocity.x),1.1)*(1 if velocity.x>0 else -1),pow(abs(velocity.y),1.1)*(1 if velocity.y>0 else -1))
 		#print(velocity)
@@ -272,9 +275,11 @@ func _physics_process(delta):
 						hitCheck(col.get_collider())
 
 					else:
-
-						var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
-						handleTile(col.get_position()-off,col)
+						var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
+						print(get_slide_collision_count())
+						print(colpos)
+						#var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
+						handleTile(colpos,col) #col.get_position()-off
 
 
 		BounceState.Bouncing:
@@ -291,6 +296,8 @@ func _physics_process(delta):
 						var norm = collision.get_normal()
 
 						norm = snapped(norm,Vector2(.1,.1))
+
+
 						if(norm.x!=0 and norm.y!=0 and !grounded):
 
 							didThing=true
@@ -306,8 +313,9 @@ func _physics_process(delta):
 						hitCheck(collision.get_collider())
 					else:
 						var off = (global_position-collision.get_position()).normalized()
-						
-						handleTile(collision.get_position()-off,collision)
+						var colpos = tileMap.get_coords_for_body_rid(collision.get_collider_rid())
+
+						handleTile(colpos,collision)
 
 							
 					#print(gothru)
@@ -329,7 +337,9 @@ func _physics_process(delta):
 						hitCheck(col.get_collider())
 					else:
 						var off = (global_position-col.get_position()).normalized()
-						handleTile(col.get_position()-off,col)
+						var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
+
+						handleTile(colpos,col)
 
 				endBounce()
 
@@ -410,10 +420,10 @@ func handleTile(tilePos, col):
 	if(tileMap):
 
 		var type
-		var pos = tileMap.to_local(tilePos)
-		pos= tileMap.local_to_map(pos)
-		
-		var dat = tileMap.get_cell_tile_data(0,pos)
+		#var pos = tileMap.to_local(tilePos)
+	#	pos= tileMap.local_to_map(pos)
+		#
+		var dat = tileMap.get_cell_tile_data(0,tilePos)
 
 		if(dat):
 			var thing = (dat.get_custom_data("special"))
@@ -542,10 +552,10 @@ func handleTile(tilePos, col):
 				"crumble":
 					#await get_tree().create_timer(.1).timeout
 					var used={}
-					eraseAll(pos,"crumble",used)
+					eraseAll(tilePos,"crumble",used)
 				"crumblebounce":
 					var used={}
-					eraseAll(pos,"crumblebounce",used)
+					eraseAll(tilePos,"crumblebounce",used)
 					hitBouncy=true
 			#removed: grav flip stuff, too jank and not enough room to utilize
 			#"up":

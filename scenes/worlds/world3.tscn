@@ -72,6 +72,14 @@ level = 13
 position = Vector2(192, -28)
 level = 14
 
+[node name="selector7" parent="." instance=ExtResource("5_b34a7")]
+position = Vector2(-240, -32)
+level = 300
+
+[node name="selector8" parent="." instance=ExtResource("5_b34a7")]
+position = Vector2(-280, 140)
+level = 300
+
 [node name="worldselector" parent="." instance=ExtResource("9_yahyw")]
 position = Vector2(-80, 132)
 world = 2
@@ -136,3 +144,6 @@ rotation = 3.14065
 [node name="plat4" parent="." instance=ExtResource("13_in2o4")]
 position = Vector2(100, 128)
 rotation = -1.57079
+
+[node name="plat10" parent="." instance=ExtResource("10_wvktj")]
+position = Vector2(-208, 140)

@@ -61,9 +61,9 @@ func _on_player_landed():
 
 
 func _on_body_exited(body):
-	print("doEnd")
-	print(doEnd)
-	print(playerIn)
+	#print("doEnd")
+	#print(doEnd)
+	#print(playerIn)
 	if(body.is_in_group("player")):
 		playerIn=false
 		if doEnd:

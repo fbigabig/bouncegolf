@@ -22,7 +22,8 @@ var levels = {
 	11: "res://scenes/levels/level_icesuperbounce.tscn",
 	12: "res://scenes/levels/level_superbounce.tscn",
 	13: "res://scenes/levels/level_cannon_easy.tscn",
-	14: "res://scenes/levels/level_cannon.tscn"
+	14: "res://scenes/levels/level_cannon.tscn",
+	300: "res://scenes/levels/world3chal.tscn"
 }
 var worlds = {
 	1: "res://scenes/worlds/world1.tscn",
