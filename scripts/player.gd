@@ -275,11 +275,13 @@ func _physics_process(delta):
 						hitCheck(col.get_collider())
 
 					else:
-						var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
-						print(get_slide_collision_count())
-						print(colpos)
+						if(col.get_collider()==tileMap):
+							var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
+							handleTile(colpos,col) #col.get_position()-off
+						#print(get_slide_collision_count())
+						#print(colpos)
 						#var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
-						handleTile(colpos,col) #col.get_position()-off
+
 
 
 		BounceState.Bouncing:
@@ -313,9 +315,9 @@ func _physics_process(delta):
 						hitCheck(collision.get_collider())
 					else:
 						var off = (global_position-collision.get_position()).normalized()
-						var colpos = tileMap.get_coords_for_body_rid(collision.get_collider_rid())
-
-						handleTile(colpos,collision)
+						if(collision.get_collider()==tileMap):
+							var colpos = tileMap.get_coords_for_body_rid(collision.get_collider_rid())
+							handleTile(colpos,collision)
 
 							
 					#print(gothru)
@@ -336,10 +338,10 @@ func _physics_process(delta):
 					if(!tileMap):
 						hitCheck(col.get_collider())
 					else:
-						var off = (global_position-col.get_position()).normalized()
-						var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
-
-						handleTile(colpos,col)
+						#var off = (global_position-col.get_position()).normalized()
+						if(col.get_collider()==tileMap):
+							var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
+							handleTile(colpos,col) #col.get_position()-off
 
 				endBounce()
 

@@ -30,7 +30,8 @@ layer_0/tile_data = PackedInt32Array(1703939, 1, 0, 1769475, 1, 1, 1703940, 6553
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="player" parent="." instance=ExtResource("2_wjiiu")]
-position = Vector2(272, -120)
+position = Vector2(112, 48)
+safe_margin = 0.01
 
 [node name="goal" parent="." instance=ExtResource("3_uimuf")]
 position = Vector2(280, 0)

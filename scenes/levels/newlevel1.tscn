@@ -20,8 +20,6 @@ layer_0/tile_data = PackedInt32Array(-131077, 65537, 1, -65541, 65537, 0, -5, 65
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("2_86c0q")]
 position = Vector2(-280, -104)
-linelength = 20
-interactBox = false
 tileMap = NodePath("../worldmap")
 
 [node name="goal" parent="." instance=ExtResource("3_33v20")]
