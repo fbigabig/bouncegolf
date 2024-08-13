@@ -69,12 +69,13 @@ const jumpTicksNum=5
 @onready var wheel = $wheel
 @onready var interacter = $interacter
 @export var tileMap: TileMap
+var useMouse=false
 var hitConveyor = {
 	"white": false,
 	"black": false
 }
 func _ready():
-
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	global.player=self
 	global.time=0
 	field.hide()
@@ -84,6 +85,14 @@ func _ready():
 	UI = UItemplate.instantiate() 
 	get_parent().add_child.call_deferred(UI)
 func _input(event):
+	if(event is InputEventKey or event is InputEventMouse) and !useMouse:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		useMouse=true
+		# Do stuff
+	elif(event is InputEventJoypadButton or event is InputEventJoypadMotion) and useMouse:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		useMouse=false
+		# Do stuff
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )) or Input.get_axis("moveLeft","moveRight")!=0:
 			timerStarted=true
@@ -98,7 +107,7 @@ func _input(event):
 
 		if(event is InputEventMouse):
 			#velocity = Vector2.ZERO
-			print("Mouse Click at: ", event.position)
+			#print("Mouse Click at: ", event.position)
 			
 			aim_dir= (get_global_mouse_position()-global_position).normalized()
 
@@ -197,8 +206,10 @@ func _physics_process(delta):
 		hitConveyor[key]=false
 
 	oldFloor=grounded
-
-	aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
+	if(useMouse):
+		aim_dir= (get_global_mouse_position()-global_position).normalized()
+	else:
+		aim_dir = Input.get_vector("aimLeft", "aimRight", "aimUp", "aimDown").normalized()
 
 	if(aim_dir.length()==0):
 		#cursor.hide()

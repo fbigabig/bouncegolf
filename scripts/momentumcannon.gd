@@ -27,8 +27,6 @@ func _process(delta):
 func _on_body_entered(body):
 
 	if(body.is_in_group("player")):
-		print(body.velocity)
-		print(body.oldV)
 		playerIn=true
 		if(active):
 			#print(dir)

@@ -8,7 +8,7 @@ func _input(event):
 			get_tree().paused=false
 		elif(is_instance_valid(global.player)):
 			UI.show()
-			UI.restartButton.grab_focus()
+			UI.resumeButton.grab_focus()
 			get_tree().paused=true
 
 # Called when the node enters the scene tree for the first time.
