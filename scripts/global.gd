@@ -53,7 +53,7 @@ var flooredTimes = {
 	12:20,
 	13:20,
 	14:20,
-	300: 20
+	300: 15
 }
 var devTimes = {
 	0: 9.11,
@@ -73,7 +73,7 @@ var devTimes = {
 	12:20,
 	13:20,
 	14:20,
-	300: 20
+	300: 11.84
 }
 func exitToWorld():
 	get_tree().change_scene_to_file(worlds[curWorld])

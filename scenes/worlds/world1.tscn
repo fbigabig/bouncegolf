@@ -72,7 +72,7 @@ position = Vector2(68, -124)
 position = Vector2(52, 132)
 
 [node name="worldselector2" parent="." instance=ExtResource("8_00k0f")]
-position = Vector2(-272, 144)
+position = Vector2(32, -136)
 world = 2
 
 [node name="goalGate" parent="." instance=ExtResource("10_bfgug")]

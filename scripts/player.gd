@@ -23,7 +23,7 @@ enum BounceState {
 	Landing
 }
 @export var linelength=20
-
+var justCol=false
 var UItemplate = preload("res://prefabs/UI/pause_UI.tscn")
 var UI
 var oldOnConveyor=false
@@ -152,6 +152,7 @@ func _process(delta):
 	else:
 		wheel.pause()
 func _physics_process(delta):
+	justCol=false
 	if(beingShot):
 		#var didThing=false
 		#
@@ -180,8 +181,8 @@ func _physics_process(delta):
 			##if(didThing):
 			#beingShot=0
 			#velocity=oldV
-		position.x=move_toward(position.x,target.x, velocity.length()*delta if velocity.length()*delta > 1 else 1)
-		position.y=move_toward(position.y,target.y,  velocity.length()*delta if velocity.length()*delta > 1 else 1)
+		position.x=move_toward(position.x,target.x, oldV.length()*delta) #if velocity.length()*delta > 1 else 1)
+		position.y=move_toward(position.y,target.y,  oldV.length()*delta) #if velocity.length()*delta > 1 else 1)
 		if(position==target):
 			beingShot=false
 			velocity=oldV*1.5
@@ -269,15 +270,15 @@ func _physics_process(delta):
 			
 			if(get_slide_collision_count()>0):
 				for i in get_slide_collision_count():
+					justCol=true
 					var col = get_slide_collision(i)
 					
 					if(!tileMap):
 						hitCheck(col.get_collider())
 
 					else:
-						if(col.get_collider()==tileMap):
-							var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
-							handleTile(colpos,col) #col.get_position()-off
+
+						handleTile(col) #col.get_position()-off
 						#print(get_slide_collision_count())
 						#print(colpos)
 						#var off = (global_position-col.get_position()).normalized()+Vector2(.001,.001 ) ##offset fixes off by one error when exactly lined up
@@ -311,13 +312,12 @@ func _physics_process(delta):
 							#position+= velocity*delta
 				
 				if(!didThing):
+					justCol=true
 					if(!tileMap):
 						hitCheck(collision.get_collider())
 					else:
-						var off = (global_position-collision.get_position()).normalized()
-						if(collision.get_collider()==tileMap):
-							var colpos = tileMap.get_coords_for_body_rid(collision.get_collider_rid())
-							handleTile(colpos,collision)
+						#var off = (global_position-collision.get_position()).normalized()
+						handleTile(collision)
 
 							
 					#print(gothru)
@@ -333,15 +333,15 @@ func _physics_process(delta):
 			oldOnConveyor=onconveyor
 			onconveyor=false
 			if(get_slide_collision_count()>0):
+				justCol=true
 				for i in get_slide_collision_count():
 					var col = get_slide_collision(i)
 					if(!tileMap):
 						hitCheck(col.get_collider())
 					else:
 						#var off = (global_position-col.get_position()).normalized()
-						if(col.get_collider()==tileMap):
-							var colpos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
-							handleTile(colpos,col) #col.get_position()-off
+
+						handleTile(col) #col.get_position()-off
 
 				endBounce()
 
@@ -415,12 +415,12 @@ func eraseAll(pos,typeGoal,usedDict):
 				if(i==0 and j==0) or usedDict.has(newPos):
 					continue
 				eraseAll(newPos,typeGoal,usedDict)
-func handleTile(tilePos, col):
+func handleTile(col):
 	if(col.get_collider()!=tileMap):
 		hitCheck(col.get_collider())
 		return
 	if(tileMap):
-
+		var tilePos = tileMap.get_coords_for_body_rid(col.get_collider_rid())
 		var type
 		#var pos = tileMap.to_local(tilePos)
 	#	pos= tileMap.local_to_map(pos)
@@ -582,7 +582,10 @@ func handleTile(tilePos, col):
 func momentumCannonEntered(dir, center,cn):
 	target = center
 	oldPos=position
+	if(justCol):
+		velocity=oldV
 	oldV=dir*(velocity.length() if velocity.length()>SPEED else SPEED)
+	velocity=Vector2.ZERO
 	beingShot=true
 	cannon=cn
 
