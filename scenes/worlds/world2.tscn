@@ -55,7 +55,7 @@ level = 9
 position = Vector2(-272, -40)
 
 [node name="worldselector3" parent="." instance=ExtResource("8_kmvtt")]
-position = Vector2(192, -144)
+position = Vector2(-260, 144)
 world = 3
 
 [node name="plat2" parent="." instance=ExtResource("7_bfifu")]

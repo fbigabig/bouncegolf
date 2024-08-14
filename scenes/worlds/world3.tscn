@@ -52,7 +52,7 @@ position = Vector2(44, -68)
 level = 11
 
 [node name="selector3" parent="." instance=ExtResource("5_b34a7")]
-position = Vector2(272, -120)
+position = Vector2(288, -120)
 level = 12
 
 [node name="selector5" parent="." instance=ExtResource("5_b34a7")]
@@ -128,7 +128,7 @@ position = Vector2(100, -80)
 rotation = -1.57079
 
 [node name="key" parent="." node_paths=PackedStringArray("keyTile") instance=ExtResource("16_ao8cl")]
-position = Vector2(272, -148)
+position = Vector2(268, -120)
 keyTile = NodePath("../keytile")
 
 [node name="keytile" parent="." instance=ExtResource("17_og0bb")]

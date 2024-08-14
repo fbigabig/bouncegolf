@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://gtw6fel1kwo4"]
+[gd_scene load_steps=4 format=3 uid="uid://gtw6fel1kwo4"]
 
 [ext_resource type="Texture2D" uid="uid://bprn1w7lm4t1l" path="res://assets/x.png" id="1_tsg3w"]
 [ext_resource type="Script" path="res://scripts/deathSign.gd" id="2_va7jb"]
+[ext_resource type="AudioStream" uid="uid://2n40m7fu12q" path="res://assets/audio/hitHurt (2).wav" id="3_0cbgj"]
 
 [node name="Sprite2D" type="Sprite2D"]
 modulate = Color(0, 0, 0, 1)
@@ -13,5 +14,10 @@ script = ExtResource("2_va7jb")
 wait_time = 0.78
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_0cbgj")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="timeout" from="restarttimer" to="." method="_on_restarttimer_timeout"]

@@ -60,6 +60,9 @@ var paused=false
 @onready var line = $aimline
 @onready var cursor = $cursor
 @onready var field = $bounceField
+@onready var player = $player
+var jumpNoise= preload("res://assets/audio/jump (1).wav")
+var bounceNoise= preload("res://assets/audio/bounce.wav")
 var timer
 @export var interactBox = false
 
@@ -122,7 +125,7 @@ func _input(event):
 			buffForce = aim_dir*SPEED*dashFact
 			return
 		startBounce()
-
+		
 		velocity = aim_dir*SPEED*dashFact
 	elif(Input.is_action_just_pressed("jump")):
 		jumpTicks=jumpTicksNum
@@ -135,7 +138,11 @@ func startBounce():
 	bounce=BounceState.Bouncing
 	field.modulate=fieldFresh
 	field.show()
-	
+	if(player.playing):
+		player.stop()
+	if(player.stream!=bounceNoise):
+		player.stream=bounceNoise
+	player.play()
 	canBounce=false
 func transgenderBounce(collision):
 	field.modulate=fieldUsed
@@ -225,11 +232,15 @@ func _physics_process(delta):
 	
 	# Handle jump.
 	if (jumpTicks>0) and (grounded||coyotecounter>0) and bounce==BounceState.None:
-
+		
 		jumpTicks=0
 		coyotecounter=0
 		velocity.y = JUMP_VELOCITY
-		
+		if(player.playing):
+			player.stop()
+		if(player.stream!=jumpNoise):
+			player.stream=jumpNoise
+		player.play()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.

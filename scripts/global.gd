@@ -3,6 +3,8 @@ extends Node
 var time = 0
 var currentlevel = -1
 var player
+var defVol
+var lowVol= -30
 var loaded=[false,false,false,false,false]
 var worldLevels = []
 var levels = {
@@ -77,11 +79,14 @@ var devTimes = {
 	300: 11.84
 }
 func exitToWorld():
+	Musicplayer.setVolume(defVol)
 	get_tree().change_scene_to_file(worlds[curWorld])
 func newWorld(worldNum):
+	defVol=Musicplayer.defVol[worldNum-1]
 	curWorld=worldNum
 	currentlevel=-1
 	exitToWorld()
+	Musicplayer.update()
 func nextLevel():
 	if(time<times[currentlevel]||times[currentlevel]==0):
 		times[currentlevel] = time

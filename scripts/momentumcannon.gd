@@ -6,7 +6,8 @@ var doEnd=false
 var inProcess=false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	global.player.landed.connect(Callable(self, "_on_player_landed"))
+	if(is_instance_valid(global.player)):
+		global.player.landed.connect(Callable(self, "_on_player_landed"))
 	var rot = snapped(rotation_degrees,1)
 	if(rot==0):
 		dir = Vector2(0,-1)
