@@ -15,9 +15,9 @@ wait_time = 0.78
 one_shot = true
 autostart = true
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_0cbgj")
-volume_db = -10.0
+volume_db = -12.0
 autoplay = true
 
 [connection signal="timeout" from="restarttimer" to="." method="_on_restarttimer_timeout"]

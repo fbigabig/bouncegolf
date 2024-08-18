@@ -12,4 +12,5 @@ func _process(delta):
 
 
 func _on_pressed():
+	Musicplayer.buttonClicked()
 	get_tree().change_scene_to_file(scene)

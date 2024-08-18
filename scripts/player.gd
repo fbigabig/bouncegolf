@@ -63,6 +63,8 @@ var paused=false
 @onready var player = $player
 var jumpNoise= preload("res://assets/audio/jump (1).wav")
 var bounceNoise= preload("res://assets/audio/bounce.wav")
+var bounceNoise1= preload("res://assets/audio/bounce1.wav")
+var bounceNoiseDone= preload("res://assets/audio/bouncedone.wav")
 var timer
 @export var interactBox = false
 
@@ -140,14 +142,19 @@ func startBounce():
 	field.show()
 	if(player.playing):
 		player.stop()
-	if(player.stream!=bounceNoise):
-		player.stream=bounceNoise
+	if(player.stream!=bounceNoise1):
+		player.stream=bounceNoise1
 	player.play()
 	canBounce=false
 func transgenderBounce(collision):
 	field.modulate=fieldUsed
 	bounce=BounceState.Landing
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact * (SUPERBOUNCE if hitBouncy else 1)
+	if(player.playing):
+		player.stop()
+	if(player.stream!=bounceNoise):
+		player.stream=bounceNoise
+	player.play()
 	#print(hitBouncy)
 	#if(hitBouncy):
 		#velocity=Vector2(pow(abs(velocity.x),1.1)*(1 if velocity.x>0 else -1),pow(abs(velocity.y),1.1)*(1 if velocity.y>0 else -1))
@@ -156,6 +163,11 @@ func transgenderBounce(collision):
 func endBounce():
 	bounce=BounceState.None
 	field.hide()
+	if(player.playing):
+		player.stop()
+	if(player.stream!=bounceNoiseDone):
+		player.stream=bounceNoiseDone
+	player.play()
 
 func _process(delta):
 	if(timer!=null and timerStarted):

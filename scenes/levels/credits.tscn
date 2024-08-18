@@ -39,7 +39,7 @@ EriFigured
 Programming
 EriFigured
 
-Art
+Art and SFX
 EriFigured
 
 Special thanks
@@ -48,7 +48,9 @@ Tyler
 Ethan
 Cody
 Kristen
+Noah
 Joanna
+Dakota
 
 
 
@@ -72,7 +74,11 @@ http://creativecommons.org/licenses/by/3.0/
 
 \"Voxel Revolution\" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/"
+http://creativecommons.org/licenses/by/3.0/
+
+\"Space Fighter Loop\" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/"
 script = ExtResource("3_eyy4q")
 
 [node name="Button" type="Button" parent="."]

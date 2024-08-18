@@ -49,7 +49,7 @@ position = Vector2(-268, 80)
 level = 10
 
 [node name="selector2" parent="." instance=ExtResource("5_b34a7")]
-position = Vector2(44, -68)
+position = Vector2(44, -76)
 level = 11
 
 [node name="selector3" parent="." instance=ExtResource("5_b34a7")]
@@ -79,7 +79,7 @@ position = Vector2(-268, 44)
 position = Vector2(-16, -32)
 
 [node name="plat17" parent="." instance=ExtResource("9_x7d5s")]
-position = Vector2(44, -44)
+position = Vector2(44, -52)
 
 [node name="plat20" parent="." instance=ExtResource("9_x7d5s")]
 position = Vector2(44, -20)

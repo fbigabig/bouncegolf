@@ -15,9 +15,12 @@ func _input(event):
 			get_tree().paused=false
 			Musicplayer.setVolume(global.defVol)
 		elif(is_instance_valid(global.player)):
+			#Musicplayer.buttonClicked()
 			UI.show()
 			initGrab = false
 			get_tree().paused=true
+			global.curWorld=1
+			Musicplayer.update()
 			Musicplayer.setVolume(global.lowVol)
 
 # Called when the node enters the scene tree for the first time.

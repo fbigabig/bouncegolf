@@ -7,6 +7,7 @@ var defVol
 var lowVol= -30
 var loaded=[false,false,false,false,false]
 var worldLevels = []
+
 var levels = {
 	0: "res://scenes/levels/beginnerlevel.tscn",
 	1 : "res://scenes/levels/newlevel1.tscn",
@@ -25,12 +26,14 @@ var levels = {
 	12: "res://scenes/levels/level_superbounce.tscn",
 	13: "res://scenes/levels/level_cannon_easy.tscn",
 	14: "res://scenes/levels/level_cannon.tscn",
-	300: "res://scenes/levels/world3chal.tscn"
+	300: "res://scenes/levels/world3chal.tscn",
+	1000: "res://scenes/levels/superchal.tscn"
 }
 var worlds = {
 	1: "res://scenes/worlds/world1.tscn",
 	2: "res://scenes/worlds/world2.tscn",
-	3: "res://scenes/worlds/world3.tscn"
+	3: "res://scenes/worlds/world3.tscn",
+	4: "res://scenes/worlds/world4.tscn",
 }
 var curWorld = 1
 var levelEntryPos = {
@@ -41,22 +44,23 @@ var times = {}
 var flooredTimes = {
 	0: 15,
 	1: 15,
-	2: 18,
-	3: 18,
+	2: 20,
+	3: 20,
 	4: 35,
 	100: 40,
 	5: 20,
-	6: 20,
-	7: 20,
+	6: 35,
+	7: 15,
 	8: 20,
 	200: 20,
-	9: 20,
-	10:20,
-	11:20,
-	12:20,
-	13:20,
+	9: 30,
+	10:35,
+	11:15,
+	12:25,
+	13:35,
 	14:20,
-	300: 15
+	300: 25,
+	1000: 30
 }
 var devTimes = {
 	0: 9.11,
@@ -66,17 +70,18 @@ var devTimes = {
 	4: 17.76,
 	100: 18.81,
 	5: 8.98,
-	6: 15,
-	7:10,
-	8: 20,
-	200: 20,
-	9: 20,
-	10: 15,
-	11:20,
-	12:20,
-	13:20,
-	14:20,
-	300: 11.84
+	6: 14.25,
+	7:3.43,
+	8: 11.11,
+	200: 7.39,
+	9: 14.85,
+	10: 17.24,
+	11:6.78,
+	12:11.7,
+	13:17.11,
+	14:7.89,
+	300: 11.84,
+	1000:13.5 
 }
 func exitToWorld():
 	Musicplayer.setVolume(defVol)

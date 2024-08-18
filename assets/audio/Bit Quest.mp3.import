@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/Bit Quest.mp3-f956a04af0e696fa831381d5a3f2864
 
 [params]
 
-loop=false
-loop_offset=0
-bpm=0
+loop=true
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

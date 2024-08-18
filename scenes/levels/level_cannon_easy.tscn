@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ds4hm5dlcntlv"]
+[gd_scene load_steps=13 format=3 uid="uid://ds4hm5dlcntlv"]
 
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="1_yoaxe"]
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="2_0j3oe"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dchcyppn84jwm" path="res://prefabs/plats/plat2.tscn" id="7_m63g1"]
 [ext_resource type="PackedScene" uid="uid://cvhp755tpvcgk" path="res://prefabs/key.tscn" id="9_bavu8"]
 [ext_resource type="PackedScene" uid="uid://dl3rtm0itv88p" path="res://prefabs/keytile.tscn" id="10_xguwg"]
+[ext_resource type="PackedScene" uid="uid://cie83h7mwjqg2" path="res://prefabs/arrow.tscn" id="11_ivsft"]
+[ext_resource type="Texture2D" uid="uid://bprn1w7lm4t1l" path="res://assets/x.png" id="12_exsq0"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -87,3 +89,29 @@ position = Vector2(136, -72)
 
 [node name="keytile2" parent="keytile" instance=ExtResource("10_xguwg")]
 position = Vector2(0, -16)
+
+[node name="arrow" parent="." instance=ExtResource("11_ivsft")]
+position = Vector2(64, 24)
+rotation = 3.14349
+
+[node name="arrow2" parent="." instance=ExtResource("11_ivsft")]
+position = Vector2(44, 128)
+rotation = -1.57079
+
+[node name="arrow3" parent="." instance=ExtResource("11_ivsft")]
+position = Vector2(48, 128)
+rotation = -1.57079
+
+[node name="arrow4" parent="." instance=ExtResource("11_ivsft")]
+position = Vector2(-140, 8)
+rotation = 1.57079
+
+[node name="arrow5" parent="." instance=ExtResource("11_ivsft")]
+position = Vector2(-136, 8)
+rotation = 1.57079
+
+[node name="X" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 0.396078)
+z_index = 1
+position = Vector2(-136, 8)
+texture = ExtResource("12_exsq0")

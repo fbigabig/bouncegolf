@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcx5nyu2sb3nf"]
+[gd_scene load_steps=9 format=3 uid="uid://dcx5nyu2sb3nf"]
 
 [ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="2_fidp4"]
 [ext_resource type="Script" path="res://scripts/startButton.gd" id="3_4q0dl"]
 [ext_resource type="PackedScene" uid="uid://br5lmcyc2ujrc" path="res://prefabs/worldmapv2.tscn" id="3_7qije"]
 [ext_resource type="PackedScene" uid="uid://dqec2ju2nyila" path="res://prefabs/plats/plat16.tscn" id="4_lyox2"]
 [ext_resource type="Script" path="res://scripts/creditsbutton.gd" id="4_o1mia"]
+[ext_resource type="Script" path="res://scenes/levels/quitbutton.gd" id="5_tuwoq"]
 [ext_resource type="PackedScene" uid="uid://cib2c1st372as" path="res://prefabs/playercpu.tscn" id="6_b3l7y"]
 [ext_resource type="PackedScene" uid="uid://ba13idvf5tkki" path="res://prefabs/plats/plat4.tscn" id="6_mwrj5"]
 
@@ -26,7 +27,7 @@ offset_bottom = -45.0
 theme = ExtResource("2_fidp4")
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
-text = "[center]Floor It, We Ball[/center]"
+text = "[center]FLOOR IT WE BALL[/center]"
 fit_content = true
 
 [node name="Button" type="Button" parent="."]
@@ -37,12 +38,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -64.0
-offset_top = 28.0
+offset_top = 24.0
 offset_right = 64.0
-offset_bottom = 64.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_neighbor_top = NodePath("../Button2")
+focus_neighbor_top = NodePath("../Button3")
 focus_neighbor_bottom = NodePath("../Button2")
 theme = ExtResource("2_fidp4")
 text = "Start"
@@ -56,20 +57,40 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -32.0
-offset_top = 76.0
+offset_top = 72.0
 offset_right = 32.0
-offset_bottom = 97.0
+offset_bottom = 93.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_top = NodePath("../Button")
-focus_neighbor_bottom = NodePath("../Button")
+focus_neighbor_bottom = NodePath("../Button3")
 theme = ExtResource("2_fidp4")
 theme_override_font_sizes/font_size = 16
 text = "Credits"
 script = ExtResource("4_o1mia")
 
+[node name="Button3" type="Button" parent="."]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 104.0
+offset_right = 32.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Button2")
+focus_neighbor_bottom = NodePath("../Button")
+theme = ExtResource("2_fidp4")
+theme_override_font_sizes/font_size = 16
+text = "Quit"
+script = ExtResource("5_tuwoq")
+
 [node name="plat" parent="." instance=ExtResource("4_lyox2")]
-position = Vector2(-88, 108)
+position = Vector2(-116, 108)
 
 [node name="plat2" parent="." instance=ExtResource("4_lyox2")]
 position = Vector2(216, -100)
@@ -104,3 +125,4 @@ rotation = 1.57079
 
 [connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
 [connection signal="pressed" from="Button2" to="Button2" method="_on_pressed"]
+[connection signal="pressed" from="Button3" to="Button3" method="_on_pressed"]

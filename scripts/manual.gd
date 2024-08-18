@@ -11,7 +11,7 @@ func _process(delta):
 
 
 func _on_button_pressed():
-
+	Musicplayer.buttonClicked()
 	parent.visible=true
 	parent.resumeButton.grab_focus()
 	queue_free()

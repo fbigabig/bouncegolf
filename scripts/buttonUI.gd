@@ -2,6 +2,7 @@ extends VBoxContainer
 
 @onready var resumeButton = $resume
 var manual= preload("res://prefabs/UI/manual.tscn")
+var title = ("res://scenes/levels/TitleScreen.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -22,11 +23,13 @@ func _on_restart_pressed():
 
 
 func _on_level_select_pressed():
+	Musicplayer.buttonClicked()
 	get_tree().paused=false
 	global.exitToWorld()
 
 
 func _on_manual_pressed():
+	Musicplayer.buttonClicked()
 	var manualInst = manual.instantiate()
 	manualInst.parent=self
 	get_parent().add_child(manualInst)
@@ -34,10 +37,14 @@ func _on_manual_pressed():
 
 
 func _on_quit_pressed():
-	get_tree().quit()
+	Musicplayer.buttonClicked()
+	get_tree().paused=false
+	Musicplayer.setVolume(global.defVol)
+	get_tree().change_scene_to_file(title)
 
 
 func _on_resume_pressed():
+	Musicplayer.buttonClicked()
 	hide()
 	Musicplayer.setVolume(global.defVol)
 	get_tree().paused=false

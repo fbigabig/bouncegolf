@@ -48,13 +48,14 @@ text = "Controls"
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 52.0
+offset_left = -104.0
 offset_top = -160.0
 offset_right = 276.0
 offset_bottom = -116.0
 theme = ExtResource("1_km6a8")
 theme_override_font_sizes/normal_font_size = 48
-text = "Tips"
+bbcode_enabled = true
+text = "[center]Tips"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -64,16 +65,7 @@ offset_right = -52.0
 offset_bottom = 144.0
 theme = ExtResource("1_km6a8")
 bbcode_enabled = true
-text = "Keyboard+Mouse:
-
-WASD to move
-Mouse to aim
-Space to Jump
-Left click to bouncedash
-ESC to pause
-R to restart
-
-Controller:
+text = "Controller (recommended):
 
 LS/Dpad to move
 Right Stick to aim
@@ -81,6 +73,15 @@ ZL/RB to jump
 ZR/LB to bouncedash
 Start to pause
 Select to restart
+
+Keyboard+Mouse:
+
+WASD to move
+Mouse to aim
+Space to Jump
+Left click to bouncedash
+ESC to pause
+R to restart
 "
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="."]
