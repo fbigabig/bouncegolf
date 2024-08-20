@@ -123,6 +123,10 @@ text = "[center]World 1[/center]"
 [node name="selector1" parent="." instance=ExtResource("4_dp0rp")]
 position = Vector2(-264, 56)
 
+[node name="selector6" parent="." instance=ExtResource("4_dp0rp")]
+position = Vector2(-264, 136)
+level = 300
+
 [node name="selector" parent="." instance=ExtResource("4_dp0rp")]
 position = Vector2(160, 24)
 level = 2
