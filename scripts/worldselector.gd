@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var world = 1
+var enabled=false
 var images = {
 	1: "res://assets/worldselects/worldpicker1.png",
 	2: "res://assets/worldselects/worldpicker2.png",
@@ -10,8 +11,20 @@ var images = {
 # Called when the node enters the scene tree for the first time.
 
 
-func _ready():
-	$Sprite2D.texture = load(images[world])
+func setup():
+	var yes= true
+	#print(global.worldLevels)
+	if(world>global.curWorld):
+		for level in global.worldLevels:
+			if(level>99): continue
+			if not (global.times[level]!=0.0):
+				yes = false
+			#else:
+				#print("failed: ")
+				#print(level)
+	if yes:
+		enabled=true
+		$Sprite2D.texture = load(images[world])
 	$RichTextLabel.text="[center]"+"world "+str(world)+"[/center]"
 
 
@@ -20,4 +33,5 @@ func _process(delta):
 	pass
 
 func doLoad():
-	global.newWorld(world)
+	if(enabled):
+		global.newWorld(world)

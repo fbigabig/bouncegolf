@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://cdhlp7dpg14cr"]
 
 [ext_resource type="Script" path="res://scripts/worldselector.gd" id="1_trhri"]
-[ext_resource type="Texture2D" uid="uid://c1ykghpf222vr" path="res://assets/worldselects/worldpicker1.png" id="2_aqcjm"]
+[ext_resource type="Texture2D" uid="uid://cvut4ssiuam7q" path="res://assets/worldselects/worldno.png" id="2_1kacc"]
 [ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="3_riun0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xp3p3"]
 radius = 12.0
 
-[node name="worldselector" type="Area2D" groups=["selector"]]
+[node name="worldselector" type="Area2D" groups=["selector", "worldtodo"]]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_trhri")
@@ -15,7 +15,7 @@ script = ExtResource("1_trhri")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -2
 z_as_relative = false
-texture = ExtResource("2_aqcjm")
+texture = ExtResource("2_1kacc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["coin"]]
 shape = SubResource("CircleShape2D_xp3p3")

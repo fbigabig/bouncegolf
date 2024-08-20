@@ -7,7 +7,7 @@ var defVol
 var lowVol= -30
 var loaded=[false,false,false,false,false]
 var worldLevels = []
-
+var worldsUnlocked = [true,false,false,true]
 var levels = {
 	0: "res://scenes/levels/beginnerlevel.tscn",
 	1 : "res://scenes/levels/newlevel1.tscn",

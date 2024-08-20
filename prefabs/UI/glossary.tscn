@@ -1,0 +1,521 @@
+[gd_scene load_steps=12 format=3 uid="uid://b14akeulyim3q"]
+
+[ext_resource type="Script" path="res://scripts/glossary.gd" id="1_dly2h"]
+[ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="2_71w3j"]
+[ext_resource type="Texture2D" uid="uid://ckt5txm332q6s" path="res://assets/key.png" id="3_vai2i"]
+[ext_resource type="Texture2D" uid="uid://dwg45a7lwxy3q" path="res://assets/keytile.png" id="4_v0p7d"]
+[ext_resource type="Texture2D" uid="uid://ndwh4k2me85c" path="res://assets/sq.png" id="5_db4h5"]
+[ext_resource type="Texture2D" uid="uid://bferlftqdbs21" path="res://assets/dsh.png" id="6_rgyjn"]
+[ext_resource type="Texture2D" uid="uid://brtbp7yh3yef0" path="res://assets/bubble.png" id="7_fhjf5"]
+[ext_resource type="Texture2D" uid="uid://bv1r5vr01be6o" path="res://assets/passtru/plat (1).png" id="7_wxuhd"]
+[ext_resource type="Script" path="res://prefabs/UI/worldinfo.gd" id="8_r8dwo"]
+[ext_resource type="Texture2D" uid="uid://ce4ntajmmeuqj" path="res://assets/conveyor_black.png" id="9_8vk7g"]
+[ext_resource type="Texture2D" uid="uid://befiui7irfkw2" path="res://assets/arrowarea.png" id="11_won7h"]
+
+[node name="glossary" type="Control"]
+z_index = 9
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_dly2h")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_left = -368.0
+offset_top = -208.0
+offset_right = 392.0
+offset_bottom = 248.0
+color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = 112.0
+offset_right = 12.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_71w3j")
+theme_override_font_sizes/font_size = 16
+text = "BACK"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -72.0
+offset_top = -184.0
+offset_right = 152.0
+offset_bottom = -140.0
+theme = ExtResource("2_71w3j")
+theme_override_font_sizes/normal_font_size = 48
+text = "Glossary"
+
+[node name="world1info" type="Node2D" parent="."]
+position = Vector2(-180, -100)
+
+[node name="bubblestuff2" type="Node2D" parent="world1info"]
+position = Vector2(-148, -60)
+
+[node name="Bubble2" type="Sprite2D" parent="world1info/bubblestuff2"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+position = Vector2(148, 116)
+texture = ExtResource("7_fhjf5")
+
+[node name="ColorRect" type="ColorRect" parent="world1info/bubblestuff2"]
+z_index = 1
+offset_left = 128.0
+offset_top = 120.0
+offset_right = 168.0
+offset_bottom = 140.0
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel11" type="RichTextLabel" parent="world1info/bubblestuff2"]
+z_index = 2
+offset_left = 56.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 148.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 10
+bbcode_enabled = true
+text = "Bubble tiles       pop on contact. You can bounce off them once. Be careful!"
+
+[node name="ColorRect2" type="ColorRect" parent="world1info/bubblestuff2"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = -1
+offset_left = 132.0
+offset_top = 92.0
+offset_right = 164.0
+offset_bottom = 120.0
+
+[node name="ColorRect3" type="ColorRect" parent="world1info/bubblestuff2"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+offset_left = 132.0
+offset_top = 120.0
+offset_right = 164.0
+offset_bottom = 124.0
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="world1info"]
+offset_left = -92.0
+offset_top = -44.0
+offset_right = 132.0
+offset_bottom = -24.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "Hazard tiles      kill on contact."
+
+[node name="Sq" type="Sprite2D" parent="world1info/RichTextLabel7"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(92, 8)
+texture = ExtResource("5_db4h5")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="world1info"]
+offset_left = -92.0
+offset_top = -20.0
+offset_right = 132.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "Keys      unlock key tiles     ."
+
+[node name="Key" type="Sprite2D" parent="world1info/RichTextLabel2"]
+modulate = Color(1, 1, 0, 1)
+z_index = 5
+position = Vector2(40, 8)
+texture = ExtResource("3_vai2i")
+
+[node name="Keytile" type="Sprite2D" parent="world1info/RichTextLabel2"]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(176, 8)
+texture = ExtResource("4_v0p7d")
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="world1info"]
+offset_left = -92.0
+offset_top = 84.0
+offset_right = 132.0
+offset_bottom = 104.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "     are one-way surfaces."
+
+[node name="Sq" type="Sprite2D" parent="world1info"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+position = Vector2(16, 9)
+scale = Vector2(1.125, 1.125)
+texture = ExtResource("5_db4h5")
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="world1info"]
+offset_left = -92.0
+offset_top = 1.0
+offset_right = 140.0
+offset_bottom = 37.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "Appearing tiles      turn into solid tiles      when passed through."
+
+[node name="Dsh" type="Sprite2D" parent="world1info/RichTextLabel4"]
+position = Vector2(108, 8)
+texture = ExtResource("6_rgyjn")
+
+[node name="Sq2" type="Sprite2D" parent="world1info"]
+position = Vector2(-44, 25)
+texture = ExtResource("5_db4h5")
+
+[node name="Plat(1)" type="Sprite2D" parent="world1info"]
+position = Vector2(-80, 92)
+texture = ExtResource("7_wxuhd")
+
+[node name="world2info" type="Node2D" parent="."]
+position = Vector2(152, -140)
+script = ExtResource("8_r8dwo")
+
+[node name="infotext" type="RichTextLabel" parent="world2info"]
+visible = false
+z_index = 2
+offset_left = -96.0
+offset_top = 56.0
+offset_right = 128.0
+offset_bottom = 116.0
+theme = ExtResource("2_71w3j")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "UNLOCK WORLD 2 TO UNLOCK MORE INFO"
+
+[node name="stuff" type="Control" parent="world2info"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sq" type="Sprite2D" parent="world2info/stuff"]
+position = Vector2(48, 52)
+texture = ExtResource("9_8vk7g")
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="world2info/stuff/Sq"]
+z_index = 2
+offset_left = -144.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 36.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "Black conveyors      are grippy."
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="world2info/stuff/Sq"]
+z_index = 2
+offset_left = -144.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 40.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "They will immediately make you match their speed."
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="world2info/stuff/Sq"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = -1
+anchors_preset = -1
+anchor_left = -0.0416667
+anchor_top = -0.1
+anchor_right = 0.25
+anchor_bottom = 0.6
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect4" type="ColorRect" parent="world2info/stuff/Sq"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+anchors_preset = -1
+anchor_left = -0.0416667
+anchor_top = 0.6
+anchor_right = 0.25
+anchor_bottom = 0.7
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect5" type="ColorRect" parent="world2info/stuff/Sq"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = -0.1
+anchor_right = 0.292
+anchor_bottom = 0.7
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.032
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="world2info/stuff/Sq"]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 1.417
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.032
+offset_bottom = -20.0
+
+[node name="ColorRect3" type="ColorRect" parent="world2info/stuff/Sq"]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = -1
+anchor_left = -0.417
+anchor_top = 0.6
+anchor_right = 0.75
+anchor_bottom = 1.0
+offset_left = -47.968
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Sq3" type="Sprite2D" parent="world2info/stuff"]
+position = Vector2(48, 112)
+texture = ExtResource("9_8vk7g")
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="world2info/stuff/Sq3"]
+z_index = 2
+offset_left = -144.0
+offset_top = -16.0
+offset_right = 80.0
+offset_bottom = 36.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "White conveyors      are less grippy."
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="world2info/stuff/Sq3"]
+z_index = 2
+anchors_preset = -1
+anchor_bottom = 0.8
+offset_left = -144.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 40.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "They take longer to accelerate you, and bouncing off them has less of an effect, but they have higher speed potential."
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="world2info/stuff/Sq3"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = -1
+anchors_preset = -1
+anchor_left = -0.0416667
+anchor_top = -0.1
+anchor_right = 0.25
+anchor_bottom = 0.6
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect4" type="ColorRect" parent="world2info/stuff/Sq3"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+anchors_preset = -1
+anchor_left = -0.0416667
+anchor_top = 0.6
+anchor_right = 0.25
+anchor_bottom = 0.7
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect5" type="ColorRect" parent="world2info/stuff/Sq3"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = -0.1
+anchor_right = 0.292
+anchor_bottom = 0.7
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.032
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="world2info/stuff/Sq3"]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 1.417
+anchor_bottom = 1.0
+offset_left = -48.0
+offset_top = -20.0
+offset_right = -48.032
+offset_bottom = -20.0
+
+[node name="ColorRect3" type="ColorRect" parent="world2info/stuff/Sq3"]
+modulate = Color(0, 0, 0, 1)
+anchors_preset = -1
+anchor_left = -0.417
+anchor_top = 0.6
+anchor_right = 0.75
+anchor_bottom = 1.0
+offset_left = -47.968
+offset_top = -20.0
+offset_right = -48.0
+offset_bottom = -20.0
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="world2info/stuff"]
+offset_left = -96.0
+offset_top = -4.0
+offset_right = 128.0
+offset_bottom = 28.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "Slime tiles      can be bounced off, but otherwise kill on contact."
+metadata/_edit_use_anchors_ = true
+
+[node name="Sq" type="Sprite2D" parent="world2info/stuff/RichTextLabel3"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(84, 8)
+texture = ExtResource("5_db4h5")
+
+[node name="world3info" type="Node2D" parent="."]
+position = Vector2(0, 20)
+script = ExtResource("8_r8dwo")
+world = 3
+
+[node name="infotext" type="RichTextLabel" parent="world3info"]
+visible = false
+offset_left = -272.0
+offset_top = 68.0
+offset_right = 288.0
+offset_bottom = 116.0
+theme = ExtResource("2_71w3j")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "UNLOCK WORLD 3 TO UNLOCK MORE INFO"
+
+[node name="stuff" type="Control" parent="world3info"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RichTextLabel9" type="RichTextLabel" parent="world3info/stuff"]
+offset_left = -272.0
+offset_top = 100.0
+offset_right = -48.0
+offset_bottom = 152.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "Bouncy tiles      increase your speed when you bounce off them, causing you to go farther."
+
+[node name="Sq" type="Sprite2D" parent="world3info/stuff/RichTextLabel9"]
+modulate = Color(0.607843, 0.00392157, 0.980392, 1)
+position = Vector2(88, 8)
+texture = ExtResource("5_db4h5")
+
+[node name="RichTextLabel10" type="RichTextLabel" parent="world3info/stuff"]
+offset_left = 108.0
+offset_top = 48.0
+offset_right = 268.0
+offset_bottom = 100.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "Momentum cannons  shoot you out a bit faster than you went in."
+
+[node name="Arrowarea" type="Sprite2D" parent="world3info/stuff"]
+z_index = 1
+position = Vector2(76, 68)
+texture = ExtResource("11_won7h")
+
+[node name="ColorRect" type="ColorRect" parent="world3info/stuff/Arrowarea"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = -1
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="bubblestuff" type="Node2D" parent="world3info/stuff"]
+position = Vector2(0, 8)
+
+[node name="Bubble2" type="Sprite2D" parent="world3info/stuff/bubblestuff"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+position = Vector2(184, 116)
+texture = ExtResource("7_fhjf5")
+
+[node name="ColorRect" type="ColorRect" parent="world3info/stuff/bubblestuff"]
+z_index = 1
+offset_left = 164.0
+offset_top = 120.0
+offset_right = 204.0
+offset_bottom = 140.0
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel11" type="RichTextLabel" parent="world3info/stuff/bubblestuff"]
+z_index = 2
+offset_left = 56.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 148.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 10
+bbcode_enabled = true
+text = "Super bubble tiles       combine the properties of bubbles and bouncy tiles."
+
+[node name="ColorRect2" type="ColorRect" parent="world3info/stuff/bubblestuff"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = -1
+offset_left = 168.0
+offset_top = 92.0
+offset_right = 200.0
+offset_bottom = 120.0
+
+[node name="ColorRect3" type="ColorRect" parent="world3info/stuff/bubblestuff"]
+modulate = Color(0.407843, 0.407843, 0.486275, 1)
+z_index = 1
+offset_left = 168.0
+offset_top = 120.0
+offset_right = 200.0
+offset_bottom = 124.0
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="world3info/stuff"]
+offset_left = -272.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = 80.0
+theme = ExtResource("2_71w3j")
+bbcode_enabled = true
+text = "Ice tiles      are slippier, and you don't slow down on them."
+
+[node name="Sq" type="Sprite2D" parent="world3info/stuff/RichTextLabel8"]
+modulate = Color(0.615686, 1, 0.996078, 1)
+position = Vector2(72, 8)
+texture = ExtResource("5_db4h5")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

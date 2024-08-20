@@ -16,8 +16,9 @@ func setup():
 			break
 
 	if yes:
-		self.modulate.a8=50
+		self.modulate.a8=60
 		col.disabled=true
+		self.z_index=-5
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

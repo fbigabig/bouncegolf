@@ -115,22 +115,23 @@ R to restart
 layout_mode = 0
 offset_left = -104.0
 offset_top = -128.0
-offset_right = 288.0
-offset_bottom = 148.0
+offset_right = 276.0
+offset_bottom = 132.0
 theme = ExtResource("1_km6a8")
 theme_override_constants/line_separation = 0
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "Do a \"dash cancel\" by touching a wall or ceiling after bouncing. This lets you regain control in midair instead of waiting to land.
 
-If stuck, try experimenting with different dash angles, or bouncing off different surfaces! 
+If stuck, try experimenting with different dash angles, or bouncing off different surfaces!
+
 If unsure how a level object works, try doing different thigs on/to it and seeing the results!
 
-All levels have a goal time, indicated by the time in red in the top left corner. If you beat this time, your best time will show up in green in the level, and the level selection icon will get a spinning ball icon on it. 
-Beat the developer time for a level to add a green check to the spinning ball.
+All levels have a goal time, indicated by the time in red in the top left corner. If you beat this time, your best time will show up in green in the level, and the level selection icon will get a spinning ball icon on it.
 
-Unlock new worlds by beating all the regular levels in a world. Unlock challenge levels (level 100/200/300) by getting every goal time in a world! There's a reward for getting the goal time for every regular level and challenge level across all 3 worlds!
-"
+Unlock challenge levels (level 100/200/300) by clearing the goal time for a world!
+
+If you beat the developer's time for a level, a green check on the spinning ball icon on the level selection icon will appear."
 
 [connection signal="pressed" from="manualcontrol/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="manualcontrol/Button2" to="." method="_on_button_2_pressed"]
