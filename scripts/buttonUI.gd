@@ -15,7 +15,7 @@ func _process(delta):
 
 func _on_restart_pressed():
 	hide()
-	Musicplayer.setVolume(global.defVol)
+	Musicplayer.setVolume(Musicplayer.defVol[global.curWorld])
 	get_tree().paused=false
 	global.player.die()
 
@@ -39,12 +39,14 @@ func _on_manual_pressed():
 func _on_quit_pressed():
 	Musicplayer.buttonClicked()
 	get_tree().paused=false
-	Musicplayer.setVolume(global.defVol)
+	Musicplayer.setVolume(Musicplayer.defVol[1])
+	global.currentlevel=-1
+	global.curWorld=1
 	get_tree().change_scene_to_file(title)
 
 
 func _on_resume_pressed():
 	Musicplayer.buttonClicked()
 	hide()
-	Musicplayer.setVolume(global.defVol)
+	Musicplayer.setVolume(Musicplayer.defVol[global.curWorld])
 	get_tree().paused=false

@@ -18,7 +18,7 @@ position = Vector2(-256, 152)
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("2_6ln2q")]
-position = Vector2(-136, -24)
+position = Vector2(-136, -32)
 
 [node name="worldmapv2" parent="." instance=ExtResource("3_wahj2")]
 modulate = Color(1, 1, 1, 1)

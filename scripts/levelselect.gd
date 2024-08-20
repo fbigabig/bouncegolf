@@ -4,6 +4,7 @@ extends Node2D
 @onready var levels = get_tree().get_nodes_in_group("levelselector")
 @onready var todo = get_tree().get_nodes_in_group("worldtodo")
 func _ready():
+	Musicplayer.setVolume(Musicplayer.defVol[global.curWorld])
 	global.worldLevels=[]
 	#print(global.loaded)
 	if(!global.loaded[global.curWorld]):
