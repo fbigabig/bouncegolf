@@ -42,6 +42,7 @@ func _on_quit_pressed():
 	Musicplayer.setVolume(Musicplayer.defVol[1])
 	global.currentlevel=-1
 	global.curWorld=1
+	Musicplayer.update()
 	get_tree().change_scene_to_file(title)
 
 

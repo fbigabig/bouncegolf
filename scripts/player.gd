@@ -102,15 +102,25 @@ func _input(event):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )) or Input.get_axis("moveLeft","moveRight")!=0:
 			timerStarted=true
 	# Mouse in viewport coordinates.
+func _process(delta):
+	if(timer!=null and timerStarted):
+		global.time+=delta
+		timer.text="[center]"+str(global.time).pad_decimals(2)+"[/center]"
+	if(direction!=0):
+		wheel.play()
+		
+		wheel.flip_h = direction<0
+	else:
+		wheel.pause()
 	if(interactBox && Input.is_action_just_pressed("confirm")):
 		for i in interacter.get_overlapping_areas():
 			if(i.is_in_group("selector")):
 				i.doLoad()
 	elif(Input.is_action_just_pressed("restart")):
 		die()
-	elif Input.is_action_just_pressed("shoot")&&  canBounce&&(event is InputEventMouse||aim_dir!=Vector2.ZERO):
+	elif Input.is_action_just_pressed("shoot")&&  canBounce&&(aim_dir!=Vector2.ZERO):
 
-		if(event is InputEventMouse):
+		if(useMouse):
 			#velocity = Vector2.ZERO
 			#print("Mouse Click at: ", event.position)
 			
@@ -169,16 +179,8 @@ func endBounce():
 		player.stream=bounceNoiseDone
 	player.play()
 
-func _process(delta):
-	if(timer!=null and timerStarted):
-		global.time+=delta
-		timer.text="[center]"+str(global.time).pad_decimals(2)+"[/center]"
-	if(direction!=0):
-		wheel.play()
-		
-		wheel.flip_h = direction<0
-	else:
-		wheel.pause()
+
+
 func _physics_process(delta):
 	justCol=false
 	if(beingShot):
