@@ -112,7 +112,7 @@ func _process(delta):
 	
 func save_func():
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	save_game.store_line("okayy")
+	save_game.store_line("savedata")
 	save_game.store_line(str(times.size()))
 	for i in times:
 		save_game.store_line(str(i))
@@ -124,7 +124,7 @@ func load_func():
 		return 
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.READ)
 	var test = save_game.get_line()
-	if(test!="okayy"):
+	if(test!="savedata"):
 		return
 	var num = int(save_game.get_line())
 
