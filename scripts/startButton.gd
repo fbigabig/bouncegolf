@@ -5,6 +5,7 @@ var toGo = "res://scenes/worlds/world1.tscn"
 func _ready():
 	grab_focus()
 	Musicplayer.setVolume(Musicplayer.defVol[global.curWorld])
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

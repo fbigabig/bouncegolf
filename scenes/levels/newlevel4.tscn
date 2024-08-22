@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://jminxqbgpyao"]
+[gd_scene load_steps=10 format=3 uid="uid://jminxqbgpyao"]
 
-[ext_resource type="TileSet" uid="uid://bboh7kmdsv0jm" path="res://resources/tilesetsmallhurt.tres" id="1_ftsws"]
 [ext_resource type="TileSet" uid="uid://q6v8a2nsc0m3" path="res://resources/tilesetsmall.tres" id="1_tgpyj"]
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="2_77yn7"]
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="3_4xs8f"]
@@ -12,14 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cbmyg0i4mlu5h" path="res://prefabs/goaltime.tscn" id="10_vt8vw"]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="owmap" type="TileMap" parent="." groups=["hazard"]]
-visible = false
-modulate = Color(0, 0, 1, 1)
-position = Vector2(-320, -184)
-tile_set = ExtResource("1_ftsws")
-format = 2
-layer_0/tile_data = PackedInt32Array(1507345, 1, 3, 1507346, 196609, 3, 1507347, 1, 3, 1507348, 196609, 3, 1507341, 1, 3, 1507342, 196609, 3, 2686996, 65536, 1, 2621460, 65536, 1, 2687021, 65536, 1, 2621485, 65536, 1, 2621507, 65536, 1, 2687043, 65536, 1, 1114161, 1, 1, 1048625, 1, 1, 983089, 1, 1, 917553, 1, 1, 852017, 1, 1, 786481, 1, 1, 720945, 1, 1, 655409, 1, 1, 589873, 1, 1, 524337, 1, 1, 458801, 1, 1, 393265, 1, 1, 327729, 1, 1, 262193, 1, 1, 196657, 1, 1, 196668, 1, 1, 262204, 1, 1, 327740, 1, 1, 393276, 1, 1, 458812, 1, 1, 524348, 1, 1, 589884, 1, 1, 655420, 1, 1, 720956, 1, 1, 786492, 1, 1, 852028, 1, 1, 917564, 1, 1, 983100, 1, 1, 1048636, 1, 1, 1114172, 1, 1, 1179708, 1, 1, 1245244, 1, 1, 1310780, 0, 1, 196679, 262145, 6, 196680, 458753, 6, 196681, 262145, 6, 196682, 458753, 6, 196683, 262145, 6, 196684, 458753, 6, 852000, 65537, 0, 852001, 131073, 3, 852002, 131073, 3, 851999, 65536, 0, 720907, 0, 0, 786443, 65537, 0, 851979, 65537, 0, 720915, 0, 0, 786451, 65537, 0, 851987, 65537, 0, 393231, 65537, 1, 393232, 65537, 1, 393225, 262145, 6, 393226, 458753, 6, 393227, 262145, 6, 393228, 458753, 6, 393229, 262145, 6, 393230, 458753, 6, 458767, 65537, 1, 524303, 65537, 4, 589839, 65537, 5, 458768, 65537, 0, 524304, 131073, 4, 589840, 131073, 5, 393233, 262145, 6, 393234, 458753, 6, 393235, 262145, 6, 393236, 458753, 6, 393237, 262145, 6, 393238, 458753, 6, 1114115, 327681, 3, 1114116, 393217, 3, 1114117, 327681, 3, 1114118, 393217, 3, 1114119, 327681, 3, 1114120, 393217, 3, 1114121, 327681, 3, 1114122, 393217, 3, 1114123, 327681, 3, 1114124, 393217, 3, 1114125, 327681, 3, 1114126, 393217, 3, 1769475, 1, 1, 1769476, 65536, 1, 983059, 1, 1, 917523, 1, 1, 983051, 1, 1, 917515, 1, 1, 1048591, 65537, 1, 1048592, 65537, 1, 1048593, 65537, 1, 1048594, 65537, 1, 1048595, 65537, 1, 2621496, 65536, 1, 2687032, 65536, 1, 1179697, 1, 1, 1245233, 0, 1, 589894, 0, 0, 524361, 65536, 0, 1048590, 1, 3)
 
 [node name="worldmap" type="TileMap" parent="."]
 position = Vector2(-320, -184)
@@ -45,13 +36,8 @@ rotation = 1.57079
 [node name="arrow3" parent="arrows" instance=ExtResource("4_v63yg")]
 position = Vector2(-288, 64)
 
-[node name="arrow4" parent="arrows" instance=ExtResource("4_v63yg")]
-position = Vector2(-128, -8)
-rotation = -3.14159
-
-[node name="arrow4" parent="arrows/arrow4" instance=ExtResource("4_v63yg")]
-position = Vector2(-80, -7.99964)
-rotation = -3.14159
+[node name="arrow8" parent="arrows" instance=ExtResource("4_v63yg")]
+position = Vector2(-48, -0.000157356)
 
 [node name="arrow5" parent="arrows" instance=ExtResource("4_v63yg")]
 position = Vector2(-224, 88)
@@ -67,8 +53,24 @@ position = Vector2(-224, 120)
 position = Vector2(-280, 88)
 rotation = -1.57079
 
+[node name="diagarrow3" parent="arrows" instance=ExtResource("5_4komh")]
+position = Vector2(-284, 92)
+rotation = -1.57079
+
 [node name="diagarrow2" parent="arrows" instance=ExtResource("5_4komh")]
 position = Vector2(-240, 136)
+rotation = -3.14159
+
+[node name="diagarrow4" parent="arrows" instance=ExtResource("5_4komh")]
+position = Vector2(-236, 140)
+rotation = -3.14159
+
+[node name="diagarrow5" parent="arrows" instance=ExtResource("5_4komh")]
+position = Vector2(-148, -12)
+rotation = -3.14159
+
+[node name="diagarrow6" parent="arrows" instance=ExtResource("5_4komh")]
+position = Vector2(-144, -8)
 rotation = -3.14159
 
 [node name="keytiledanger" parent="." instance=ExtResource("7_d8t5v")]

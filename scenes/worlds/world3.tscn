@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0bjebcto5xep"]
+[gd_scene load_steps=21 format=3 uid="uid://d0bjebcto5xep"]
 
 [ext_resource type="Script" path="res://scripts/levelselect.gd" id="1_27nqw"]
 [ext_resource type="PackedScene" uid="uid://b623qtxlqgq5n" path="res://prefabs/worldmap.tscn" id="2_5e61d"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dl3rtm0itv88p" path="res://prefabs/keytile.tscn" id="17_og0bb"]
 [ext_resource type="PackedScene" uid="uid://chj58rppmg5op" path="res://prefabs/plats/plat6.tscn" id="18_fo1km"]
 [ext_resource type="PackedScene" uid="uid://bv3hpiswqpd8m" path="res://prefabs/plats/plat14.tscn" id="19_4n3s4"]
+[ext_resource type="Texture2D" uid="uid://cqq5lx01yc70x" path="res://assets/whitearrow.png" id="20_52eva"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_27nqw")
@@ -166,3 +167,13 @@ rotation = -1.57079
 [node name="plat13" parent="." instance=ExtResource("19_4n3s4")]
 position = Vector2(160, -100)
 rotation = -3.14159
+
+[node name="Whitearrow" type="Sprite2D" parent="."]
+position = Vector2(-288, -132)
+rotation = -1.57079
+texture = ExtResource("20_52eva")
+
+[node name="Whitearrow2" type="Sprite2D" parent="."]
+position = Vector2(-284, -132)
+rotation = -1.57079
+texture = ExtResource("20_52eva")

@@ -90,19 +90,21 @@ func _ready():
 	UI = UItemplate.instantiate() 
 	get_parent().add_child.call_deferred(UI)
 func _input(event):
-	if(event is InputEventKey or event is InputEventMouse) and !useMouse:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		useMouse=true
-		# Do stuff
-	elif(event is InputEventJoypadButton or event is InputEventJoypadMotion) and useMouse:
+	if (event is InputEventKey or event is InputEventMouse) and !useMouse:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+
+		useMouse = true
+	if (event is InputEventJoypadButton or event is InputEventJoypadMotion) and useMouse:
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-		useMouse=false
-		# Do stuff
+		await get_tree().create_timer(.05).timeout
+
+		useMouse = false
 	if(not timerStarted):
 		if(not event is InputEventMouseMotion and (event.is_action("moveLeft") or event.is_action("moveRight")  or event.is_action("jump") )) or Input.get_axis("moveLeft","moveRight")!=0:
 			timerStarted=true
 	# Mouse in viewport coordinates.
 func _process(delta):
+
 	if(timer!=null and timerStarted):
 		global.time+=delta
 		timer.text="[center]"+str(global.time).pad_decimals(2)+"[/center]"

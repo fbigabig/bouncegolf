@@ -8,6 +8,7 @@ func _ready():
 	global.worldLevels=[]
 	#print(global.loaded)
 	if(!global.loaded[global.curWorld]):
+		
 		global.load_func()
 		global.loaded[global.curWorld]=true
 		for i in levels:
