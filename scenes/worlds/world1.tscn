@@ -187,21 +187,21 @@ visible = false
 shape = SubResource("RectangleShape2D_mqmaj")
 
 [node name="ballspin" type="AnimatedSprite2D" parent="StaticBody2D"]
-modulate = Color(1, 1, 1, 0.34902)
+modulate = Color(1, 1, 1, 0.117647)
 z_as_relative = false
 position = Vector2(0, 20)
 sprite_frames = SubResource("SpriteFrames_jk2bh")
 autoplay = "default"
 
 [node name="ballspin2" type="AnimatedSprite2D" parent="StaticBody2D"]
-modulate = Color(1, 1, 1, 0.34902)
+modulate = Color(1, 1, 1, 0.117647)
 z_as_relative = false
 position = Vector2(28, -12)
 sprite_frames = SubResource("SpriteFrames_jk2bh")
 autoplay = "default"
 
 [node name="ballspin3" type="AnimatedSprite2D" parent="StaticBody2D"]
-modulate = Color(1, 1, 1, 0.34902)
+modulate = Color(1, 1, 1, 0.117647)
 z_as_relative = false
 position = Vector2(-28, -12)
 sprite_frames = SubResource("SpriteFrames_jk2bh")

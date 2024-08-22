@@ -49,19 +49,19 @@ text = "BACK"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -72.0
-offset_top = -184.0
-offset_right = 152.0
-offset_bottom = -140.0
+offset_left = -276.0
+offset_top = -176.0
+offset_right = -52.0
+offset_bottom = -132.0
 theme = ExtResource("2_71w3j")
 theme_override_font_sizes/normal_font_size = 48
 text = "Glossary"
 
 [node name="world1info" type="Node2D" parent="."]
-position = Vector2(-180, -100)
+position = Vector2(-184, -92)
 
 [node name="bubblestuff2" type="Node2D" parent="world1info"]
-position = Vector2(-148, -60)
+position = Vector2(-148, -56)
 
 [node name="Bubble2" type="Sprite2D" parent="world1info/bubblestuff2"]
 modulate = Color(0.407843, 0.407843, 0.486275, 1)
@@ -82,11 +82,22 @@ z_index = 2
 offset_left = 56.0
 offset_top = 100.0
 offset_right = 300.0
-offset_bottom = 148.0
+offset_bottom = 182.0
 theme = ExtResource("2_71w3j")
 theme_override_constants/line_separation = 10
 bbcode_enabled = true
-text = "Bubble tiles       pop on contact. You can bounce off them once. Be careful!"
+text = "Bubble tiles       pop on contact. "
+
+[node name="RichTextLabel12" type="RichTextLabel" parent="world1info/bubblestuff2"]
+z_index = 2
+offset_left = 57.0
+offset_top = 124.0
+offset_right = 301.0
+offset_bottom = 206.0
+theme = ExtResource("2_71w3j")
+theme_override_constants/line_separation = 3
+bbcode_enabled = true
+text = "You can only bounce off them once, and landing on them does not restore your dash! Be careful"
 
 [node name="ColorRect2" type="ColorRect" parent="world1info/bubblestuff2"]
 modulate = Color(0.407843, 0.407843, 0.486275, 1)
@@ -139,9 +150,9 @@ texture = ExtResource("4_v0p7d")
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="world1info"]
 offset_left = -92.0
-offset_top = 84.0
+offset_top = 116.0
 offset_right = 132.0
-offset_bottom = 104.0
+offset_bottom = 136.0
 theme = ExtResource("2_71w3j")
 bbcode_enabled = true
 text = "     are one-way surfaces."
@@ -171,11 +182,11 @@ position = Vector2(-44, 25)
 texture = ExtResource("5_db4h5")
 
 [node name="Plat(1)" type="Sprite2D" parent="world1info"]
-position = Vector2(-80, 92)
+position = Vector2(-80, 124)
 texture = ExtResource("7_wxuhd")
 
 [node name="world2info" type="Node2D" parent="."]
-position = Vector2(152, -140)
+position = Vector2(152, -160)
 script = ExtResource("8_r8dwo")
 
 [node name="infotext" type="RichTextLabel" parent="world2info"]
@@ -387,6 +398,7 @@ offset_bottom = -20.0
 metadata/_edit_use_anchors_ = true
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="world2info/stuff"]
+layout_mode = 0
 offset_left = -96.0
 offset_top = -4.0
 offset_right = 128.0
@@ -425,9 +437,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="RichTextLabel9" type="RichTextLabel" parent="world3info/stuff"]
-offset_left = -272.0
+layout_mode = 0
+offset_left = -276.0
 offset_top = 100.0
-offset_right = -48.0
+offset_right = -52.0
 offset_bottom = 152.0
 theme = ExtResource("2_71w3j")
 bbcode_enabled = true
@@ -439,6 +452,7 @@ position = Vector2(88, 8)
 texture = ExtResource("5_db4h5")
 
 [node name="RichTextLabel10" type="RichTextLabel" parent="world3info/stuff"]
+layout_mode = 0
 offset_left = 108.0
 offset_top = 48.0
 offset_right = 268.0
@@ -505,9 +519,10 @@ offset_right = 200.0
 offset_bottom = 124.0
 
 [node name="RichTextLabel8" type="RichTextLabel" parent="world3info/stuff"]
-offset_left = -272.0
+layout_mode = 0
+offset_left = -276.0
 offset_top = 48.0
-offset_right = -48.0
+offset_right = -52.0
 offset_bottom = 80.0
 theme = ExtResource("2_71w3j")
 bbcode_enabled = true
@@ -516,6 +531,16 @@ text = "Ice tiles      are slippier, and you don't slow down on them."
 [node name="Sq" type="Sprite2D" parent="world3info/stuff/RichTextLabel8"]
 modulate = Color(0.615686, 1, 0.996078, 1)
 position = Vector2(72, 8)
+texture = ExtResource("5_db4h5")
+
+[node name="Sq2" type="Sprite2D" parent="."]
+position = Vector2(14, 50)
+scale = Vector2(47.25, 0.25)
+texture = ExtResource("5_db4h5")
+
+[node name="Sq3" type="Sprite2D" parent="."]
+position = Vector2(-2.38419e-07, -77.5)
+scale = Vector2(0.25, 16.1875)
 texture = ExtResource("5_db4h5")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

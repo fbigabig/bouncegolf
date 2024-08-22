@@ -14,6 +14,8 @@ func _process(delta):
 func _on_body_entered(body):
 	if(body.is_in_group("player")):
 		get_tree().paused=true
+		body.UI.queue_free() #fixes focus issue
 		var clearUI = clearUItemplate.instantiate()
 		get_parent().add_child(clearUI)
+
 		#print(str(global.time).pad_decimals(2))

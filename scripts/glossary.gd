@@ -15,4 +15,5 @@ func _process(delta):
 
 func _on_button_pressed():
 	mc.show()
+	mc.get_parent().grabbed=false
 	queue_free()

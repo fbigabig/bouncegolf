@@ -81,6 +81,15 @@ position = Vector2(-16, -32)
 [node name="plat17" parent="." instance=ExtResource("9_x7d5s")]
 position = Vector2(44, -52)
 
+[node name="plat18" parent="." instance=ExtResource("9_x7d5s")]
+position = Vector2(44, -44)
+
+[node name="plat19" parent="." instance=ExtResource("9_x7d5s")]
+position = Vector2(44, -36)
+
+[node name="plat21" parent="." instance=ExtResource("9_x7d5s")]
+position = Vector2(44, -28)
+
 [node name="plat20" parent="." instance=ExtResource("9_x7d5s")]
 position = Vector2(44, -20)
 

@@ -2,6 +2,7 @@ extends VBoxContainer
 
 @onready var resumeButton = $resume
 var manual= preload("res://prefabs/UI/manual.tscn")
+var manualOpen=false
 var title = ("res://scenes/levels/TitleScreen.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,6 +35,7 @@ func _on_manual_pressed():
 	manualInst.parent=self
 	get_parent().add_child(manualInst)
 	visible=false
+	manualOpen=true
 
 
 func _on_quit_pressed():

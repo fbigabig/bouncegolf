@@ -2,6 +2,7 @@ extends Node2D
 var initGrab = false
 var pausePressed=false
 var paused=false
+
 @onready var UI = $buttonUI
 func _input(event):
 	if(get_tree().paused):
@@ -14,7 +15,7 @@ func _input(event):
 				initGrab=true
 			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 			global.player.useMouse=false
-	if(event.is_action_pressed("pause") and !pausePressed):
+	if(event.is_action_pressed("pause") and !pausePressed and not UI.manualOpen):
 		pausePressed=true
 		paused=false
 		if(get_tree().paused):

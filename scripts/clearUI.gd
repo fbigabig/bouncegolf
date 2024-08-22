@@ -3,12 +3,13 @@ extends VBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Button.grab_focus()
+
 	$levelBeat.text = "[center]Level " +str(global.currentlevel)+" Cleared![/center]"
 	$timeBeat.text = "[center]Time: " +str(global.time).pad_decimals(2)+"[/center]"
 	global.nextLevel()
 	global.save_func()
-
+	$Button.grab_focus() 
+	print("AAAA")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

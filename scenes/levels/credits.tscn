@@ -31,7 +31,7 @@ text = "[center]Credits[/center]"
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
 offset_left = -256.0
 offset_top = -96.0
-offset_bottom = 160.0
+offset_bottom = 332.0
 theme = ExtResource("2_uooq6")
 text = "Idea
 EriFigured
@@ -43,14 +43,7 @@ Art and SFX
 EriFigured
 
 Special thanks
-Ryan
-Tyler
-Ethan
-Cody
-Kristen
-Noah
-Joanna
-Dakota
+Ryan, Tyler, Ethan, Cody, Kristen, Noah, Joanna
 
 
 
@@ -60,7 +53,7 @@ Dakota
 offset_left = 64.0
 offset_top = -96.0
 offset_right = 288.0
-offset_bottom = 312.0
+offset_bottom = 428.0
 theme = ExtResource("2_uooq6")
 text = "Music
 
