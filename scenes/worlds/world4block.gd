@@ -16,7 +16,7 @@ func setup():
 			break
 
 	if yes:
-		self.modulate.a8=60
+		self.modulate.a8=80
 		col.disabled=true
 		self.z_index=-5
 

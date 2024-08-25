@@ -2,7 +2,7 @@ extends VBoxContainer
 
 @onready var resumeButton = $resume
 var manual= preload("res://prefabs/UI/manual.tscn")
-var manualOpen=false
+var manualInst
 var title = ("res://scenes/levels/TitleScreen.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,11 +31,10 @@ func _on_level_select_pressed():
 
 func _on_manual_pressed():
 	Musicplayer.buttonClicked()
-	var manualInst = manual.instantiate()
+	manualInst = manual.instantiate()
 	manualInst.parent=self
 	get_parent().add_child(manualInst)
 	visible=false
-	manualOpen=true
 
 
 func _on_quit_pressed():

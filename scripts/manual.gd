@@ -30,4 +30,3 @@ func _on_button_2_pressed():
 	parent.visible=true
 	parent.resumeButton.grab_focus()
 	queue_free()
-	parent.manualOpen=false

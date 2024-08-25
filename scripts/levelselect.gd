@@ -14,7 +14,7 @@ func _ready():
 		for i in levels:
 			global.levelEntryPos[i.level]=i.position
 
-	global.save_func()
+
 	for i in levels:
 		i.setup() #use signal later maybe?
 	#(global.worldLevels)
@@ -28,6 +28,8 @@ func _ready():
 		player.position = global.levelEntryPos[global.currentlevel]
 	for i in todo:
 		i.setup()
+		
+	global.save_func()
 		
 
 

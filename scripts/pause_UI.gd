@@ -15,13 +15,15 @@ func _input(event):
 				initGrab=true
 			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 			global.player.useMouse=false
-	if(event.is_action_pressed("pause") and !pausePressed and not UI.manualOpen):
+	if(event.is_action_pressed("pause") and !pausePressed):
 		pausePressed=true
 		paused=false
 		if(get_tree().paused):
 			UI.hide()
 			get_tree().paused=false
 			Musicplayer.setVolume(Musicplayer.defVol[global.curWorld])
+			if(is_instance_valid(UI.manualInst)):
+				UI.manualInst.queue_free()
 		elif(is_instance_valid(global.player)):
 			pausePressed=false
 			paused=true

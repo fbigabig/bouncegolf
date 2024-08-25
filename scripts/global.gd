@@ -111,13 +111,24 @@ func _process(delta):
 	pass
 	
 func save_func():
+	print(worldsUnlocked)
+	var yes= true
+	#print(global.worldLevels)
+	for level in global.worldLevels:
+		if(level>99): continue
+		if not (global.times[level]!=0.0):
+			yes = false
+	if(yes and curWorld!=4):
+		worldsUnlocked[curWorld-1+1]=true
+	print(worldsUnlocked)
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	save_game.store_line("savedata")
 	save_game.store_line(str(times.size()))
 	for i in times:
 		save_game.store_line(str(i))
 		save_game.store_line(str(times[i]).pad_decimals(2))
-
+	for i in worldsUnlocked:
+		save_game.store_line(str(i))
 	save_game.close()
 func load_func():
 	if not FileAccess.file_exists("user://savegame.save"):
@@ -131,5 +142,8 @@ func load_func():
 	for i in num:
 		var level = int(save_game.get_line())
 		times[level]=float(save_game.get_line())
+	for i in worldsUnlocked.size():
+		var tmp:bool = save_game.get_line()=="true"
+		worldsUnlocked[i]=tmp
 
 

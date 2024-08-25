@@ -22,10 +22,8 @@ func setup():
 			#else:
 				#print("failed: ")
 				#print(level)
-	if yes:
+	if global.worldsUnlocked[world-1]:
 		enabled=true
-		if(world!=4): #world 4 is in world 1 so this would try to unlock world 5 otherwise
-			global.worldsUnlocked[world-1]=true #indexes at 0 ands portals take u to next world so world 2 bool is at index 1
 		$Sprite2D.texture = load(images[world])
 	$RichTextLabel.text="[center]"+"world "+str(world)+"[/center]"
 
