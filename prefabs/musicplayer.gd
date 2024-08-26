@@ -6,7 +6,7 @@ extends Node2D
 @onready var keyp = $keynoise
 @onready var levp = $levelnoise
 var songs = [preload("res://assets/audio/Bit Quest.mp3"),preload("res://assets/audio/Voxel Revolution.mp3"),preload("res://assets/audio/Bit Shift.mp3"),preload("res://assets/audio/Space Fighter Loop.mp3")]
-var defVol = [0,-10,-20,-20,-15]
+var defVol = [0,-13.5,-20,-20,-15]
 var buttonClickedSound = preload("res://assets/audio/blipSelect.wav")
 # Called when the node enters the scene tree for the first time.
 func _ready():

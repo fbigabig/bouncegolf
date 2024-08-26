@@ -194,6 +194,6 @@ points = PackedVector2Array(0, 0, 16, 0)
 width = 1.0
 
 [node name="player" type="AudioStreamPlayer" parent="."]
-volume_db = -12.0
+volume_db = -8.0
 
 [connection signal="body_entered" from="interacter" to="." method="_on_interacter_body_entered"]
