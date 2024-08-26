@@ -10,5 +10,5 @@ func _ready():
 func _process(delta):
 	position.y-= 10*delta
 	if(position.y<-goal):
-		position.y=goal
+		position.y=160
 
