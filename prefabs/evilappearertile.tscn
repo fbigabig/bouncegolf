@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bagx3ejt5i6xg" path="res://assets/whitedashsq.png" id="3_6s7fa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6sy21"]
-radius = 7.0
+radius = 6.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_inj1p"]
 size = Vector2(16, 16)
@@ -15,7 +15,7 @@ script = ExtResource("1_n5e35")
 toAppear = ExtResource("2_vjvru")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(1, 0, 1, 1)
 texture = ExtResource("3_6s7fa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -27,5 +27,5 @@ shape = SubResource("CircleShape2D_6sy21")
 shape = SubResource("RectangleShape2D_inj1p")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="exitarea" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_exited" from="exitarea" to="." method="_on_exitarea_body_exited"]
+[connection signal="body_exited" from="exitarea" to="." method="_on_area_2d_body_exited"]

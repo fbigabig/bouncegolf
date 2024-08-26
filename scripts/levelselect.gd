@@ -12,7 +12,7 @@ func _ready():
 		global.load_func()
 		global.loaded[global.curWorld]=true
 		for i in levels:
-			global.levelEntryPos[i.level]=i.position
+			global.levelEntryPos[i.level]=i.position+Vector2(0,1)
 
 
 	for i in levels:
