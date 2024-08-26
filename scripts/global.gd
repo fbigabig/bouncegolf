@@ -37,7 +37,7 @@ var worlds = {
 }
 var curWorld = 1
 var levelEntryPos = {
-	-1: Vector2(-264,144) #start pos, same for every world
+	-1: Vector2(-256,153) #start pos, same for every world
 	#-1: Vector2(196,-16) #start pos, same for every world
 }
 var times = {}

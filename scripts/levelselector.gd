@@ -28,6 +28,8 @@ func _process(delta):
 
 func doLoad():
 	#get_tree().change_scene_to_file(sceneToLoad)
+	Musicplayer.stopSounds()
+	Musicplayer.playLev()
 	global.setLevel(level)
 	get_tree().change_scene_to_file(global.levels[level])
 #func _on_body_entered(body):

@@ -23,7 +23,7 @@ func _ready():
 	#print(str(global.currentlevel)+" curlevel")
 	#print("levelentrypos: "+ str(global.levelEntryPos))
 	if(global.currentlevel==-1 and global.curWorld==4):
-		player.position = Vector2(0,128)
+		player.position = Vector2(0,136)
 	else:
 		player.position = global.levelEntryPos[global.currentlevel]
 	for i in todo:

@@ -11,7 +11,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("1_a2w2x")]
-position = Vector2(264, -64)
+position = Vector2(256, -63)
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("2_8nvou")]

@@ -10,7 +10,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("1_m475k")]
-position = Vector2(-68, -16)
+position = Vector2(-68, -15)
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("2_2xl8t")]

@@ -69,6 +69,7 @@ const jumpTicksNum=5
 @onready var wheel = $wheel
 
 @export var tileMap: TileMap
+
 var useMouse=false
 var hitConveyor = {
 	"white": false,
@@ -78,13 +79,13 @@ func _ready():
 	global.player=self
 	global.time=0
 
-	
+	aim_dir=Vector2(rng.randf_range(-1,1),rng.randf_range(-1,1)).normalized()
 	startBounce()
 func _input(event):
 	pass
 	
 func startBounce():
-	aim_dir=Vector2(rng.randf_range(-1,1),rng.randf_range(-1,1)).normalized()
+
 	emit_signal("landed") #used to reset cannons
 	onconveyor=false
 	onice=false
@@ -106,7 +107,8 @@ func transgenderBounce(collision):
 func endBounce():
 	bounce=BounceState.None
 	field.hide()
-	startBounce()
+	direction = rng.randi_range(-1,1)
+	
 
 func _process(delta):
 	if(timer!=null and timerStarted):
@@ -160,6 +162,13 @@ func _physics_process(delta):
 				velocity=buffForce
 
 		return
+	if(grounded):
+		jumpTicks=jumpTicksNum
+		if(canBounce):
+			canBounce=false
+			aim_dir=Vector2(rng.randf_range(-1,1),rng.randf_range(-1,1)).normalized()
+			await  get_tree().create_timer(.5).timeout
+			startBounce()
 	for key in hitConveyor:
 		hitConveyor[key]=false
 	oldFloor=grounded
@@ -179,7 +188,7 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	direction = Input.get_axis("moveLeft", "moveRight")
+
 
 	
 	velOffset = velocity.normalized()

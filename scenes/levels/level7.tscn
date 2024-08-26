@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://701cwee2mhu"]
+[gd_scene load_steps=9 format=3 uid="uid://701cwee2mhu"]
 
 [ext_resource type="PackedScene" uid="uid://br5lmcyc2ujrc" path="res://prefabs/worldmapv2.tscn" id="3_1w5jq"]
 [ext_resource type="PackedScene" uid="uid://bo3ie08u3dfd6" path="res://prefabs/player.tscn" id="3_6gy7g"]
@@ -7,11 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://cvn0u3xb7m7o6" path="res://prefabs/goal.tscn" id="4_casrg"]
 [ext_resource type="PackedScene" uid="uid://cbmyg0i4mlu5h" path="res://prefabs/goaltime.tscn" id="4_ogwby"]
 [ext_resource type="PackedScene" uid="uid://chj58rppmg5op" path="res://prefabs/plats/plat6.tscn" id="7_7mf3w"]
+[ext_resource type="PackedScene" uid="uid://vh7d0srt5hhy" path="res://prefabs/diagarrow.tscn" id="8_t3nym"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("3_6gy7g")]
-position = Vector2(-256, 152)
+position = Vector2(-256, 153)
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("4_casrg")]
@@ -34,3 +35,11 @@ position = Vector2(248, -36)
 
 [node name="plat2" parent="." instance=ExtResource("7_7mf3w")]
 position = Vector2(-256, 48)
+
+[node name="diagarrow" parent="." instance=ExtResource("8_t3nym")]
+position = Vector2(-224, 128)
+rotation = 1.57079
+
+[node name="diagarrow2" parent="." instance=ExtResource("8_t3nym")]
+position = Vector2(-220, 124)
+rotation = 1.57079

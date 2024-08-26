@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://jsuau7ygtkdg"]
+[gd_scene load_steps=4 format=3 uid="uid://jsuau7ygtkdg"]
 
 [ext_resource type="Texture2D" uid="uid://ndwh4k2me85c" path="res://assets/sq.png" id="1_hliys"]
+[ext_resource type="AudioStream" uid="uid://bq6ocwi1inl53" path="res://assets/audio/appear.wav" id="2_4sex0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gf2qv"]
 size = Vector2(16, 16)
@@ -8,9 +9,13 @@ size = Vector2(16, 16)
 [node name="appearedSquare" type="StaticBody2D" groups=["hazard"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_gf2qv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 1, 1)
 texture = ExtResource("1_hliys")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_4sex0")
+volume_db = -10.0
+autoplay = true

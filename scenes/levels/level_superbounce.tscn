@@ -16,7 +16,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("1_sqiro")]
-position = Vector2(-272, 136)
+position = Vector2(-272, 137)
 tileMap = NodePath("../worldmapv2")
 
 [node name="goal" parent="." instance=ExtResource("2_kqecq")]
@@ -58,7 +58,7 @@ position = Vector2(0, 80)
 position = Vector2(0, 64)
 
 [node name="key" parent="." node_paths=PackedStringArray("keyTile") instance=ExtResource("7_0bqww")]
-position = Vector2(-268, 80)
+position = Vector2(-236, 80)
 keyTile = NodePath("../keytile")
 
 [node name="key2" parent="." node_paths=PackedStringArray("keyTile") instance=ExtResource("7_0bqww")]
@@ -106,11 +106,11 @@ position = Vector2(-180, 68)
 rotation = 1.57079
 
 [node name="Whitearrow" type="Sprite2D" parent="."]
-position = Vector2(-272, 52)
+position = Vector2(-272, 76.0001)
 rotation = -1.57079
 texture = ExtResource("12_rmcep")
 
 [node name="Whitearrow2" type="Sprite2D" parent="."]
-position = Vector2(-268, 52)
+position = Vector2(-268, 76.0001)
 rotation = -1.57079
 texture = ExtResource("12_rmcep")

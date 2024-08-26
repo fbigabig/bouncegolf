@@ -33,5 +33,7 @@ func _process(delta):
 	pass
 
 func doLoad():
+	Musicplayer.stopSounds()
+	Musicplayer.playLev()
 	if(enabled):
 		global.newWorld(world)

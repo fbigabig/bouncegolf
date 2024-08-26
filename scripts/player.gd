@@ -65,6 +65,7 @@ var jumpNoise= preload("res://assets/audio/jump (1).wav")
 var bounceNoise= preload("res://assets/audio/bounce.wav")
 var bounceNoise1= preload("res://assets/audio/bounce1.wav")
 var bounceNoiseDone= preload("res://assets/audio/bouncedone.wav")
+var superbounceNoise = preload("res://assets/audio/superjump.wav")
 var timer
 @export var interactBox = false
 
@@ -164,8 +165,12 @@ func transgenderBounce(collision):
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact * (SUPERBOUNCE if hitBouncy else 1)
 	if(player.playing):
 		player.stop()
-	if(player.stream!=bounceNoise):
-		player.stream=bounceNoise
+	if(SUPERBOUNCE):
+		if(player.stream!=superbounceNoise):
+			player.stream=superbounceNoise
+	else:
+		if(player.stream!=bounceNoise):
+			player.stream=bounceNoise
 	player.play()
 	#print(hitBouncy)
 	#if(hitBouncy):
@@ -593,10 +598,12 @@ func handleTile(col):
 					#await get_tree().create_timer(.1).timeout
 					var used={}
 					eraseAll(tilePos,"crumble",used)
+					Musicplayer.playBub()
 				"crumblebounce":
 					var used={}
 					eraseAll(tilePos,"crumblebounce",used)
 					hitBouncy=true
+					Musicplayer.playBub()
 			#removed: grav flip stuff, too jank and not enough room to utilize
 			#"up":
 				#if(gravity == gravities[type]): return

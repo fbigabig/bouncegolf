@@ -14,6 +14,7 @@ func _ready():
 func _process(delta):
 	pass
 func doLoad():
+	Musicplayer.stopSounds()
 	#get_tree().change_scene_to_file(sceneToLoad)
 	get_tree().paused=false
 	global.exitToWorld()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc8ivx57f12x4"]
+[gd_scene load_steps=4 format=3 uid="uid://cc8ivx57f12x4"]
 
 [ext_resource type="Texture2D" uid="uid://ndwh4k2me85c" path="res://assets/sq.png" id="1_ychng"]
+[ext_resource type="AudioStream" uid="uid://bq6ocwi1inl53" path="res://assets/audio/appear.wav" id="2_al2jb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gf2qv"]
 size = Vector2(16, 16)
@@ -13,3 +14,8 @@ shape = SubResource("RectangleShape2D_gf2qv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ychng")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_al2jb")
+volume_db = -10.0
+autoplay = true
