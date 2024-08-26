@@ -165,7 +165,7 @@ func transgenderBounce(collision):
 	velocity = velocity.bounce(collision.get_normal()) * bounceFact * (SUPERBOUNCE if hitBouncy else 1)
 	if(player.playing):
 		player.stop()
-	if(SUPERBOUNCE):
+	if(hitBouncy):
 		if(player.stream!=superbounceNoise):
 			player.stream=superbounceNoise
 	else:

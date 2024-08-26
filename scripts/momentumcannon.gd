@@ -4,6 +4,7 @@ var active=true
 var playerIn = false
 var doEnd=false
 var inProcess=false
+@onready var player = $AudioStreamPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if(is_instance_valid(global.player)):
@@ -36,6 +37,7 @@ func _on_body_entered(body):
 			active=false
 			body.momentumCannonEntered(dir,position,self)
 
+
 			
 
 func end():
@@ -47,6 +49,7 @@ func end():
 func doneShooting():
 	inProcess=true
 	modulate.a8=50
+	player.play()
 
 
 

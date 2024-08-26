@@ -111,7 +111,6 @@ func _process(delta):
 	pass
 	
 func save_func():
-	print(worldsUnlocked)
 	var yes= true
 	#print(global.worldLevels)
 	for level in global.worldLevels:
@@ -120,7 +119,6 @@ func save_func():
 			yes = false
 	if(yes and curWorld!=4):
 		worldsUnlocked[curWorld-1+1]=true
-	print(worldsUnlocked)
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	save_game.store_line("savedata")
 	save_game.store_line(str(times.size()))
