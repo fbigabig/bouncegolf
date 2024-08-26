@@ -14,6 +14,7 @@ func _process(delta):
 
 
 func _on_button_pressed():
+	Musicplayer.buttonClicked()
 	mc.show()
 	mc.get_parent().grabbed=false
 	queue_free()
