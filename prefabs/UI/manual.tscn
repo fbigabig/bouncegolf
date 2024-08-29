@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0aohbol480wl"]
+[gd_scene load_steps=3 format=3 uid="uid://c0aohbol480wl"]
 
 [ext_resource type="Script" path="res://scripts/manual.gd" id="1_go0la"]
 [ext_resource type="Theme" uid="uid://eu3yjnjsv0w0" path="res://resources/theme.tres" id="1_km6a8"]
-[ext_resource type="Script" path="res://scenes/levels/creditstext.gd" id="3_k6la7"]
 
 [node name="manual" type="Control"]
 z_index = 9
@@ -80,7 +79,6 @@ theme = ExtResource("1_km6a8")
 theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "[center]Tips"
-script = ExtResource("3_k6la7")
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="manualcontrol"]
 layout_mode = 0
@@ -123,14 +121,13 @@ theme = ExtResource("1_km6a8")
 theme_override_constants/line_separation = 0
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "Bouncing removes control until you bounce, then land or collide.
+text = "Bouncedashing removes control until you bounce, then land or collide. You can bouncedash once in midair.
 Do a \"dash cancel\" by touching a wall or ceiling after bouncing. This lets you regain control in midair instead of waiting to land.
 
 In some levels, arrows may put you on the right track, but they won't usually give exact angles to follow. Use them as hints.
 If stuck, try experimenting with different dash angles, or bouncing off different surfaces! 
 
-All levels have a goal time, indicated by the time in red in the top left corner. If you beat this time, your best time will show up in green in the level, and the level selection icon will get a spinning ball icon on it. 
-Beat the developer time for a level to add a green check to the spinning ball.
+All levels have a goal time, indicated by the time in red in the top left corner. If you beat this time, your best time will show up in green in the level, and the level selection icon will get a spinning ball icon on it. Beat the developer time for a level to add a green check to the spinning ball.
 
 Unlock new worlds by beating all the regular levels in a world. Unlock challenge levels (level 100/200/300) by getting every goal time in a world! There's a reward for getting the goal time for every regular level and challenge level across all 3 worlds!
 "

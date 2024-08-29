@@ -35,10 +35,14 @@ position = Vector2(-276, 56)
 rotation = 1.57079
 
 [node name="arrow8" parent="arrows" instance=ExtResource("4_v63yg")]
-position = Vector2(-52, 0)
+position = Vector2(-52, 16)
 
 [node name="arrow5" parent="arrows" instance=ExtResource("4_v63yg")]
 position = Vector2(-224, 88)
+rotation = -1.57079
+
+[node name="arrow6" parent="arrows" instance=ExtResource("4_v63yg")]
+position = Vector2(-52, -32)
 rotation = -1.57079
 
 [node name="diagarrow" parent="arrows" instance=ExtResource("5_4komh")]

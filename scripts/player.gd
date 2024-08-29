@@ -189,6 +189,7 @@ func endBounce():
 
 
 func _physics_process(delta):
+
 	justCol=false
 	if(beingShot):
 		#var didThing=false

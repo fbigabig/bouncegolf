@@ -42,7 +42,7 @@ position = Vector2(44, 92)
 position = Vector2(-40, -4)
 
 [node name="plat4" parent="." instance=ExtResource("8_lsm4q")]
-position = Vector2(-240, -20)
+position = Vector2(-232, -20)
 
 [node name="plat2" parent="." instance=ExtResource("9_31cba")]
 position = Vector2(192, -92)

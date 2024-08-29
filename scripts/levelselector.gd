@@ -4,8 +4,9 @@ extends Area2D
 @onready var ball = $ballspin
 @onready var check = $checksprite
 # Called when the node enters the scene tree for the first time.
-
-
+var doRC=true
+func _ready():
+	$RayCast2D.level=level
 func setup():
 	global.worldLevels.append(level)
 	if(!global.times.has(level)):
@@ -21,7 +22,21 @@ func setup():
 		check.show()
 	else:
 		check.hide()
-
+	
+	#var space_state = get_world_2d().direct_space_state
+	## use global coordinates, not local to node
+	#var query = PhysicsRayQueryParameters2D.create(global_position+Vector2(0, 0), global_position+Vector2(0, 1000))
+	#query.exclude = [self]
+#
+	#var result = space_state.intersect_ray(query)
+	#print(result)
+	#if result:
+		#$Line2D.add_point(to_local(result.position-Vector2(0,7)))
+		#playerExitPos=result.position-Vector2(0,7)
+	#else:
+		#$Line2D.add_point(to_local(global_position+Vector2(0, 1000)))
+		#$Line2D.default_color=Color.REBECCA_PURPLE
+		#playerExitPos=position+Vector2(0,1)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -36,4 +51,3 @@ func doLoad():
 	#if(body.is_in_group("player")):
 		#print(str(global.time).pad_decimals(2))
 		#call_deferred("doLoad")
-

@@ -8,11 +8,11 @@ func _ready():
 	global.worldLevels=[]
 	#print(global.loaded)
 	if(!global.loaded[global.curWorld]):
-		
 		global.load_func()
 		global.loaded[global.curWorld]=true
-		for i in levels:
-			global.levelEntryPos[i.level]=i.position+Vector2(0,1)
+			
+		
+
 
 
 	for i in levels:
@@ -30,7 +30,7 @@ func _ready():
 		i.setup()
 		
 	global.save_func()
-		
+
 
 
 
