@@ -7,7 +7,7 @@ var paused=false
 func _input(event):
 	if(get_tree().paused):
 		if(event is InputEventKey or event is InputEventMouse and is_instance_valid(global.player)):
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 			global.player.useMouse=true
 		elif(event is InputEventJoypadButton or event is InputEventJoypadMotion and is_instance_valid(global.player)):
 			if(!initGrab): 
