@@ -15,7 +15,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." node_paths=PackedStringArray("tileMap") instance=ExtResource("1_scvm3")]
-position = Vector2(-240, 137)
+position = Vector2(-257, 137)
 safe_margin = 0.001
 tileMap = NodePath("../worldmapv2")
 
@@ -128,11 +128,6 @@ position = Vector2(-272, -96)
 [node name="cannon8" parent="." instance=ExtResource("9_4till")]
 z_index = -2
 position = Vector2(-272, 32)
-
-[node name="plat8" parent="." instance=ExtResource("7_fubng")]
-z_index = -1
-position = Vector2(-272, 44)
-rotation = -3.14159
 
 [node name="plat9" parent="." instance=ExtResource("7_fubng")]
 position = Vector2(-228, -128)
